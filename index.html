@@ -1,4 +1,4 @@
-<script>
+﻿<script>
 // Función placeholder para evitar error de referencia
 function cargarEmailsGuardados() {
     // Aquí puedes implementar la carga de emails guardados si es necesario
@@ -326,21 +326,9 @@ function cargarEmailsGuardados() {
 
 /* 
 <!-- Botón LEY KARIN al lado de INFORMACION EP y Modal (ubica esto en el body donde corresponda) -->
-<!--
-<button id="btnLeyKarin" class="btn-secundario hover-scale" onclick="abrirModalLeyKarin()" data-tooltip="Preguntas Frecuentes Ley Karin">⚖️ LEY KARIN</button>
-<div id="modalLeyKarin" class="modal" style="display:none; justify-content:center; align-items:center;">
-    <div class="modal-contenido" style="max-width:700px; background:white; border-radius:16px; box-shadow:0 8px 32px rgba(0,33,71,0.15); padding:2rem; position:relative; overflow-y:auto; max-height:90vh;">
-        <button onclick="cerrarModalLeyKarin()" style="position:absolute; top:18px; right:18px; background:none; border:none; font-size:1.5rem; color:#1e3a8a; cursor:pointer;">&times;</button>
-        <h2 style="color:#1e3a8a; margin-bottom:1rem; text-align:center;">⚖️ Ley Karin – Preguntas Frecuentes ACHS Seguro Laboral</h2>
-        <div style="font-size:1em; color:#222; line-height:1.6; max-height:70vh; overflow-y:auto; padding-right:8px;">
-            <!-- ...contenido de preguntas frecuentes... -->
-        </div>
-    </div>
-</div>
+<!-- Modal LEY KARIN eliminado - versión completa está en línea 3180 -->
 
 <!-- ✅ Script migrado a assets/js/app.js - Sistema de Modales (10/11/2025) -->
-
--->
 */
 
         /* Tipografía modernizada: pila de fuentes del sistema para rendimiento y legibilidad.
@@ -2636,8 +2624,13 @@ const feriadosCL = new Map([
 <!-- ✅ Script migrado a assets/js/app.js - Sistema de Modales (10/11/2025) -->
 <!-- Modal Novedades -->
 <div id="modalNovedades" class="modal" style="display:none; justify-content:center; align-items:center;">
-        <div class="modal-contenido" style="max-width:500px; background:white; border-radius:12px; box-shadow:0 8px 32px rgba(0,33,71,0.15); padding:1.2rem; position:relative; max-height:85vh; overflow-y:auto;">
-                <button onclick="cerrarModalNovedades()" style="position:absolute; top:10px; right:10px; background:none; border:none; font-size:1.3rem; color:#1e3a8a; cursor:pointer;">&times;</button>
+        <div class="modal-contenido" id="contenidoNovedades" style="max-width:500px; background:white; border-radius:12px; box-shadow:0 8px 32px rgba(0,33,71,0.15); padding:1.2rem; position:relative; max-height:85vh; overflow-y:auto; transform:scale(1); transition:transform 0.2s ease;">
+                <div style="position:absolute; top:10px; right:10px; display:flex; gap:5px; align-items:center;">
+                    <button onclick="ajustarZoomModal('contenidoNovedades', -0.1)" style="background:#e2e8f0; color:#1e3a8a; border:none; border-radius:4px; width:28px; height:28px; cursor:pointer; font-size:1.1rem; font-weight:bold;" title="Reducir zoom">−</button>
+                    <button onclick="ajustarZoomModal('contenidoNovedades', 0)" style="background:#e2e8f0; color:#1e3a8a; border:none; border-radius:4px; padding:4px 8px; cursor:pointer; font-size:0.75rem; font-weight:bold;" title="Restablecer zoom">100%</button>
+                    <button onclick="ajustarZoomModal('contenidoNovedades', 0.1)" style="background:#e2e8f0; color:#1e3a8a; border:none; border-radius:4px; width:28px; height:28px; cursor:pointer; font-size:1.1rem; font-weight:bold;" title="Aumentar zoom">+</button>
+                    <button onclick="cerrarModalNovedades()" style="background:none; border:none; font-size:1.3rem; color:#1e3a8a; cursor:pointer;">&times;</button>
+                </div>
                 <h2 style="color:#1e3a8a; margin-bottom:0.7rem; text-align:center; font-size:1.3rem;">🆕 Novedades</h2>
                 <div style="margin-bottom:0.8rem; color:#334155; font-size:0.85rem;">
                         <p style="margin:0 0 0.6rem;">Aquí podrás listar comunicados, cambios y mejoras recientes de todos los procedimientos</p>
@@ -3447,7 +3440,7 @@ No, no es obligación.
 
             <!-- Lockers Gratuitos -->
             <div style="background:#e0f2fe; border-left:4px solid #0284c7; padding:16px; border-radius:8px; margin-bottom:15px;">
-                <h4 style="color:#0284c7; margin-top:0; margin-bottom:12px;">  Lockers Gratuitos</h4>
+                <h4 style="color:#0284c7; margin-top:0; margin-bottom:12px;">� Lockers Gratuitos</h4>
                 <p style="margin:0;">
                     Disponibles en el <strong>Piso -6</strong>, a un costado de las máquinas de pago.
                 </p>
@@ -3617,38 +3610,7 @@ No, no es obligación.
                 <!-- Botones de herramientas (entre Consulta y Formulario) -->
 
                                 <!-- Modal Reclamo -->
-                                                <div id="modalReclamo" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:4000; justify-content:center; align-items:center;">
-                                                                        <div style="background:linear-gradient(135deg,#fff,#e3f2fd 80%); border-radius:24px; padding:40px 32px; max-width:480px; width:95%; box-shadow:0 12px 40px rgba(30,58,138,0.13); position:relative;">
-                                                                            <div style="display:flex;align-items:center;gap:12px;justify-content:center;margin-bottom:12px;">
-                                                                                <span style="font-size:2.2em;">🛑</span>
-                                                                                <h2 style="color:#2563eb; margin:0; font-size:1.25em; letter-spacing:1px;">Levantamiento de Quiebre Paciente</h2>
-                                                                            </div>
-                                                                            <div style="background:#e3f2fd; color:#1e3a8a; border-radius:10px; padding:12px 18px; margin-bottom:20px; font-size:1em; text-align:center;">
-                                                                                <b>Un ejecutivo ACHS está reportando una situación crítica o quiebre en la atención de un paciente.</b><br>
-                                                                                Por favor, describe el caso con claridad para que el equipo EP-SNL pueda gestionarlo de forma prioritaria.
-                                                                            </div>
-                                                                            <form onsubmit="enviarReclamo(event)">
-                                                                                  <label style="font-weight:600; color:#1e3a8a;">Nombre del paciente:</label>
-                                                                                  <input type="text" id="reclamoNombre" required placeholder="Nombre completo del paciente" style="width:100%;margin-bottom:10px;padding:10px;border-radius:8px;border:1.5px solid #b8c2c9;">
-                                                                                  <label style="font-weight:600; color:#1e3a8a;">RUT del paciente:</label>
-                                                                                  <input type="text" id="reclamoRut" required placeholder="12.345.678-9" style="width:100%;margin-bottom:10px;padding:10px;border-radius:8px;border:1.5px solid #b8c2c9;">
-                                                                                  <label style="font-weight:600; color:#1e3a8a;">Correo del paciente:</label>
-                                                                                  <input type="email" id="reclamoCorreo" required placeholder="paciente@correo.com" style="width:100%;margin-bottom:10px;padding:10px;border-radius:8px;border:1.5px solid #b8c2c9;">
-                                                                                  <label style="font-weight:600; color:#1e3a8a;">Detalle del quiebre/situación:</label>
-                                                                                  <textarea id="reclamoDetalle" required rows="4" placeholder="Describe la situación, motivo y urgencia..." style="width:100%;margin-bottom:18px;padding:10px;border-radius:8px;border:1.5px solid #b8c2c9;"></textarea>
-                                                                                <div style="display:flex;flex-direction:column;gap:12px;">
-                                                                                    <button type="submit" style="background:linear-gradient(90deg,#2563eb,#5ea0ef);color:white;border:none;border-radius:8px;padding:14px 0;font-weight:bold;font-size:1.08em;cursor:pointer;box-shadow:0 2px 8px #b3d1ff;">Reportar Quiebre</button>
-                                                                                    <button type="button" onclick="copiarReclamoATexto()" style="background:linear-gradient(90deg,#00b894,#5ea0ef);color:white;border:none;border-radius:8px;padding:14px 0;font-weight:bold;font-size:1.08em;cursor:pointer;box-shadow:0 2px 8px #b3d1ff;display:flex;align-items:center;justify-content:center;gap:8px;">
-                                                                                        <img src='https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/microsoftteams.svg' alt='Teams' style='width:1.3em;height:1.3em;vertical-align:middle;filter:invert(1);'> Copiar reclamo para Teams
-                                                                                    </button>
-                                                                                    <button type="button" onclick="derivarATeams()" style="background:linear-gradient(90deg,#0078d4,#5ea0ef);color:white;border:none;border-radius:8px;padding:14px 0;font-weight:bold;font-size:1.08em;cursor:pointer;box-shadow:0 2px 8px #b3d1ff;display:flex;align-items:center;justify-content:center;gap:8px;">
-                                                                                        <img src='https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/microsoftteams.svg' alt='Teams' style='width:1.3em;height:1.3em;vertical-align:middle;filter:invert(1);'> Derivar Quiebre a EP-SNL Teams
-                                                                                    </button>
-                                                                                    <button type="button" onclick="cerrarModalReclamo()" style="background:#6c757d;color:white;border:none;border-radius:8px;padding:10px 0;font-weight:bold;font-size:1em;cursor:pointer;">Cerrar</button>
-                                                                                </div>
-                                                                            </form>
-                                                                        </div>
-                                                                    </div>
+                                                <!-- Modal Reclamo eliminado - versión completa está en línea 7379 -->
 
                                 <script>
                                 function derivarATeams() {
@@ -3714,59 +3676,93 @@ No, no es obligación.
                     <div class="modal-contenido" style="background:white; border-radius:16px; padding:32px 24px; max-width:480px; width:95%; box-shadow:0 8px 32px rgba(30,58,138,0.18); position:relative;">
                         <button onclick="cerrarModal('modalSiglasAgencias')" class="btn-cerrar-modal" aria-label="Cerrar" style="position:absolute; top:10px; right:12px; background:none; border:none; font-size:1.5rem; color:#1e3a8a; cursor:pointer; line-height:1;">&times;</button>
                         <h2 style="color:#1e3a8a; margin-top:0; margin-bottom:22px; font-size:1.5em; text-align:center; letter-spacing:1px;">Siglas de Agencias ACHS</h2>
-                                                <!-- estilos migrados a assets/css/styles.css -->
-                        <div class="sigla-lista-vertical">
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">TEMTCAPR</span><span class="sigla-tarjeta-agencia">TEMUCO</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">VINTCAPR</span><span class="sigla-tarjeta-agencia">VIÑA DEL MAR</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">STGTCAPR</span><span class="sigla-tarjeta-agencia">SANTIAGO</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">PMOTCAPR</span><span class="sigla-tarjeta-agencia">PUERTO MONTT</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">CNCTCAPR</span><span class="sigla-tarjeta-agencia">CONCEPCION</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">VLDTCAPR</span><span class="sigla-tarjeta-agencia">VALDIVIA</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">MAITCAPR</span><span class="sigla-tarjeta-agencia">MAIPU</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">LANTCAPR</span><span class="sigla-tarjeta-agencia">LOS ANGELEZ</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">TLCTCAPR</span><span class="sigla-tarjeta-agencia">TALCA</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">IQUTCAPR</span><span class="sigla-tarjeta-agencia">IQUIQUE</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">MIGTCAPR</span><span class="sigla-tarjeta-agencia">SAN MIGUEL</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">FELTCAPR</span><span class="sigla-tarjeta-agencia">SAN FELIPE</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">RANTCAPR</span><span class="sigla-tarjeta-agencia">RANCAGUA</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">VLPTCAPR</span><span class="sigla-tarjeta-agencia">VALPARAISO</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">PALTCAPR</span><span class="sigla-tarjeta-agencia">PUENTE ALTO</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">LCNTCAPR</span><span class="sigla-tarjeta-agencia">LAS CONDES</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">OVATCAPR</span><span class="sigla-tarjeta-agencia">OVALLE</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">CURTCAPR</span><span class="sigla-tarjeta-agencia">CURICO</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">PUNTCAPR</span><span class="sigla-tarjeta-agencia">PUNTA ARENAS</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">TLHTCAPR</span><span class="sigla-tarjeta-agencia">TALCAHUANO</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">REITCAPR</span><span class="sigla-tarjeta-agencia">LA REINA</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">QUITCAPR</span><span class="sigla-tarjeta-agencia">QUILICURA</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">COLTCAPR</span><span class="sigla-tarjeta-agencia">COLINA</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">FERTCAPR</span><span class="sigla-tarjeta-agencia">SAN FERNANDO</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">CASTCAPR</span><span class="sigla-tarjeta-agencia">CASTRO</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">COQTCAPR</span><span class="sigla-tarjeta-agencia">COQUIMBO</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">CORTCAPR</span><span class="sigla-tarjeta-agencia">CORONEL</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">COYTCAPR</span><span class="sigla-tarjeta-agencia">COYAIQUE</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">SVCTCAPR</span><span class="sigla-tarjeta-agencia">SAN VICENTE</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">COPTCAPR</span><span class="sigla-tarjeta-agencia">COPIAPO</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">MELTCAPR</span><span class="sigla-tarjeta-agencia">MELIPILLA</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">PLATCAPR</span><span class="sigla-tarjeta-agencia">PARQUE LAS AMERICAS</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">ILLTCAPR</span><span class="sigla-tarjeta-agencia">ILLAPEL</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">CHITCAPR</span><span class="sigla-tarjeta-agencia">CHILLAN</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">OSOTCAPR</span><span class="sigla-tarjeta-agencia">OSORNO</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">ANGTCAPR</span><span class="sigla-tarjeta-agencia">ANGOL</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">ANFTCAPR</span><span class="sigla-tarjeta-agencia">ANTOFAGASTA</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">AYSTCAPR</span><span class="sigla-tarjeta-agencia">AYSEN</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">CLMTCAPR</span><span class="sigla-tarjeta-agencia">CALAMA</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">TLGTCAPR</span><span class="sigla-tarjeta-agencia">TALAGANTE</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">ANDTCAPR</span><span class="sigla-tarjeta-agencia">LOS ANDES</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">BUITCAPR</span><span class="sigla-tarjeta-agencia">BUIN</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">SBDTCAPR</span><span class="sigla-tarjeta-agencia">SAN BERNARDO</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">FLOTCAPR</span><span class="sigla-tarjeta-agencia">LA FLORIDA</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">SERTCAPR</span><span class="sigla-tarjeta-agencia">LA SERENA</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">SANTCAPR</span><span class="sigla-tarjeta-agencia">SAN ANTONIO</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">PENTCAPR</span><span class="sigla-tarjeta-agencia">PEÑAFLOR</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">ARITCAPR</span><span class="sigla-tarjeta-agencia">ARICA</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">CRNTCAPR</span><span class="sigla-tarjeta-agencia">CURANILAHUE</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">VOETCAPR</span><span class="sigla-tarjeta-agencia">VESPUCIO OESTE</span></span></div>
-                          <div class="sigla-tarjeta-grande"><span class="sigla-tarjeta-icono">🏷️</span><span class="sigla-tarjeta-info"><span class="sigla-tarjeta-sigla">PARTCAPR</span><span class="sigla-tarjeta-agencia">PARRAL</span></span></div>
+                        <input id="buscadorSiglasAgencias" type="text" placeholder="🔍 Buscar sigla o agencia..." style="width:100%; margin-bottom:10px; padding:10px 12px; border:2px solid #cbd5e1; border-radius:8px; font-size:1em; transition:border-color 0.3s;" onfocus="this.style.borderColor='#1e3a8a'" onblur="this.style.borderColor='#cbd5e1'">
+                        <div id="contadorResultados" style="text-align:center; margin-bottom:12px; font-size:0.9em; color:#64748b; font-weight:600;"></div>
+                        <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            var input = document.getElementById('buscadorSiglasAgencias');
+                            var contador = document.getElementById('contadorResultados');
+                            if (!input) return;
+                            input.addEventListener('input', function() {
+                                var filtro = input.value.toLowerCase().normalize('NFD').replace(/[00-6f]/g, '');
+                                var items = document.querySelectorAll('#modalSiglasAgencias .sigla-item');
+                                var visibles = 0;
+                                
+                                items.forEach(function(card) {
+                                    var sigla = card.querySelector('.sigla-tarjeta-sigla').textContent.toLowerCase().normalize('NFD').replace(/[00-6f]/g, '');
+                                    var agencia = card.querySelector('.sigla-tarjeta-agencia').textContent.toLowerCase().normalize('NFD').replace(/[00-6f]/g, '');
+                                    if (busqueda === '' || sigla.indexOf(busqueda) >= 0 || agencia.indexOf(busqueda) >= 0) {
+                                        card.style.display = 'flex';
+                                        visibles++;
+                                    } else {
+                                        card.style.display = 'none';
+                                    }
+                                });
+                                
+                                if (busqueda === '') {
+                                    contador.textContent = '';
+                                } else {
+                                    contador.textContent = visibles + ' resultado' + (visibles !== 1 ? 's' : '') + ' encontrado' + (visibles !== 1 ? 's' : '');
+                                }
+                            });
+                        });
+                        </script>
+                        <!-- estilos migrados a assets/css/styles.css -->
+                        <!-- Script del buscador movido a assets/js/buscador-siglas.js (14/11/2025) -->
+                        <div style="max-height:400px; overflow-y:auto; padding:8px 4px;">
+                          <ul style="list-style:none; padding:0; margin:0;">
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">TEMTCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">TEMUCO</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">VINTCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">VIÑA DEL MAR</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">STGTCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">SANTIAGO</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">PMOTCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">PUERTO MONTT</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">CNCTCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">CONCEPCION</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">VLDTCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">VALDIVIA</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">MAITCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">MAIPU</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">LANTCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">LOS ANGELEZ</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">TLCTCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">TALCA</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">IQUTCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">IQUIQUE</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">MIGTCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">SAN MIGUEL</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">FELTCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">SAN FELIPE</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">RANTCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">RANCAGUA</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">VLPTCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">VALPARAISO</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">PALTCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">PUENTE ALTO</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">LCNTCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">LAS CONDES</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">OVATCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">OVALLE</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">CURTCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">CURICO</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">PUNTCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">PUNTA ARENAS</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">TLHTCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">TALCAHUANO</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">REITCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">LA REINA</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">QUITCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">QUILICURA</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">COLTCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">COLINA</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">FERTCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">SAN FERNANDO</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">CASTCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">CASTRO</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">COQTCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">COQUIMBO</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">CORTCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">CORONEL</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">COYTCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">COYAIQUE</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">SVCTCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">SAN VICENTE</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">COPTCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">COPIAPO</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">MELTCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">MELIPILLA</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">PLATCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">PARQUE LAS AMERICAS</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">ILLTCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">ILLAPEL</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">CHITCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">CHILLAN</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">OSOTCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">OSORNO</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">ANGTCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">ANGOL</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">ANFTCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">ANTOFAGASTA</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">AYSTCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">AYSEN</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">CLMTCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">CALAMA</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">TLGTCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">TALAGANTE</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">ANDTCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">LOS ANDES</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">BUITCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">BUIN</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">SBDTCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">SAN BERNARDO</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">FLOTCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">LA FLORIDA</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">SERTCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">LA SERENA</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">SANTCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">SAN ANTONIO</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">PENTCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">PEÑAFLOR</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">ARITCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">ARICA</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">CRNTCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">CURANILAHUE</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">VOETCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">VESPUCIO OESTE</span></li>
+                            <li class="sigla-item" style="padding:12px 16px; margin-bottom:8px; background:#f8fafc; border-left:4px solid #1e3a8a; border-radius:6px; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s;"><span class="sigla-tarjeta-sigla" style="font-weight:700; color:#1e3a8a; font-size:0.95em;">PARTCAPR</span><span class="sigla-tarjeta-agencia" style="color:#475569; font-size:0.9em;">PARRAL</span></li>
+                          </ul>
                         </div>
                         <div style="text-align:center; margin-top:22px; display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
                             <button onclick="cerrarModal('modalSiglasAgencias')" style="background:#2563eb; color:white; border:none; border-radius:8px; padding:10px 28px; font-weight:bold; font-size:1.05em; cursor:pointer; box-shadow:0 2px 8px rgba(30,58,138,0.10);">Cerrar</button>
@@ -3813,8 +3809,13 @@ No, no es obligación.
                                 </script>
                                                                 <!-- Modal Buscador Terapia Física (Diagnósticos) -->
                                                                 <div id="modalBuscadorTF" class="modal" style="display:none; justify-content:center; align-items:center;">
-                                                                        <div class="modal-contenido" style="max-width:780px; width:96%; background:white; border-radius:16px; box-shadow:0 8px 32px rgba(30,58,138,0.15); padding:1.5rem; position:relative;">
-                                                                                <button onclick="cerrarModalBuscadorTF()" style="position:absolute; top:14px; right:16px; background:none; border:none; font-size:1.6rem; color:#1e3a8a; cursor:pointer;" aria-label="Cerrar">&times;</button>
+                                                                        <div class="modal-contenido" id="contenidoBuscadorTF" style="max-width:780px; width:96%; background:white; border-radius:16px; box-shadow:0 8px 32px rgba(30,58,138,0.15); padding:1.5rem; position:relative; transform:scale(1); transition:transform 0.2s ease;">
+                                                                                <div style="position:absolute; top:14px; right:16px; display:flex; gap:5px; align-items:center;">
+                                                                                    <button onclick="ajustarZoomModal('contenidoBuscadorTF', -0.1)" style="background:#e0f2fe; color:#0369a1; border:none; border-radius:4px; width:28px; height:28px; cursor:pointer; font-size:1.1rem; font-weight:bold;" title="Reducir zoom">−</button>
+                                                                                    <button onclick="ajustarZoomModal('contenidoBuscadorTF', 0)" style="background:#e0f2fe; color:#0369a1; border:none; border-radius:4px; padding:4px 8px; cursor:pointer; font-size:0.75rem; font-weight:bold;" title="Restablecer zoom">100%</button>
+                                                                                    <button onclick="ajustarZoomModal('contenidoBuscadorTF', 0.1)" style="background:#e0f2fe; color:#0369a1; border:none; border-radius:4px; width:28px; height:28px; cursor:pointer; font-size:1.1rem; font-weight:bold;" title="Aumentar zoom">+</button>
+                                                                                    <button onclick="cerrarModalBuscadorTF()" style="background:none; border:none; font-size:1.6rem; color:#1e3a8a; cursor:pointer;" aria-label="Cerrar">&times;</button>
+                                                                                </div>
                                                                                 <h2 style="color:#1e3a8a; margin:0 0 0.8rem; text-align:center;">🔎 Buscador de diagnósticos para Terapia Física</h2>
                                                                                 <div style="display:flex; gap:10px; align-items:center; justify-content:space-between; flex-wrap:wrap; margin-bottom:12px;">
                                                                                         <input id="inputBuscarTF" type="text" placeholder="Escribe para filtrar…" oninput="filtrarDiagnosticosTF()" style="flex:1; min-width:240px; padding:10px 12px; border:2px solid #dbeafe; border-radius:10px; font-size:0.98rem; outline:none;">
@@ -3835,6 +3836,7 @@ No, no es obligación.
                                                                 // Dataset de diagnósticos para el buscador de TF
                                                                 const DIAGNOSTICOS_TF = `
 CONTUSION DE DEDO DE LA MANO, SIN DAÑO DE LA(S) U
+ABOMBAMIENTO DISCAL
 ABSCESO FALANGE DISTAL DEDO IZQUIERDO
 ACORTAMIENTO DEL TENDON DE AQUILES (ADQUIRIDO) 
 AFLOJAMIENTO DE PROTESIS TOTAL DE CADERA
@@ -4047,6 +4049,7 @@ ESPONDILOSIS, NO ESPECIFICADA
 ESTENOSIS RAQUIDEA DORSAL O LUMBAR
 FALTA DE CONSOLIDACION DE  FRACTURA  PSEUDOARTROSI
 FASCITIS PLANTAR
+FIBROMATOSIS PALMAR (DUPUYTREN)
 FRACTURA ABIERTA  DE COSTILLA 
 FRACTURA ABIERTA DE APOFISIS TRANSVERSADE VERTEBRA
 FRACTURA ABIERTA DE PELVIS IZQUIERDA(O)
@@ -4356,6 +4359,7 @@ PANADIZO DE ORTEJO DERECHA(O)
 PANADIZO DEDO DE LA MANO
 PERDIDA DE PULPEJO DEDO MEDIO IZQUIERDO
 PERIARTRITIS DE LA MUÑECA 
+PINZAMIENTO INCIPIENTE FEMOROACETABULAR
 PLICA MEDIOPATELAR 
 POLIARTRITIS, NO ESPECIFICADA
 PSEUDOARTROSIS DE COLUMNA
@@ -4421,6 +4425,7 @@ SINOVITIS CREPITANTE CRONICA MANO Y MUÑECA
 SINOVITIS DE RODILLA
 SINOVITIS TRANSITORIA
 SINOVITIS Y TENOSINOVITIS DE EXTREMIDAD INFERIOR
+SUPRAESPINOSO
 TENDINITIS AQUILIANA
 TENDINITIS BICIPITAL
 TENDINITIS CALCICA MANGUITO ROTADOR
@@ -5291,9 +5296,14 @@ RADICULOPATÍA LUMBAR
 
     <!-- Modal Script SNL 2.0 (Contact Center ACHS Salud) -->
     <div id="modalScriptSNL2" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.7); z-index:2000; justify-content:center; align-items:center;">
-        <div style="background:white; border-radius:20px; padding:36px; max-width:95vw; max-height:95vh; width:850px; min-width:320px; position:relative; display:flex; flex-direction:column; box-shadow:0 12px 40px rgba(0,210,255,0.18); overflow-y:auto;">
-            <!-- Botón cerrar -->
-            <button onclick="cerrarModalScriptSNL2()" style="position:absolute; top:18px; right:18px; background:rgba(255,255,255,0.2); color:#00d2ff; border:2px solid #00d2ff; border-radius:50%; width:48px; height:48px; cursor:pointer; font-size:1.7em; font-weight:bold; transition:all 0.3s ease;" onmouseover="this.style.background='rgba(0,210,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">&times;</button>
+        <div id="contenidoScriptSNL2" style="background:white; border-radius:20px; padding:36px; max-width:95vw; max-height:95vh; width:850px; min-width:320px; position:relative; display:flex; flex-direction:column; box-shadow:0 12px 40px rgba(0,210,255,0.18); overflow-y:auto; transform:scale(1); transition:transform 0.2s ease;">
+            <!-- Botón cerrar y zoom -->
+            <div style="position:absolute; top:18px; right:18px; display:flex; gap:6px; align-items:center;">
+                <button onclick="ajustarZoomModal('contenidoScriptSNL2', -0.1)" style="background:rgba(0,210,255,0.15); color:#00d2ff; border:2px solid #00d2ff; border-radius:6px; width:34px; height:34px; cursor:pointer; font-size:1.2rem; font-weight:bold;" title="Reducir zoom">−</button>
+                <button onclick="ajustarZoomModal('contenidoScriptSNL2', 0)" style="background:rgba(0,210,255,0.15); color:#00d2ff; border:2px solid #00d2ff; border-radius:6px; padding:6px 10px; cursor:pointer; font-size:0.8rem; font-weight:bold;" title="Restablecer zoom">100%</button>
+                <button onclick="ajustarZoomModal('contenidoScriptSNL2', 0.1)" style="background:rgba(0,210,255,0.15); color:#00d2ff; border:2px solid #00d2ff; border-radius:6px; width:34px; height:34px; cursor:pointer; font-size:1.2rem; font-weight:bold;" title="Aumentar zoom">+</button>
+                <button onclick="cerrarModalScriptSNL2()" style="background:rgba(255,255,255,0.2); color:#00d2ff; border:2px solid #00d2ff; border-radius:50%; width:48px; height:48px; cursor:pointer; font-size:1.7em; font-weight:bold; transition:all 0.3s ease;" onmouseover="this.style.background='rgba(0,210,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">&times;</button>
+            </div>
             
             <!-- Header -->
             <div style="text-align:center; margin-bottom:30px; padding:20px 0; border-bottom:3px solid #00d2ff;">
@@ -5325,42 +5335,7 @@ RADICULOPATÍA LUMBAR
                                 <button onclick="abrirModalMedicosBonos()" style="background:linear-gradient(145deg, #009688, #26a69a); color:white; border:none; padding:14px 28px; border-radius:12px; cursor:pointer; font-size:1.08em; font-weight:600; transition:all 0.3s ease; box-shadow:0 5px 20px rgba(0,150,136,0.2);">🩺 Nombres de médico para compra de bonos</button>
                         </div>
                         <!-- Modal Nombres de Médico para Bonos -->
-                        <div id="modalMedicosBonos" class="modal" style="display:none; justify-content:center; align-items:center;">
-                            <div class="modal-contenido" style="max-width:540px; background:white; border-radius:16px; box-shadow:0 8px 32px rgba(0,33,71,0.15); padding:2rem; position:relative;">
-                                <button onclick="cerrarModalMedicosBonos()" style="position:absolute; top:18px; right:18px; background:none; border:none; font-size:1.5rem; color:#009688; cursor:pointer;">&times;</button>
-                                <h2 style="color:#009688; margin-bottom:1rem; text-align:center;">🩺 Profesionales por Zona – Compra de Bonos ACHS</h2>
-                                <div style="margin-bottom:1.2rem;">
-                                    <b>👨‍⚕️ Médico General-Traumatología-Dermatología</b><br>
-                                    <span>🔢 <b>Código:</b> 0101001</span>
-                                    <ul style="margin-top:0.7rem; margin-bottom:0.7rem;">
-                                        <li>🧭 Norte: <b>María José Seguí Arcos</b> (Antofagasta)</li>
-                                        <li>🏙️ Centro: <b>Miguel José Ayala Angarita</b> (Maipú)</li>
-                                        <li>🌧️ Sur: <b>Luis Diego Bermúdez Jiménez</b> (Valdivia)</li>
-                                    </ul>
-                                    <span style="color:#dc3545; font-size:0.98em;">📝 Importante: Al comprar el bono, debes elegir al profesional correspondiente según la zona de la sede donde se atenderá el paciente.</span>
-                                </div>
-                                <div style="margin-bottom:1.2rem;">
-                                    <b>🧘‍♂️ Kinesiología</b><br>
-                                    <ul style="margin-top:0.7rem; margin-bottom:0.7rem;">
-                                        <li>🧭 Norte: <b>Nelson Ignacio Arancibia Figueroa</b> (Antofagasta)</li>
-                                        <li>🏙️ Centro: <b>Krish Rayen García González</b> (Maipú)</li>
-                                        <li>🌧️ Sur: <b>Claudia Andrea Daetz Medina</b> (Osorno)</li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <b>🧠 Psicología</b><br>
-                                    <span>📍 Profesionales asignados por sede:</span>
-                                    <ul style="margin-top:0.7rem; margin-bottom:0.7rem;">
-                                        <li><b>Francisca Peñafiel</b><br>
-                                            <span style="font-size:0.97em; color:#007bff;">🔹 La Serena<br>🔹 Valparaíso<br>🔹 San Antonio</span>
-                                        </li>
-                                        <li><b>Eileen Yamile Green Jara</b><br>
-                                            <span style="font-size:0.97em; color:#007bff;">🔹 San Felipe<br>🔹 San Miguel</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                        <!-- Modal Medicos Bonos eliminado - versión principal está en línea 2599 -->
                         <script>
                         function abrirModalMedicosBonos() {
                             document.getElementById('modalMedicosBonos').style.display = 'flex';
@@ -6454,76 +6429,19 @@ RADICULOPATÍA LUMBAR
         </div>
     </div>
 
-    <!-- Modal de Redacción de Email -->
-    <div id="modalRedactarEmail" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:2100; justify-content:center; align-items:center;">
-        <div style="background:white; border-radius:15px; padding:30px; max-width:800px; width:90%; max-height:90vh; overflow-y:auto; box-shadow:0 20px 40px rgba(0,0,0,0.3); border:3px solid #007bff;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; border-bottom:2px solid #007bff; padding-bottom:15px;">
-                <h2 style="color:#0056b3; margin:0; font-size:1.6em;">✍️ Redactar Nuevo Email</h2>
-                <button onclick="cerrarModalRedactar()" style="background:#007bff; color:white; border:none; border-radius:50%; width:35px; height:35px; cursor:pointer; font-size:1.3em; font-weight:bold;">&times;</button>
-            </div>
-            
-            <div style="margin-bottom:20px;">
-                <label style="display:block; font-weight:bold; color:#495057; margin-bottom:5px;">📧 Para:</label>
-                <input type="email" id="emailPara" placeholder="destinatario@achs.cl" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:4px;">
-            </div>
-            
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-bottom:20px;">
-                <div>
-                    <label style="display:block; font-weight:bold; color:#495057; margin-bottom:5px;">📋 CC:</label>
-                    <input type="email" id="emailCC" placeholder="copia@achs.cl (opcional)" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:4px;">
-                </div>
-                <div>
-                    <label style="display:block; font-weight:bold; color:#495057; margin-bottom:5px;">⚡ Prioridad:</label>
-                    <select id="prioridadEmail" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:4px;">
-                        <option value="normal">📧 Normal</option>
-                        <option value="alta">🔴 Alta</option>
-                        <option value="baja">🟢 Baja</option>
-                    </select>
-                </div>
-            </div>
-            
-            <div style="margin-bottom:20px;">
-                <label style="display:block; font-weight:bold; color:#495057; margin-bottom:5px;">📝 Asunto:</label>
-                <input type="text" id="asuntoEmail" placeholder="Asunto del mensaje" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:4px;">
-            </div>
-            
-            <div style="margin-bottom:20px;">
-                <label style="display:block; font-weight:bold; color:#495057; margin-bottom:5px;">📄 Mensaje:</label>
-                <textarea id="contenidoEmail" rows="10" placeholder="Escriba su mensaje aquí..." style="width:100%; padding:10px; border:1px solid #ddd; border-radius:4px; resize:vertical;"></textarea>
-            </div>
-            
-            <div style="margin-bottom:20px;">
-                <label style="display:block; font-weight:bold; color:#495057; margin-bottom:5px;">📎 Plantillas Rápidas:</label>
-                <select id="plantillasEmail" onchange="aplicarPlantilla()" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:4px;">
-                    <option value="">Seleccionar plantilla...</option>
-                    <option value="saludo">👋 Saludo formal</option>
-                    <option value="seguimiento">📋 Seguimiento de caso</option>
-                    <option value="informacion">ℹ️ Solicitud de información</option>
-                    <option value="cierre">✅ Cierre de gestión</option>
-                    <option value="derivacion">↗️ Derivación a especialista</option>
-                </select>
-            </div>
-            
-            <div style="text-align:center; border-top:1px solid #ddd; padding-top:20px;">
-                <button onclick="enviarEmail()" style="background:#28a745; color:white; border:none; padding:12px 30px; border-radius:8px; cursor:pointer; font-weight:bold; margin-right:10px; font-size:1.1em;">
-                    📤 Enviar Email
-                </button>
-                <button onclick="guardarBorrador()" style="background:#ffc107; color:#856404; border:none; padding:12px 30px; border-radius:8px; cursor:pointer; font-weight:bold; margin-right:10px; font-size:1.1em;">
-                    💾 Guardar Borrador
-                </button>
-                <button onclick="limpiarFormularioEmail()" style="background:#6c757d; color:white; border:none; padding:12px 30px; border-radius:8px; cursor:pointer; font-weight:bold; font-size:1.1em;">
-                    🧹 Limpiar
-                </button>
-            </div>
-        </div>
-    </div>
+    <!-- Modal de Redacción de Email eliminado - No se utilizaba (14/11/2025) -->
 
     <!-- Modal de Planilla de Respuestas -->
     <div id="modalPlanillaRespuestas" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:2000; justify-content:center; align-items:center;">
-        <div style="background:white; border-radius:15px; padding:30px; max-width:1200px; width:95%; max-height:95vh; overflow-y:auto; box-shadow:0 20px 40px rgba(0,0,0,0.3); border:3px solid #6f42c1;">
+        <div id="contenidoPlanilla" style="background:white; border-radius:15px; padding:30px; max-width:1200px; width:95%; max-height:95vh; overflow-y:auto; box-shadow:0 20px 40px rgba(0,0,0,0.3); border:3px solid #6f42c1; transform:scale(1); transition:transform 0.2s ease;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px; border-bottom:2px solid #6f42c1; padding-bottom:15px;">
                 <h2 style="color:#5a2d91; margin:0; font-size:1.8em;">📋 Planilla de Respuestas Predefinidas</h2>
-                <button onclick="cerrarModalPlanillaRespuestas()" style="background:#6f42c1; color:white; border:none; border-radius:50%; width:35px; height:35px; cursor:pointer; font-size:1.3em; transition:all 0.3s ease; font-weight:bold;">&times;</button>
+                <div style="display:flex; gap:8px; align-items:center;">
+                    <button onclick="ajustarZoomModal('contenidoPlanilla', -0.1)" style="background:#e9ecef; color:#6f42c1; border:none; border-radius:4px; width:32px; height:32px; cursor:pointer; font-size:1.2rem; font-weight:bold;" title="Reducir zoom">−</button>
+                    <button onclick="ajustarZoomModal('contenidoPlanilla', 0)" style="background:#e9ecef; color:#6f42c1; border:none; border-radius:4px; padding:6px 10px; cursor:pointer; font-size:0.8rem; font-weight:bold;" title="Restablecer zoom">100%</button>
+                    <button onclick="ajustarZoomModal('contenidoPlanilla', 0.1)" style="background:#e9ecef; color:#6f42c1; border:none; border-radius:4px; width:32px; height:32px; cursor:pointer; font-size:1.2rem; font-weight:bold;" title="Aumentar zoom">+</button>
+                    <button onclick="cerrarModalPlanillaRespuestas()" style="background:#6f42c1; color:white; border:none; border-radius:50%; width:35px; height:35px; cursor:pointer; font-size:1.3em; transition:all 0.3s ease; font-weight:bold;">&times;</button>
+                </div>
             </div>
             
             <!-- Barra de búsqueda y herramientas -->
@@ -6753,7 +6671,7 @@ RADICULOPATÍA LUMBAR
 
     <!-- Modal Script EP (Enfermedades Profesionales) -->
     <div id="modalScriptEP" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.6); z-index:2500; justify-content:center; align-items:center;">
-        <div style="background:linear-gradient(135deg, #fff 0%, #f8f9fa 100%); border-radius:20px; padding:30px; max-width:1000px; width:95%; max-height:95vh; overflow-y:auto; box-shadow:0 25px 50px rgba(220,53,69,0.4); border:4px solid #dc3545; position:relative;">
+        <div id="contenidoScriptEP" style="background:linear-gradient(135deg, #fff 0%, #f8f9fa 100%); border-radius:20px; padding:30px; max-width:1000px; width:95%; max-height:95vh; overflow-y:auto; box-shadow:0 25px 50px rgba(220,53,69,0.4); border:4px solid #dc3545; position:relative; transform:scale(1); transition:transform 0.2s ease;">
             
             <!-- Header destacado -->
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px; background:linear-gradient(135deg, #dc3545, #c82333); color:white; padding:20px; border-radius:15px; margin:-30px -30px 25px -30px;">
@@ -6761,7 +6679,12 @@ RADICULOPATÍA LUMBAR
                     <h2 style="margin:0; font-size:2.2em; text-shadow:2px 2px 4px rgba(0,0,0,0.3);">🏥 SCRIPT EP</h2>
                     <p style="margin:5px 0 0 0; font-size:1.1em; opacity:0.9;">Protocolo de Atención para Enfermedades Profesionales</p>
                 </div>
-                <button onclick="cerrarModalScriptEP()" style="background:rgba(255,255,255,0.2); color:white; border:2px solid white; border-radius:50%; width:45px; height:45px; cursor:pointer; font-size:1.5em; font-weight:bold; transition:all 0.3s ease;" onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">&times;</button>
+                <div style="display:flex; gap:6px; align-items:center;">
+                    <button onclick="ajustarZoomModal('contenidoScriptEP', -0.1)" style="background:rgba(255,255,255,0.2); color:white; border:2px solid white; border-radius:6px; width:36px; height:36px; cursor:pointer; font-size:1.2rem; font-weight:bold;" title="Reducir zoom">−</button>
+                    <button onclick="ajustarZoomModal('contenidoScriptEP', 0)" style="background:rgba(255,255,255,0.2); color:white; border:2px solid white; border-radius:6px; padding:6px 10px; cursor:pointer; font-size:0.75rem; font-weight:bold;" title="Restablecer zoom">100%</button>
+                    <button onclick="ajustarZoomModal('contenidoScriptEP', 0.1)" style="background:rgba(255,255,255,0.2); color:white; border:2px solid white; border-radius:6px; width:36px; height:36px; cursor:pointer; font-size:1.2rem; font-weight:bold;" title="Aumentar zoom">+</button>
+                    <button onclick="cerrarModalScriptEP()" style="background:rgba(255,255,255,0.2); color:white; border:2px solid white; border-radius:50%; width:45px; height:45px; cursor:pointer; font-size:1.5em; font-weight:bold; transition:all 0.3s ease;" onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">&times;</button>
+                </div>
             </div>
             
             <!-- Contenido del script -->
@@ -6823,7 +6746,7 @@ RADICULOPATÍA LUMBAR
                 
                 <!-- Sección 5: Modalidad de atención -->
                 <div style="background:#fce4ec; border-left:6px solid #e91e63; padding:20px; margin-bottom:20px; border-radius:10px;">
-                    <h3 style="color:#e91e63; margin:0 0 15px 0; font-size:1.4em;">  MODALIDAD DE ATENCIÓN</h3>
+                    <h3 style="color:#e91e63; margin:0 0 15px 0; font-size:1.4em;">� MODALIDAD DE ATENCIÓN</h3>
                     <div style="background:white; padding:15px; border-radius:8px; border:1px solid #e91e63;">
                         <p style="margin:0 0 15px 0; font-weight:600;">"Para su tipo de atención, la modalidad es a través de <span style="background:#ffeb3b; padding:2px 6px; border-radius:4px; color:#000;">telemedicina</span>."</p>
                         <p style="margin:0; font-weight:600;">"¿Conoce esta modalidad? ¿Se ha atendido previamente por telemedicina?"</p>
@@ -6852,7 +6775,7 @@ RADICULOPATÍA LUMBAR
                 
                 <!-- Sección 7: Agendamiento -->
                 <div style="background:#e8f5e8; border-left:6px solid #4caf50; padding:20px; margin-bottom:20px; border-radius:10px;">
-                    <h3 style="color:#4caf50; margin:0 0 15px 0; font-size:1.4em;">  AGENDAMIENTO</h3>
+                    <h3 style="color:#4caf50; margin:0 0 15px 0; font-size:1.4em;">� AGENDAMIENTO</h3>
                     <div style="background:white; padding:15px; border-radius:8px; border:1px solid #4caf50;">
                         <p style="margin:0 0 15px 0; line-height:1.8;">Quiero comentarle que su agendamiento para ingreso de enfermedad profesional de <span style="background:#ffeb3b; padding:2px 6px; border-radius:4px; color:#000; font-weight:bold;">salud mental</span>, tanto para la <span style="background:#c8e6c9; padding:2px 6px; border-radius:4px; color:#000; font-weight:bold;">consulta médica</span> como para la <span style="background:#c8e6c9; padding:2px 6px; border-radius:4px; color:#000; font-weight:bold;">cita con el psicólogo</span>, será gestionado y le llegará la información con detalles del día y hora de atención dentro de las próximas <span style="background:#ffeb3b; padding:2px 6px; border-radius:4px; color:#000; font-weight:bold;">24 horas hábiles</span> a su correo electrónico &lt;xxxx@xxx.xx&gt;.</p>
                         
@@ -11134,6 +11057,34 @@ Total de alertas: ${alertasProgramadas.length}
             console.log('✅ Modal de planilla de respuestas cerrado');
         }
     }
+
+    // ===== FUNCIÓN DE ZOOM PARA MODALES =====
+    const zoomLevels = {}; // Almacenar nivel de zoom por modal
+    
+    function ajustarZoomModal(modalContenidoId, cambio) {
+        const contenido = document.getElementById(modalContenidoId);
+        if (!contenido) return;
+        
+        // Inicializar nivel de zoom si no existe
+        if (!zoomLevels[modalContenidoId]) {
+            zoomLevels[modalContenidoId] = 1.0;
+        }
+        
+        // Si cambio es 0, restablecer a 100%
+        if (cambio === 0) {
+            zoomLevels[modalContenidoId] = 1.0;
+        } else {
+            // Ajustar zoom (límites: 0.5x a 2.0x)
+            zoomLevels[modalContenidoId] = Math.max(0.5, Math.min(2.0, zoomLevels[modalContenidoId] + cambio));
+        }
+        
+        // Aplicar transform scale
+        contenido.style.transform = `scale(${zoomLevels[modalContenidoId]})`;
+        
+        // Feedback visual temporal
+        const nivel = Math.round(zoomLevels[modalContenidoId] * 100);
+        console.log(`🔍 Zoom ${modalContenidoId}: ${nivel}%`);
+    }
     
     // Función para copiar respuesta al portapapeles
     function copiarRespuesta(elemento) {
@@ -11341,19 +11292,10 @@ Total de alertas: ${alertasProgramadas.length}
     }
     
     // Función para integrar con el sistema de emails (si está abierto)
+    // NOTA: Modal de Redacción eliminado (14/11/2025) - Función deshabilitada
     function integrarConEmails(texto) {
-        const modalEmails = document.getElementById('modalEmails');
-        const modalRedactar = document.getElementById('modalRedactarEmail');
-        const contenidoEmail = document.getElementById('contenidoEmail');
-        
-        if (modalEmails && modalEmails.style.display === 'flex') {
-            // Si el modal de emails está abierto, abrir redacción
-            if (modalRedactar && contenidoEmail) {
-                modalRedactar.style.display = 'flex';
-                contenidoEmail.value = texto;
-                mostrarMensajeTemp('📧 Texto insertado en el email', '#007bff');
-            }
-        }
+        // Funcionalidad deshabilitada - Modal de Redacción de Email fue eliminado
+        console.log('Modal de Redacción de Email no disponible');
     }
     
     // ========== FUNCIONES PARA SCRIPT EP (ENFERMEDADES PROFESIONALES) ==========
@@ -11418,7 +11360,7 @@ Esta investigación se realizará para identificar si su patología es de ORIGEN
 
 "¿Desea tomar la cita?"
 
-  MODALIDAD DE ATENCIÓN
+� MODALIDAD DE ATENCIÓN
 "Para su tipo de atención, la modalidad es a través de TELEMEDICINA."
 "¿Conoce esta modalidad? ¿Se ha atendido previamente por telemedicina?"
 
@@ -11433,7 +11375,7 @@ En su atención con el médico, deberá indicar DOS TESTIGOS DE LA EMPRESA para 
 
 📱 Le informo que recibirá un MENSAJE VÍA WHATSAPP con un video explicativo del proceso de evaluación.
 
-  AGENDAMIENTO
+� AGENDAMIENTO
 Quiero comentarle que su agendamiento para ingreso de enfermedad profesional de SALUD MENTAL, tanto para la CONSULTA MÉDICA como para la CITA CON EL PSICÓLOGO, será gestionado y le llegará la información con detalles del día y hora de atención dentro de las próximas 24 HORAS HÁBILES a su correo electrónico <xxxx@xxx.xx>.
 
 "¿Tiene alguna preferencia AM (8 AM – 13 PM) o PM (13 PM – 18 PM) de su citación?"
@@ -11541,7 +11483,7 @@ MEDIOSDEPRUEBA@ACHS.CL
     </div>
     
     <div class="seccion">
-        <div class="titulo-seccion">  MODALIDAD DE ATENCIÓN</div>
+        <div class="titulo-seccion">� MODALIDAD DE ATENCIÓN</div>
         <p><strong>"Para su tipo de atención, la modalidad es a través de <span class="destacado">telemedicina</span>."</strong></p>
         <p class="pregunta">"¿Conoce esta modalidad? ¿Se ha atendido previamente por telemedicina?"</p>
     </div>
@@ -11549,7 +11491,7 @@ MEDIOSDEPRUEBA@ACHS.CL
     <div class="seccion">
         <div class="titulo-seccion">⚠️ INSTRUCCIONES IMPORTANTES</div>
         <div class="importante">
-            <strong>  LLAMADA TELEFÓNICA OBLIGATORIA:</strong><br>
+            <strong>� LLAMADA TELEFÓNICA OBLIGATORIA:</strong><br>
             Ese día también lo llamarán a su celular para hacer su admisión de manera telefónica <span class="destacado">20 min antes aproximadamente</span>. Por favor esté atento a su teléfono el día de su ingreso y tenga su <span class="destacado">cédula de identidad a mano</span>.
         </div>
         
@@ -11564,7 +11506,7 @@ MEDIOSDEPRUEBA@ACHS.CL
     </div>
     
     <div class="seccion">
-        <div class="titulo-seccion">  AGENDAMIENTO</div>
+        <div class="titulo-seccion">� AGENDAMIENTO</div>
         <p>Quiero comentarle que su agendamiento para ingreso de enfermedad profesional de <span class="destacado">salud mental</span>, tanto para la <span class="destacado">consulta médica</span> como para la <span class="destacado">cita con el psicólogo</span>, será gestionado y le llegará la información con detalles del día y hora de atención dentro de las próximas <span class="destacado">24 horas hábiles</span> a su correo electrónico &lt;xxxx@xxx.xx&gt;.</p>
         
         <p class="pregunta">"¿Tiene alguna preferencia AM (8 AM – 13 PM) o PM (13 PM – 18 PM) de su citación?"</p>
@@ -11952,8 +11894,13 @@ MEDIOSDEPRUEBA@ACHS.CL
                             <p><strong>Ejecutivo:</strong> ¿Su dolencia está relacionada con qué parte del cuerpo?, ¿cuál es su diagnóstico?</p>
                             <p><strong>Paciente:</strong> &lt;Indica lugar del cuerpo y diagnóstico&gt;</p>
                             <p style="background:#fff3cd; padding:10px; border-radius:6px; border:1px solid #ffc107;">
-                                📝 <strong>Nota:</strong> Revisar listado. Si se encuentra, proceder a agendar cita. En caso contrario, anotar diagnóstico y no agendar.
-                            </p>
+                            <p><strong>Paciente:</strong> En caso de que el paciente indique dos extremidades se debe agendar dos citas de ingreso y comunicarle lo siguiente </p> 
+                            <p><strong> En caso de que el paciente indique dos extremidades se debe agendar dos citas de ingreso y comunicarle lo siguiente</p>
+                            <p><strong>Ejecutivo:<strong> Como requieres tratamiento para dos zonas, debes agendar 2 sesiones de evaluación diferentes (1 por cada lesión) para así poder tratar de manera completa ambas zonas. 
+                            <p><strong>Ejemplo 1: si tienes lesión de muñeca y lesión de rodilla, debemos evaluar cada una por separado y así personalizar tu tratamiento.
+                            <p><strong>Ejemplo 2: Si tienes lesión de muñeca y hombro, debemos evaluar cada una por separado y así personalizar tu tratamiento.
+ 
+                            <p>📝<strong>Nota:</strong> Revisar listado. Si se encuentra, proceder a agendar cita. En caso contrario, anotar diagnóstico y no agendar.</p>
                             <p><strong>Ejecutivo:</strong> ¿En qué centro desea agendar o de qué comuna es para buscarle la más cercana?</p>
                             <p><strong>Paciente:</strong> &lt;XXXXX centro/comuna&gt;</p>
                             <p style="background:#e3f2fd; padding:10px; border-radius:6px; border:1px solid #2196f3;">
@@ -14316,8 +14263,8 @@ Compartido desde la Base de Conocimientos ACHS`;
                 infoArticulo.innerHTML = `
                     <div style="margin-bottom: 8px;"><strong>📅 Creado:</strong> ${fechaFormateada}</div>
                     <div style="margin-bottom: 8px;"><strong>👤 Autor:</strong> ${articulo.autor}</div>
-                    <div style="margin-bottom: 8px;"><strong>  Tipo:</strong> ${articulo.tipoDocumento || 'MANUAL'}</div>
-                    <div style="margin-bottom: 8px;"><strong> 👀 Vistas:</strong> ${articulo.vistas}</div>
+                    <div style="margin-bottom: 8px;"><strong>� Tipo:</strong> ${articulo.tipoDocumento || 'MANUAL'}</div>
+                    <div style="margin-bottom: 8px;"><strong>�👀 Vistas:</strong> ${articulo.vistas}</div>
                     <div style="margin-bottom: 8px;"><strong>💬 Comentarios:</strong> ${articulo.comentarios?.length || 0}</div>
                     <div><strong>📊 Categoría:</strong> ${articulo.categoria}</div>
                 `;
@@ -16266,9 +16213,26 @@ ${datos.observacionesInternas}
 
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
-            document.querySelectorAll('.modal.activo').forEach(m => {
-                cerrarModal(m.id);
+            // Cerrar cualquier modal visible cuyo id comience con 'modal'
+            document.querySelectorAll("div[id^='modal']").forEach(m => {
+                const style = window.getComputedStyle(m);
+                if (style.display !== 'none') {
+                    m.style.display = 'none';
+                }
             });
+
+            // Intentar cerrar modales que usen la clase 'modal activo' y API cerrarModal
+            document.querySelectorAll('.modal.activo').forEach(m => {
+                try {
+                    if (typeof cerrarModal === 'function') cerrarModal(m.id);
+                } catch (_) {
+                    /* noop */
+                }
+            });
+
+            // Ocultar overlay de notificaciones si está visible
+            const overlay = document.getElementById('notificationOverlay');
+            if (overlay) overlay.style.display = 'none';
         }
     });
 
