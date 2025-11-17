@@ -4667,7 +4667,6 @@ RADICULOPATÍA LUMBAR
                                 </script>
                     <button id="btnDireccion" class="btn-herramienta" onclick="abrirDireccion()">📍 Dirección</button>
                     <button id="btnAtencion" class="btn-herramienta">⚠️ Atención</button>
-                    <button id="borrarTodo" class="btn-herramienta btn-especial">🗑️ Borrar Todo</button>
                     
                 
                 <script>
@@ -4859,63 +4858,62 @@ RADICULOPATÍA LUMBAR
                 <form class="formulario-principal hover-lift" onsubmit="event.preventDefault();" style="margin-left: calc(-1 * var(--spacing-2xl)); margin-right: calc(-1 * var(--spacing-2xl)); width: calc(100% + 2 * var(--spacing-2xl)); max-width: none; border-radius: 0;">
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-lg); align-items: start; padding: var(--spacing-xl);">
                         
-                        <!-- Fila 1: Fecha y RUT (lado a lado) -->
-                        <div class="form-group">
-                            <label for="fecha" class="form-label">📅 Fecha:</label>
-                            <input type="date" id="fecha" name="fecha" readonly class="form-input">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="rut" class="form-label">🆔 RUT:</label>
-                            <input type="text" id="rut" name="rut" class="form-input" placeholder="12.345.678-9">
-                        </div>
-                        
-                        <!-- Fila 2: Nombre (ocupa todo el ancho) -->
-                        <div class="form-group" style="grid-column: 1 / -1;">
-                            <label for="nombre" class="form-label">👤 Nombre:</label>
-                            <input type="text" id="nombre" name="nombre" class="form-input" placeholder="Nombre completo del cliente">
+                        <!-- Fila 1: Fecha, RUT y Nombre en la misma línea -->
+                        <div class="form-row-5" style="grid-column: 1 / -1; display:grid; grid-template-columns: minmax(95px, 0.4fr) minmax(105px, 0.45fr) minmax(160px, 0.9fr) minmax(170px, 1.2fr) minmax(240px, 1.5fr); gap: var(--spacing-lg); align-items: end;">
+                            <div class="form-group">
+                                <label for="fecha" class="form-label">📅 Fecha:</label>
+                                <input type="date" id="fecha" name="fecha" readonly class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label for="rut" class="form-label">🆔 RUT:</label>
+                                <input type="text" id="rut" name="rut" class="form-input" placeholder="12.345.678-9">
+                            </div>
+                            <div class="form-group">
+                                <label for="nombre" class="form-label">👤 Nombre:</label>
+                                <input type="text" id="nombre" name="nombre" class="form-input" placeholder="Nombre completo del cliente">
+                            </div>
+                            <div class="form-group">
+                                <label for="motivo" class="form-label">📋 Motivo:</label>
+                                <select id="motivo" name="motivo" class="form-select">
+                                    <option>ELIGE UNA OPCIÓN</option>
+                                    <option>SNL</option>
+                                    <option>EP</option>
+                                    <option>TRANSFERENCIA</option>
+                                    <option>AGENCIA</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="submotivo" class="form-label">📝 Sub-motivo:</label>
+                                <select id="submotivo" name="submotivo" class="form-select">
+                                    <option>ELIGE UNA OPCIÓN</option>
+                                    <option>Consulta SNL</option>
+                                    <option>Anula Hora</option>
+                                    <option>Consulta EP</option>
+                                    <option>TRANSFERENCIA</option>
+                                    <option>Ingreso EP-SM flujo normal</option>
+                                    <option>Ley Karin // Ingreso EP-SM</option>
+                                    <option>Ingreso EP-ME</option>
+                                    <option>Paciente solicita ingreso de EP-SM y PSICO se ingresa por form</option>
+                                    <option>Sin ingreso administrativo se agenda por Form</option>
+                                    <option>Reagendamiento administrativo se agenda por Form</option>
+                                    <option>Reagendamiento PSICO se agenda por Form</option>
+                                    <option>Reagendamiento de EP-SM y PSICO se agenda por Form</option>
+                                    <option>Se agenda notificación</option>
+                                    <option>Ingreso EP-SM presencial</option>
+                                </select>
+                            </div>
                         </div>
                         
                         <!-- Fila 3: Motivo y Sub-motivo (lado a lado) -->
-                        <div class="form-group">
-                            <label for="motivo" class="form-label">📋 Motivo:</label>
-                            <select id="motivo" name="motivo" class="form-select">
-                                <option>ELIGE UNA OPCIÓN</option>
-                                <option>SNL</option>
-                                <option>EP</option>
-                                <option>TRANSFERENCIA</option>
-                                <option>AGENCIA</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="submotivo" class="form-label">📝 Sub-motivo:</label>
-                            <select id="submotivo" name="submotivo" class="form-select">
-                                <option>ELIGE UNA OPCIÓN</option>
-                                <option>Consulta SNL</option>
-                                <option>Anula Hora</option>
-                                <option>Consulta EP</option>
-                                <option>TRANSFERENCIA</option>
-                                <option>Ingreso EP-SM flujo normal</option>
-                                <option>Ley Karin // Ingreso EP-SM</option>
-                                <option>Ingreso EP-ME</option>
-                                <option>Paciente solicita ingreso de EP-SM y PSICO se ingresa por form</option>
-                                <option>Sin ingreso administrativo se agenda por Form</option>
-                                <option>Reagendamiento administrativo se agenda por Form</option>
-                                <option>Reagendamiento PSICO se agenda por Form</option>
-                                <option>Reagendamiento de EP-SM y PSICO se agenda por Form</option>
-                                <option>Se agenda notificación</option>
-                                <option>Ingreso EP-SM presencial</option>
-                            </select>
-                        </div>
                         
                         <!-- Fila 4: Observación (ocupa todo el ancho) -->
                         <div class="form-group" style="grid-column: 1 / -1;">
                             <label for="observacion" class="form-label">💭 Observación:</label>
-                            <textarea id="observacion" name="observacion" rows="4" class="form-textarea" placeholder="Detalles adicionales..." style="min-height: 100px; resize: vertical;"></textarea>
+                            <textarea id="observacion" name="observacion" rows="3" class="form-textarea" placeholder="Detalles adicionales..." style="min-height: 72px; resize: vertical;"></textarea>
                         </div>
-                        <div class="form-group" style="grid-column: 1 / -1; margin-top: 8px;">
+                        <div class="form-group" style="grid-column: 1 / -1; margin-top: 8px; display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
                             <button id="grabar" type="button" class="btn-primario hover-lift escalar-suave btn-bounce" data-tooltip="Guardar registro actual">✅ GRABAR REGISTRO</button>
+                            <button id="borrarTodoPrincipal" type="button" class="btn-secundario" data-tooltip="Limpiar todos los campos" onclick="limpiarFormularioPrincipal()">🧹 LIMPIAR TODO</button>
                         </div>
                         
                     </div>
@@ -4956,6 +4954,113 @@ RADICULOPATÍA LUMBAR
                         });
                     } catch (e) {
                         console.error('Init grabar handler error:', e);
+                    }
+                })();
+                </script>
+                <script>
+                // Limpia los campos principales del formulario superior
+                function limpiarFormularioPrincipal(){
+                    try {
+                        var fechaEl = document.getElementById('fecha');
+                        var rutEl = document.getElementById('rut');
+                        var nombreEl = document.getElementById('nombre');
+                        var motivoEl = document.getElementById('motivo');
+                        var submotivoEl = document.getElementById('submotivo');
+                        var obsEl = document.getElementById('observacion');
+
+                        if (rutEl) rutEl.value = '';
+                        if (nombreEl) nombreEl.value = '';
+                        if (motivoEl) motivoEl.selectedIndex = 0;
+                        if (submotivoEl) submotivoEl.selectedIndex = 0;
+                        if (obsEl) obsEl.value = '';
+                        if (fechaEl) {
+                            var hoy = new Date();
+                            fechaEl.value = hoy.toISOString().split('T')[0];
+                        }
+
+                        if (typeof mostrarMensajeTemp === 'function') {
+                            mostrarMensajeTemp('🧹 Formulario limpiado', '#6c757d');
+                        }
+                    } catch(e) {
+                        console.error('Error al limpiar formulario principal:', e);
+                    }
+                }
+                </script>
+                <script>
+                // Dependencia: cuando Motivo = SNL, limitar Sub-motivo
+                (function(){
+                    function configurarMotivoSubmotivo(){
+                        var motivoEl = document.getElementById('motivo');
+                        var submotivoEl = document.getElementById('submotivo');
+                        if(!motivoEl || !submotivoEl) return;
+
+                        // Guardar todas las opciones originales una sola vez
+                        if(!submotivoEl._todasLasOpciones){
+                            submotivoEl._todasLasOpciones = Array.from(submotivoEl.options).map(function(o){
+                                return {value:o.value, text:o.text};
+                            });
+                        }
+
+                        // Mapa de filtros por motivo (texto exacto mostrado)
+                        var filtros = {
+                            'SNL': [
+                                'Consulta SNL',
+                                'Anula Hora'
+                            ],
+                            'AGENCIA': [
+                                'Ingreso EP-SM flujo normal',
+                                'Ley Karin // Ingreso EP-SM',
+                                'Ingreso EP-SM presencial',
+                                'Ingreso EP-ME'
+                            ],
+                            'EP': [
+                                'Paciente solicita ingreso de EP-SM y PSICO se ingresa por form',
+                                'Sin ingreso administrativo se agenda por Form',
+                                'Reagendamiento administrativo se agenda por Form',
+                                'Reagendamiento PSICO se agenda por Form',
+                                'Reagendamiento de EP-SM y PSICO se agenda por Form',
+                                'Se agenda notificación',
+                                'Ingreso EP-SM presencial'
+                            ],
+                            'TRANSFERENCIA': [
+                                'TRANSFERENCIA'
+                            ]
+                        };
+
+                        function setOptions(options){
+                            while(submotivoEl.options.length) submotivoEl.remove(0);
+                            options.forEach(function(opt){
+                                var o = document.createElement('option');
+                                o.value = opt.value; o.text = opt.text;
+                                submotivoEl.add(o);
+                            });
+                            submotivoEl.selectedIndex = 0;
+                        }
+
+                        function aplicarFiltro(){
+                            var valorMotivo = (motivoEl.value || '').toUpperCase();
+                            var todas = submotivoEl._todasLasOpciones;
+                            var base = todas.filter(function(o){ return o.text.toUpperCase().includes('ELIGE'); });
+
+                            if(filtros[valorMotivo]){
+                                var listaPermitida = filtros[valorMotivo].map(function(t){ return t.toUpperCase(); });
+                                var filtradas = todas.filter(function(o){ return listaPermitida.indexOf(o.text.toUpperCase()) !== -1; });
+                                setOptions(base.concat(filtradas));
+                            } else {
+                                setOptions(todas);
+                            }
+                        }
+
+                        motivoEl.removeEventListener('change', aplicarFiltro);
+                        motivoEl.addEventListener('change', aplicarFiltro);
+                        aplicarFiltro();
+                    }
+
+                    window.configurarMotivoSubmotivo = configurarMotivoSubmotivo;
+                    if(document.readyState === 'loading'){
+                        document.addEventListener('DOMContentLoaded', configurarMotivoSubmotivo);
+                    } else {
+                        configurarMotivoSubmotivo();
                     }
                 })();
                 </script>
@@ -10300,6 +10405,7 @@ Total de alertas: ${alertasProgramadas.length}
         configurarBotonAtencion(); // CONFIGURAR BOTÓN ATENCIÓN
         configurarBotonPendiente(); // CONFIGURAR BOTÓN PENDIENTE
         configurarBotonPlanillaRespuestas(); // CONFIGURAR BOTÓN PLANILLA DE RESPUESTAS
+        if (typeof configurarMotivoSubmotivo === 'function') configurarMotivoSubmotivo();
         
         console.log('✅ Inicialización completa');
     });
