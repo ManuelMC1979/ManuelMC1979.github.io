@@ -2486,8 +2486,7 @@ function cargarEmailsGuardados() {
 <!-- Franja superior azul con texto desplazándose (ticker informativo) -->
 <div class="banner-ticker" role="status" aria-live="polite" id="bannerTicker">
     <div class="banner-inner" id="bannerInner">
-        <span class="banner-text" id="bannerText"> 🕔 Recuerda: nuestro TMO objetivo es de 5 minutos.
-Enfócate en resolver con empatía, claridad y eficiencia.</span>
+        <span class="banner-text" id="bannerText"> 📌 Personaliza la atención: usa el nombre del cliente y agradece el tiempo en espera.</span>
     </div>
     <button type="button" class="banner-toggle" id="bannerToggle" aria-label="Pausar desplazamiento" title="Pausar/Continuar" onclick="toggleBannerTicker()">❚❚</button>
 </div>
@@ -3145,8 +3144,66 @@ const feriadosCL = new Map([
                 </tbody>
             </table>
         </div>
+        <script>
+            // Ordenar alfabéticamente por "Centros Bloqueados" (1a columna)
+            document.addEventListener('DOMContentLoaded', function(){
+                try {
+                    const tbody = document.querySelector('#modalPacientesSMP table tbody');
+                    if (!tbody) return;
+                    const rows = Array.from(tbody.querySelectorAll('tr'));
+                    const coll = new Intl.Collator('es', { sensitivity: 'base' });
+                    rows.sort((a,b) => {
+                        const at = (a.cells[0]?.textContent || '').trim();
+                        const bt = (b.cells[0]?.textContent || '').trim();
+                        return coll.compare(at, bt);
+                    });
+                    rows.forEach(r => tbody.appendChild(r));
+                } catch(e) { /* no-op */ }
+            });
+        </script>
         <div style="margin-bottom:1rem; font-size:0.97em; color:#666;">
             <b>Nota:</b> Algunos centros tienen 2 psicólogos y solo uno de ellos tiene la malla cerrada, por lo que dependerá del psicólogo con quien se atiende el paciente.
+        </div>
+        <!-- Botón guía: qué psicólogo agendar cuando la agencia tiene más de uno -->
+        <div style="margin:0 0 1rem 0;">
+            <button id="btnGuiaPsicologoSMP" style="background:#e0f2fe; color:#0369a1; border:1px solid #7dd3fc; border-radius:10px; padding:10px 14px; font-weight:700; cursor:pointer;">
+                ❓ ¿Qué psicólogo agendar en agencia bloqueada?
+            </button>
+            <div id="guiaPsicologoSMP" style="display:none; margin-top:10px; background:#f8fafc; border:1px solid #cbd5e1; border-radius:10px; padding:12px;">
+                <div style="font-weight:700; color:#0f172a; margin-bottom:8px;">Guía rápida (agencias con más de un psicólogo):</div>
+                <ul style="margin:0; padding-left:16px; color:#1f2937;">
+                    <li><b>Puerto Montt:</b> Catalina Navarro Bocaz</li>
+                    <li><b>Los Andes:</b> Nicolás Prado Ligeti</li>
+                    <li><b>Viña del Mar:</b> Angela Morales Silva</li>
+                </ul>
+                <div style="margin-top:8px; font-size:0.9em; color:#475569;">Si necesitas agregar más centros a esta guía, indícamelos y los sumo.</div>
+            </div>
+            <script>
+                (function(){
+                    var btn = document.getElementById('btnGuiaPsicologoSMP');
+                    var box = document.getElementById('guiaPsicologoSMP');
+                    // Ordenar alfabéticamente la lista de la guía por nombre de agencia
+                    try {
+                        var ul = document.querySelector('#guiaPsicologoSMP ul');
+                        if (ul) {
+                            var items = Array.from(ul.querySelectorAll('li'));
+                            var coll = new Intl.Collator('es', { sensitivity: 'base' });
+                            items.sort(function(a,b){
+                                var at = (a.querySelector('b')?.textContent || a.textContent || '').replace(':','').trim();
+                                var bt = (b.querySelector('b')?.textContent || b.textContent || '').replace(':','').trim();
+                                return coll.compare(at, bt);
+                            });
+                            items.forEach(function(li){ ul.appendChild(li); });
+                        }
+                    } catch(e) { /* no-op */ }
+                    if(btn && box){
+                        btn.addEventListener('click', function(){
+                            var visible = box.style.display === 'block';
+                            box.style.display = visible ? 'none' : 'block';
+                        });
+                    }
+                })();
+            </script>
         </div>
         <div style="margin-bottom:1rem;">
             <a href="https://achs.sharepoint.com/:x:/s/SaludIntegral/Eehipz2oYspAtLxZ5Onbs5UBQK4OU2bKfBBIAtDTw9GZwA?wdOrigin=TEAMS-MAGLEV.p2p_ns.rwc&wdExp=TEAMS-TREATMENT&wdhostclicktime=1759155374934&web=1" target="_blank" style="color:#3076e3; font-weight:600; text-decoration:underline;">📄 Ver Excel: Pacientes que pueden agendar centros</a>
@@ -3161,7 +3218,6 @@ const feriadosCL = new Map([
 <!-- ✅ Script migrado a assets/js/app.js - Sistema de Modales (10/11/2025) -->
 
                         <button id="btnPlanillaRespuestas" class="btn-secundario hover-scale" data-tooltip="Respuestas predefinidas">📋 PLANILLA RESPUESTAS</button>
-                        <button id="btnSiglasAgencias" class="btn-secundario hover-scale" onclick="abrirModal('modalSiglasAgencias')" data-tooltip="Ver siglas de agencias ACHS">🏷️ SIGLAS DE AGENCIAS ACHS</button>
                         <button id="btnInformacionEP" class="btn-secundario hover-scale" onclick="abrirModal('modalInformacionEP')" data-tooltip="Información sobre Enfermedades Profesionales">📚 INFORMACION EP</button>
                         <button id="btnLeyKarin" class="btn-secundario hover-scale" onclick="abrirModal('modalLeyKarin')" data-tooltip="Preguntas Frecuentes Ley Karin">⚖️ LEY KARIN</button>
 <!-- Modal LEY KARIN -->
