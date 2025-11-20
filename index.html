@@ -4721,8 +4721,144 @@ RADICULOPATÍA LUMBAR
                                             <b>Tip práctico para la llamada:</b><br>
                                             <span>“Puede acudir entre las 9 y las 18 horas, por orden de llegada. Solo se realizan radiografías de extremidades, y no todos los centros ofrecen el servicio, por lo que es importante validar antes.”</span>
                                         </div>
+                                        <!-- Botón para abrir segunda ventana (modal) de sedes RX -->
+                                        <div style="margin-top:1.2rem; display:flex; justify-content:center;">
+                                            <button onclick="abrirModalSedesRayosX()" style="background:linear-gradient(135deg,#1e3a8a,#3b82f6); color:#fff; border:none; padding:1rem 1.4rem; border-radius:14px; cursor:pointer; font-size:1.05rem; font-weight:600; letter-spacing:.5px; display:flex; align-items:center; gap:10px; box-shadow:0 6px 18px rgba(30,58,138,0.35); position:relative; overflow:hidden; animation:pulseRX 2s ease-in-out infinite;">
+                                                <span style="font-size:1.3rem;">📡</span>
+                                                <span>Ver Sedes Abiertas RX</span>
+                                                <span style="position:absolute; inset:0; background:radial-gradient(circle at 30% 30%, rgba(255,255,255,0.25), transparent 60%); opacity:.4; animation:glowRX 4s linear infinite; pointer-events:none;"></span>
+                                            </button>
+                                            <style>
+                                                @keyframes pulseRX {0%{transform:scale(1);}50%{transform:scale(1.035);}100%{transform:scale(1);} }
+                                                @keyframes glowRX {0%{transform:translate(0,0);}50%{transform:translate(8px,6px);}100%{transform:translate(0,0);} }
+                                                /* Soporte preferencia reduce motion */
+                                                @media (prefers-reduced-motion: reduce){
+                                                    button[onclick="abrirModalSedesRayosX()"]{animation:none;}
+                                                    button[onclick="abrirModalSedesRayosX()"] span[style*='radial-gradient']{animation:none;}
+                                                }
+                                            </style>
+                                        </div>
                                     </div>
                                 </div>
+                                <!-- Segundo Modal: Sedes abiertas para venta de rayos X -->
+                                <div id="modalSedesRayosX" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.55); z-index:2100; justify-content:center; align-items:center;">
+                                    <div style="background:#ffffff; border-radius:16px; padding:1.6rem; max-width:640px; width:94%; max-height:88vh; overflow:auto; box-shadow:0 12px 40px rgba(0,0,0,0.25); position:relative;">
+                                        <button onclick="cerrarModalSedesRayosX()" style="position:absolute; top:14px; right:14px; background:#dc2626; color:#fff; border:none; width:34px; height:34px; border-radius:50%; font-size:1.2rem; cursor:pointer;">&times;</button>
+                                        <h2 style="margin:0 0 0.4rem 0; color:#1e3a8a; font-size:1.15rem;">📡 Sedes abiertas para venta de rayos X</h2>
+                                        <p style="margin:0 0 0.9rem 0; font-size:0.8rem; color:#475569;">Listado de sedes con autorización (Resolución) para venta de radiografías FONASA. Estado operativo actual.</p>
+                                        <div style="overflow-x:auto;">
+                                            <table style="width:100%; border-collapse:collapse; font-size:0.75rem;">
+                                                <thead>
+                                                    <tr style="background:#1e3a8a; color:#fff;">
+                                                        <th style="padding:6px 8px; text-align:left; border:1px solid #1e3a8a;">Sede</th>
+                                                        <th style="padding:6px 8px; text-align:left; border:1px solid #1e3a8a;">FONASA</th>
+                                                        <th style="padding:6px 8px; text-align:center; border:1px solid #1e3a8a;">ACTIVO/NO ACTIVO</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr style="background:#ffffff;"><td style="padding:6px 8px; border:1px solid #e2e8f0;">Antofagasta</td><td style="padding:6px 8px; border:1px solid #e2e8f0;">Con Resolución</td><td style="padding:6px 8px; border:1px solid #e2e8f0; text-align:center; color:#059669; font-weight:600;">Activo</td></tr>
+                                                    <tr style="background:#f8fafc;"><td style="padding:6px 8px; border:1px solid #e2e8f0;">Calama</td><td style="padding:6px 8px; border:1px solid #e2e8f0;">Con Resolución</td><td style="padding:6px 8px; border:1px solid #e2e8f0; text-align:center; color:#059669; font-weight:600;">Activo</td></tr>
+                                                    <tr style="background:#ffffff;"><td style="padding:6px 8px; border:1px solid #e2e8f0;">La Florida</td><td style="padding:6px 8px; border:1px solid #e2e8f0;">Con Resolución</td><td style="padding:6px 8px; border:1px solid #e2e8f0; text-align:center; color:#059669; font-weight:600;">Activo</td></tr>
+                                                    <tr style="background:#f8fafc;"><td style="padding:6px 8px; border:1px solid #e2e8f0;">Concepción</td><td style="padding:6px 8px; border:1px solid #e2e8f0;">Con Resolución</td><td style="padding:6px 8px; border:1px solid #e2e8f0; text-align:center; color:#059669; font-weight:600;">Activo</td></tr>
+                                                    <tr style="background:#ffffff;"><td style="padding:6px 8px; border:1px solid #e2e8f0;">Maipú</td><td style="padding:6px 8px; border:1px solid #e2e8f0;">Con Resolución</td><td style="padding:6px 8px; border:1px solid #e2e8f0; text-align:center; color:#059669; font-weight:600;">Activo</td></tr>
+                                                    <tr style="background:#f8fafc;"><td style="padding:6px 8px; border:1px solid #e2e8f0;">San Bernardo</td><td style="padding:6px 8px; border:1px solid #e2e8f0;">Con Resolución</td><td style="padding:6px 8px; border:1px solid #e2e8f0; text-align:center; color:#059669; font-weight:600;">Activo</td></tr>
+                                                    <tr style="background:#ffffff;"><td style="padding:6px 8px; border:1px solid #e2e8f0;">San Miguel</td><td style="padding:6px 8px; border:1px solid #e2e8f0;">Con Resolución</td><td style="padding:6px 8px; border:1px solid #e2e8f0; text-align:center; color:#059669; font-weight:600;">Activo</td></tr>
+                                                    <tr style="background:#f8fafc;"><td style="padding:6px 8px; border:1px solid #e2e8f0;">Santiago</td><td style="padding:6px 8px; border:1px solid #e2e8f0;">Con Resolución</td><td style="padding:6px 8px; border:1px solid #e2e8f0; text-align:center; color:#059669; font-weight:600;">Activo</td></tr>
+                                                    <tr style="background:#ffffff;"><td style="padding:6px 8px; border:1px solid #e2e8f0;">La Reina</td><td style="padding:6px 8px; border:1px solid #e2e8f0;">Con Resolución</td><td style="padding:6px 8px; border:1px solid #e2e8f0; text-align:center; color:#059669; font-weight:600;">Activo</td></tr>
+                                                    <tr style="background:#f8fafc;"><td style="padding:6px 8px; border:1px solid #e2e8f0;">La Serena</td><td style="padding:6px 8px; border:1px solid #e2e8f0;">Con Resolución</td><td style="padding:6px 8px; border:1px solid #e2e8f0; text-align:center; color:#059669; font-weight:600;">Activo</td></tr>
+                                                    <tr style="background:#ffffff;"><td style="padding:6px 8px; border:1px solid #e2e8f0;">Copiapó</td><td style="padding:6px 8px; border:1px solid #e2e8f0;">Con Resolución</td><td style="padding:6px 8px; border:1px solid #e2e8f0; text-align:center; color:#059669; font-weight:600;">Activo</td></tr>
+                                                    <tr style="background:#f8fafc;"><td style="padding:6px 8px; border:1px solid #e2e8f0;">Los Andes</td><td style="padding:6px 8px; border:1px solid #e2e8f0;">Con Resolución</td><td style="padding:6px 8px; border:1px solid #e2e8f0; text-align:center; color:#059669; font-weight:600;">Activo</td></tr>
+                                                    <tr style="background:#ffffff;"><td style="padding:6px 8px; border:1px solid #e2e8f0;">Los Ángeles</td><td style="padding:6px 8px; border:1px solid #e2e8f0;">Con Resolución</td><td style="padding:6px 8px; border:1px solid #e2e8f0; text-align:center; color:#059669; font-weight:600;">Activo</td></tr>
+                                                    <tr style="background:#f8fafc;"><td style="padding:6px 8px; border:1px solid #e2e8f0;">Iquique</td><td style="padding:6px 8px; border:1px solid #e2e8f0;">Con Resolución</td><td style="padding:6px 8px; border:1px solid #e2e8f0; text-align:center; color:#059669; font-weight:600;">Activo</td></tr>
+                                                    <tr style="background:#ffffff;"><td style="padding:6px 8px; border:1px solid #e2e8f0;">Puente Alto</td><td style="padding:6px 8px; border:1px solid #e2e8f0;">Con Resolución</td><td style="padding:6px 8px; border:1px solid #e2e8f0; text-align:center; color:#059669; font-weight:600;">Activo</td></tr>
+                                                    <tr style="background:#f8fafc;"><td style="padding:6px 8px; border:1px solid #e2e8f0;">Chillán</td><td style="padding:6px 8px; border:1px solid #e2e8f0;">Con Resolución</td><td style="padding:6px 8px; border:1px solid #e2e8f0; text-align:center; color:#059669; font-weight:600;">Activo</td></tr>
+                                                    <tr style="background:#ffffff;"><td style="padding:6px 8px; border:1px solid #e2e8f0;">Rancagua</td><td style="padding:6px 8px; border:1px solid #e2e8f0;">Con Resolución</td><td style="padding:6px 8px; border:1px solid #e2e8f0; text-align:center; color:#059669; font-weight:600;">Activo</td></tr>
+                                                    <tr style="background:#f8fafc;"><td style="padding:6px 8px; border:1px solid #e2e8f0;">San Antonio</td><td style="padding:6px 8px; border:1px solid #e2e8f0;">Con Resolución</td><td style="padding:6px 8px; border:1px solid #e2e8f0; text-align:center; color:#059669; font-weight:600;">Activo</td></tr>
+                                                    <tr style="background:#ffffff;"><td style="padding:6px 8px; border:1px solid #e2e8f0;">Curicó</td><td style="padding:6px 8px; border:1px solid #e2e8f0;">Con Resolución</td><td style="padding:6px 8px; border:1px solid #e2e8f0; text-align:center; color:#059669; font-weight:600;">Activo</td></tr>
+                                                    <tr style="background:#f8fafc;"><td style="padding:6px 8px; border:1px solid #e2e8f0;">Valdivia</td><td style="padding:6px 8px; border:1px solid #e2e8f0;">Con Resolución</td><td style="padding:6px 8px; border:1px solid #e2e8f0; text-align:center; color:#059669; font-weight:600;">Activo</td></tr>
+                                                    <tr style="background:#ffffff;"><td style="padding:6px 8px; border:1px solid #e2e8f0;">Temuco</td><td style="padding:6px 8px; border:1px solid #e2e8f0;">Con Resolución</td><td style="padding:6px 8px; border:1px solid #e2e8f0; text-align:center; color:#059669; font-weight:600;">Activo</td></tr>
+                                                    <tr style="background:#f8fafc;"><td style="padding:6px 8px; border:1px solid #e2e8f0;">Viña del Mar</td><td style="padding:6px 8px; border:1px solid #e2e8f0;">Con Resolución</td><td style="padding:6px 8px; border:1px solid #e2e8f0; text-align:center; color:#059669; font-weight:600;">Activo</td></tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div style="margin-top:0.6rem; font-size:0.65rem; color:#64748b; text-align:right;">Actualizado: 20-11-2025</div>
+                                    </div>
+                                </div>
+                                <script>
+                                function abrirModalSedesRayosX(){
+                                    const m = document.getElementById('modalSedesRayosX');
+                                    if(m){ m.style.display='flex'; }
+                                }
+                                function cerrarModalSedesRayosX(){
+                                    const m = document.getElementById('modalSedesRayosX');
+                                    if(m){ m.style.display='none'; }
+                                }
+                                // ===== Filtro rápido sedes RX =====
+                                // Inserta UI de filtro al cargar por primera vez
+                                (function initFiltroSedesRX(){
+                                    const modal = document.getElementById('modalSedesRayosX');
+                                    if(!modal) return;
+                                    const caja = modal.querySelector('h2');
+                                    const tabla = modal.querySelector('table');
+                                    if(!caja || !tabla) return;
+                                    // Evitar duplicar si ya existe
+                                    if(modal.querySelector('#filtroSedeRX')) return;
+                                    const ui = document.createElement('div');
+                                    ui.style.display='flex';
+                                    ui.style.flexWrap='wrap';
+                                    ui.style.gap='6px';
+                                    ui.style.margin='0 0 .8rem 0';
+                                    ui.innerHTML = `
+                                        <input id="filtroSedeRX" type="text" placeholder="Filtrar sede..." style="flex:1 1 160px; padding:6px 8px; border:1px solid #cbd5e1; border-radius:6px; font-size:.75rem;" />
+                                        <select id="filtroEstadoRX" style="flex:0 0 130px; padding:6px 8px; border:1px solid #cbd5e1; border-radius:6px; font-size:.75rem;">
+                                            <option value="">Todos estados</option>
+                                            <option value="Activo">Activo</option>
+                                            <option value="No Activo">No Activo</option>
+                                        </select>
+                                        <button id="resetFiltroRX" style="flex:0 0 70px; background:#1e3a8a; color:#fff; border:none; padding:6px 10px; border-radius:6px; font-size:.7rem; cursor:pointer;">Reset</button>
+                                        <span id="contadorSedesRX" style="flex:1 1 100%; font-size:.65rem; color:#475569; text-align:right;">&nbsp;</span>
+                                    `;
+                                    caja.insertAdjacentElement('afterend', ui);
+                                    // Eventos
+                                    ui.querySelector('#filtroSedeRX').addEventListener('input', filtrarSedesRX);
+                                    ui.querySelector('#filtroEstadoRX').addEventListener('change', filtrarSedesRX);
+                                    ui.querySelector('#resetFiltroRX').addEventListener('click', function(){
+                                        ui.querySelector('#filtroSedeRX').value='';
+                                        ui.querySelector('#filtroEstadoRX').value='';
+                                        filtrarSedesRX();
+                                    });
+                                    filtrarSedesRX();
+                                })();
+                                function filtrarSedesRX(){
+                                    const modal = document.getElementById('modalSedesRayosX');
+                                    if(!modal) return;
+                                    const filtroTexto = (modal.querySelector('#filtroSedeRX')?.value || '').toLowerCase();
+                                    const filtroEstado = modal.querySelector('#filtroEstadoRX')?.value || '';
+                                    const filas = modal.querySelectorAll('table tbody tr');
+                                    let visibles = 0;
+                                    filas.forEach(tr => {
+                                        const cels = tr.querySelectorAll('td');
+                                        if(cels.length < 3) return;
+                                        const sede = cels[0].textContent.toLowerCase();
+                                        const estado = cels[2].textContent.trim();
+                                        let ok = true;
+                                        if(filtroTexto && !sede.includes(filtroTexto)) ok=false;
+                                        if(filtroEstado && estado !== filtroEstado) ok=false;
+                                        tr.style.display = ok ? '' : 'none';
+                                        if(ok){
+                                            visibles++;
+                                            // Resaltar coincidencia
+                                            if(filtroTexto){
+                                                cels[0].innerHTML = sede.replace(new RegExp(filtroTexto,'gi'), m => `<mark style="background:#fde68a; color:#7c2d12;">${m}</mark>`);
+                                            } else {
+                                                cels[0].innerHTML = cels[0].textContent; // limpiar
+                                            }
+                                        }
+                                    });
+                                    const contador = modal.querySelector('#contadorSedesRX');
+                                    if(contador){ contador.textContent = `Coincidencias: ${visibles}`; }
+                                }
+                                </script>
                                 <script>
                                 function abrirModalHorarioImagen() {
                                     document.getElementById('modalHorarioImagen').style.display = 'flex';
