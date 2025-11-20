@@ -2623,7 +2623,7 @@ const feriadosCL = new Map([
 <!-- ✅ Script migrado a assets/js/app.js - Sistema de Modales (10/11/2025) -->
 <!-- Modal Novedades -->
 <div id="modalNovedades" class="modal" style="display:none; justify-content:center; align-items:center;">
-        <div class="modal-contenido" id="contenidoNovedades" style="max-width:500px; background:white; border-radius:12px; box-shadow:0 8px 32px rgba(0,33,71,0.15); padding:1.2rem; position:relative; max-height:85vh; overflow-y:auto; transform:scale(1); transition:transform 0.2s ease;">
+        <div class="modal-contenido" id="contenidoNovedades" style="max-width:720px; background:white; border-radius:12px; box-shadow:0 8px 32px rgba(0,33,71,0.15); padding:1.2rem; position:relative; max-height:85vh; overflow-y:auto; transform:scale(1); transition:transform 0.2s ease;">
                 <div style="position:absolute; top:10px; right:10px; display:flex; gap:5px; align-items:center;">
                     <button onclick="ajustarZoomModal('contenidoNovedades', -0.1)" style="background:#e2e8f0; color:#1e3a8a; border:none; border-radius:4px; width:28px; height:28px; cursor:pointer; font-size:1.1rem; font-weight:bold;" title="Reducir zoom">−</button>
                     <button onclick="ajustarZoomModal('contenidoNovedades', 0)" style="background:#e2e8f0; color:#1e3a8a; border:none; border-radius:4px; padding:4px 8px; cursor:pointer; font-size:0.75rem; font-weight:bold;" title="Restablecer zoom">100%</button>
@@ -3337,57 +3337,79 @@ No, no es obligación.
     <div class="modal-contenido" style="max-width:520px; background:white; border-radius:16px; box-shadow:0 8px 32px rgba(30,99,235,0.15); padding:2rem; position:relative;">
         <button onclick="cerrarModal('modalNotificacionEP')" style="position:absolute; top:18px; right:18px; background:none; border:none; font-size:1.5rem; color:#2563eb; cursor:pointer;">&times;</button>
         <h2 style="color:#2563eb; margin-bottom:1rem; text-align:center;">🛎️ Notificación EP</h2>
-        <div style="font-size:1.08em; color:#222; line-height:1.5;">
-            <ol>
-  <li>🕒 Pacientes con tiempo perdido
-    <ul>
-      <li>Responsable de notificación: Agencia de Tratamiento (último control EP).</li>
-      <li>Telemedicina SM: Sede responsable es Providencia.</li>
-    </ul>
-  </li>
-  <li>🌍 Pacientes de región
-    <ul>
-      <li>Retiro de resolución: En sede ACHS más cercana al domicilio del paciente.</li>
-    </ul>
-  </li>
-  <li>📬 Plazo y acceso a resolución
-    <ul>
-      <li>Plazo de notificación: 5 días hábiles.</li>
-      <li>Si no recibe correo/carta: Puede acceder a resolución en Achs Virtual → Siniestro → Descargar documento.</li>
-      <li>Sin acceso tecnológico o zonas rurales: Notificación presencial en sede de ingreso.</li>
-    </ul>
-  </li>
-  <li>🏙️ Territorio Metropolitano
-    <ul>
-      <li>Eliminación de distinción Metro EP: Ya no es exclusiva de Providencia.</li>
-      <li>Notificación según sede de tratamiento final: El paciente debe acudir a esa sede.</li>
-      <li>Telemedicina:
-        <ul>
-          <li>CTP: Cita presencial en Providencia.</li>
-          <li>STP: Envío por correo o carta certificada según autorización.</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>🚫 Inasistencias en pacientes con tiempo perdido
-    <ul>
-      <li>Alta administrativa: Se genera con una sola inasistencia injustificada.</li>
-      <li>Call Center:
-        <ul>
-          <li>Verifica si resolución fue enviada.</li>
-          <li>Informa canal y plazo de entrega.</li>
-          <li>Recuerda que luego del plazo, puede descargarse desde Achs Virtual.</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>🏥 Pacientes sin tiempo perdido
-    <ul>
-      <li>Responsable de notificación: Agencia de Ingreso (urgencia, atención ambulatoria o espontánea).</li>
-    </ul>
-  </li>
-</ol>
-        </div>
+                <div style="font-size:1.02em; color:#222; line-height:1.55;">
+                        <style>
+                                .accordion-notif details { 
+                                        border:1px solid #d0e2ff; 
+                                        border-radius:10px; 
+                                        padding:.4rem .85rem .75rem; 
+                                        background:#f8fbff; 
+                                        margin-bottom:.65rem; 
+                                        box-shadow:0 2px 6px rgba(37,99,235,0.08);
+                                }
+                                .accordion-notif details[open]{
+                                        background:#eef5ff;
+                                        border-color:#2563eb;
+                                        box-shadow:0 4px 14px rgba(37,99,235,0.18);
+                                }
+                                .accordion-notif summary { 
+                                        font-weight:700; 
+                                        cursor:pointer; 
+                                        list-style:none; 
+                                        display:flex; 
+                                        align-items:center; 
+                                        gap:.5rem; 
+                                        color:#1e3a8a; 
+                                        font-size:1.02em;
+                                }
+                                .accordion-notif summary::marker { display:none; }
+                                .accordion-notif summary span.icon { font-size:1.15em; }
+                                .accordion-notif p { margin:.55rem 0 .4rem; }
+                        </style>
+                        <p style="background:#e0edff; border-left:5px solid #2563eb; padding:.75rem .9rem; border-radius:8px; font-weight:600; font-size:.95em; color:#0f2647;">
+                                Alineamiento sobre notificación de pacientes STP/CTP EP – Revisión de flujos y mesa de trabajo conjunta.
+                        </p>
+                        <div class="accordion-notif">
+                                <details>
+                                        <summary><span class="icon">🕒</span>Pacientes con tiempo perdido</summary>
+                                        <p>La notificación será responsabilidad de la <strong>Agencia de Tratamiento</strong>, es decir, aquella donde el paciente tuvo su último control de EP.</p>
+                                        <p>En el caso de atenciones por <strong>Telemedicina SM</strong>, la sede responsable será <strong>Providencia</strong>.</p>
+                                </details>
+                                <details>
+                                        <summary><span class="icon">🌍</span>Pacientes de región</summary>
+                                        <p>Todas las atenciones de pacientes de otras regiones deberán retirar su resolución en la <strong>sede ACHS más cercana</strong> a su domicilio.</p>
+                                </details>
+                                <details>
+                                        <summary><span class="icon">📬</span>Plazo de notificación y acceso a resolución</summary>
+                                        <p>Pasados los <strong>5 días hábiles</strong> establecidos por normativa para la notificación, si el paciente no ha recibido el correo o la carta certificada, podrá acceder a su resolución a través de <strong>Achs Virtual</strong>, ingresando con su usuario y clave, en el apartado <em>Siniestro → Descargar documento</em>.</p>
+                                        <p>En caso de personas sin acceso tecnológico o que residan en zonas rurales, podrán acercarse a la sede ACHS Salud de ingreso para recibir la notificación de manera presencial.</p>
+                                </details>
+                                <details>
+                                        <summary><span class="icon">🏙️</span>Territorio Metropolitano</summary>
+                                        <p>Se elimina la distinción del Territorio Metro para EP, dejando de ser de cargo exclusivo de la Agencia Providencia. Ya no corresponde notificar en Providencia solo por tratarse de un paciente RM.</p>
+                                        <p>Si el paciente finalizó sus atenciones en una sede específica de la RM, deberá acercarse a esa misma sede de tratamiento para solicitar su documento.</p>
+                                        <p>En el caso de telemedicina, la sede Providencia continúa siendo la responsable de la notificación:</p>
+                                        <ul style="margin:.4rem 0 .2rem .9rem; padding:0;">
+                                                <li><strong>CTP:</strong> cita presencial de notificación.</li>
+                                                <li><strong>STP:</strong> envío según autorización del paciente (correo o carta certificada).</li>
+                                        </ul>
+                                </details>
+                                <details>
+                                        <summary><span class="icon">🚫</span>Pacientes con tiempo perdido – Inasistencias</summary>
+                                        <p>Bastará <strong>una inasistencia injustificada</strong> para generar alta administrativa y proceder con la notificación no presencial (ya no se requieren dos citaciones).</p>
+                                        <p><strong>Call Center:</strong> Si existe una cita previa a la notificación o el paciente declara no haber podido asistir, se debe:</p>
+                                        <ul style="margin:.4rem 0 .2rem .9rem; padding:0;">
+                                                <li>Revisar en <em>Siniestro</em> si el documento fue enviado (correo o carta certificada).</li>
+                                                <li>Informar el canal y plazo de entrega.</li>
+                                                <li>Recordar que, una vez cumplido dicho plazo, el paciente puede descargar la resolución desde Achs Virtual.</li>
+                                        </ul>
+                                </details>
+                                <details>
+                                    <summary><span class="icon">🏥</span>Pacientes sin tiempo perdido</summary>
+                                    <p>La notificación se mantiene a cargo de la <strong>Agencia de Ingreso</strong>, correspondiente al lugar donde el paciente fue atendido inicialmente (urgencia, atención ambulatoria o espontánea).</p>
+                                </details>
+                        </div>
+                </div>
     </div>
 </div>
 
@@ -3396,63 +3418,57 @@ No, no es obligación.
 <!-- Modal Documentos de Egreso EP-SM Telemedicina -->
 <div id="modalDocumentosEgreso" class="modal" style="display:none; justify-content:center; align-items:center;">
     <div class="modal-contenido" style="max-width:700px; background:white; border-radius:16px; box-shadow:0 8px 32px rgba(217,119,6,0.15); padding:2rem; position:relative; max-height:85vh; overflow-y:auto;">
-        <button onclick="cerrarModalDocumentosEgreso()" style="position:absolute; top:18px; right:18px; background:none; border:none; font-size:1.5rem; color:#d97706; cursor:pointer;">&times;</button>
-        <h2 style="color:#d97706; margin-bottom:1rem; text-align:center;">📄 Documentos de egreso – Pacientes EP-SM Telemedicina</h2>
-        
-        <div style="background:#fff7ed; border-left:4px solid #d97706; padding:15px; border-radius:8px; margin-bottom:20px;">
-            <h3 style="color:#d97706; margin-top:0; font-size:1.15em;">📌 Recordatorio:</h3>
-            <p style="margin:5px 0; color:#222; line-height:1.7;">
-                Cuando un paciente EP-SM llama posterior a su atención indicando que no ha recibido los documentos para firmar, se debe aplicar el siguiente protocolo:
-            </p>
+        <button onclick="cerrarModal('modalDocumentosEgreso')" style="position:absolute; top:18px; right:18px; background:none; border:none; font-size:1.5rem; color:#d97706; cursor:pointer;">&times;</button>
+        <h2 style="color:#d97706; margin-bottom:.75rem; text-align:center;">📄 Documentos de egreso – Pacientes EP-SM Telemedicina</h2>
+        <style>
+            #modalDocumentosEgreso .doc-toolbar{display:flex; gap:.6rem; flex-wrap:wrap; justify-content:center; margin:.25rem 0 1rem;}
+            #modalDocumentosEgreso .doc-toolbar button{background:#d97706; color:#fff; border:none; padding:.5rem .9rem; font-size:.7rem; font-weight:600; border-radius:8px; cursor:pointer; box-shadow:0 3px 10px rgba(217,119,6,.3);}            
+            #modalDocumentosEgreso .doc-toolbar button:hover{filter:brightness(1.08);}            
+            #modalDocumentosEgreso details summary{list-style:none; cursor:pointer; display:flex; align-items:center; gap:.55rem; font-weight:700;}
+            #modalDocumentosEgreso details summary::marker{display:none;}
+        </style>
+        <div class="doc-toolbar">
+            <button type="button" onclick="docEgresoExpand(true)">Expandir todo</button>
+            <button type="button" onclick="docEgresoExpand(false)">Colapsar todo</button>
         </div>
-
-        <div style="font-size:1.05em; color:#222; line-height:1.7;">
-            <div style="background:#f0fdf4; border-left:4px solid #16a34a; padding:15px; border-radius:8px; margin-bottom:15px;">
-                <h4 style="color:#16a34a; margin-top:0;">🔹 Plazo de envío:</h4>
-                <ul style="margin:8px 0; padding-left:20px;">
-                    <li>Informar que el documento será enviado dentro de un plazo de <strong>24 horas</strong>.</li>
-                    <li>El remitente del correo es: <strong style="color:#2563eb;">Salud Digital TM sdtelemedicina@achs.cl</strong></li>
-                    <li>El asunto del correo es: <strong>"Documentos de egreso paciente telemedicina"</strong></li>
-                </ul>
-            </div>
-
-            <div style="background:#fef3c7; border-left:4px solid #f59e0b; padding:15px; border-radius:8px; margin-bottom:15px;">
-                <h4 style="color:#f59e0b; margin-top:0;">🔹 Si han pasado más de 24 horas y no ha recibido el documento:</h4>
-                <p style="margin:8px 0;">
-                    El paciente debe solicitarlo directamente al correo: <strong style="color:#2563eb;">ejecutivoachs@achs.cl</strong>
-                </p>
-            </div>
-
-            <div style="background:#eff6ff; border-left:4px solid #2563eb; padding:15px; border-radius:8px; margin-bottom:15px;">
-                <h4 style="color:#2563eb; margin-top:0;">🔹 Si el paciente no sabe cómo firmar el documento:</h4>
-                <p style="margin:8px 0;">Indicar que debe ingresar al siguiente enlace:</p>
-                <p style="margin:8px 0; background:white; padding:10px; border-radius:6px; text-align:center;">
-                    👉 <a href="https://prod.salud.achs.cl/web-firmadigital/" target="_blank" style="color:#2563eb; font-weight:bold; text-decoration:none;">https://prod.salud.achs.cl/web-firmadigital/</a>
-                </p>
-                <p style="margin:8px 0;">Debe ingresar su número de documento y aceptar.</p>
-            </div>
-
-            <div style="background:#fef2f2; border-left:4px solid #dc2626; padding:15px; border-radius:8px; margin-bottom:15px;">
-                <h4 style="color:#dc2626; margin-top:0;">🔹 Si presenta problemas técnicos, puede hacerlo:</h4>
-                <p style="margin:8px 0;">
-                    Transferir a <strong>Soporte Web</strong> para asistencia directa.
-                </p>
-            </div>
-
-            <div style="background:#e0e7ff; border-left:4px solid #4f46e5; padding:15px; border-radius:8px; margin-bottom:15px;">
-                <h4 style="color:#4f46e5; margin-top:0;">📎 Correo que reciben los pacientes:</h4>
-                <p style="margin:8px 0;">
-                    Es importante que revisen su <strong>bandeja de entrada</strong> y <strong>correo no deseado</strong>.
-                </p>
-            </div>
-
-            <div style="background:#fee2e2; border:2px solid #dc2626; padding:15px; border-radius:8px; margin-top:20px;">
-                <h4 style="color:#dc2626; margin-top:0;">⚠️ Importante:</h4>
-                <p style="margin:5px 0; font-weight:600;">
-                    Siempre validar si el paciente está dentro del plazo de espera y ofrecer alternativas claras si no ha recibido el documento.
-                </p>
-            </div>
-        </div>
+        <details class="doc-egreso" open style="background:#fff7ed; border-left:4px solid #d97706; padding:15px; border-radius:8px; margin-bottom:15px;">
+            <summary style="color:#d97706; font-size:1.05em;">📌 Recordatorio</summary>
+            <p style="margin:5px 0; color:#222; line-height:1.7;">Cuando un paciente EP-SM llama posterior a su atención indicando que no ha recibido los documentos para firmar, se debe aplicar el siguiente protocolo:</p>
+        </details>
+        <details class="doc-egreso" style="background:#f0fdf4; border-left:4px solid #16a34a; padding:15px; border-radius:8px; margin-bottom:15px;">
+            <summary style="color:#16a34a;">🔹 Plazo de envío</summary>
+            <ul style="margin:8px 0; padding-left:20px;">
+                <li>Informar que el documento será enviado dentro de un plazo de <strong>24 horas</strong>.</li>
+                <li>Remitente del correo: <strong style="color:#2563eb;">Salud Digital TM sdtelemedicina@achs.cl</strong></li>
+                <li>Asunto: <strong>"Documentos de egreso paciente telemedicina"</strong></li>
+            </ul>
+        </details>
+        <details class="doc-egreso" style="background:#fef3c7; border-left:4px solid #f59e0b; padding:15px; border-radius:8px; margin-bottom:15px;">
+            <summary style="color:#f59e0b;">🔹 Si han pasado más de 24 horas</summary>
+            <p style="margin:8px 0;">El paciente debe solicitarlo directamente al correo: <strong style="color:#2563eb;">ejecutivoachs@achs.cl</strong></p>
+        </details>
+        <details class="doc-egreso" style="background:#eff6ff; border-left:4px solid #2563eb; padding:15px; border-radius:8px; margin-bottom:15px;">
+            <summary style="color:#2563eb;">🔹 Si el paciente no sabe cómo firmar</summary>
+            <p style="margin:8px 0;">Indicar que debe ingresar al siguiente enlace:</p>
+            <p style="margin:8px 0; background:white; padding:10px; border-radius:6px; text-align:center;">👉 <a href="https://prod.salud.achs.cl/web-firmadigital/" target="_blank" style="color:#2563eb; font-weight:bold; text-decoration:none;">https://prod.salud.achs.cl/web-firmadigital/</a></p>
+            <p style="margin:8px 0;">Debe ingresar su número de documento y aceptar.</p>
+        </details>
+        <details class="doc-egreso" style="background:#fef2f2; border-left:4px solid #dc2626; padding:15px; border-radius:8px; margin-bottom:15px;">
+            <summary style="color:#dc2626;">🔹 Problemas técnicos</summary>
+            <p style="margin:8px 0;">Transferir a <strong>Soporte Web</strong> para asistencia directa.</p>
+        </details>
+        <details class="doc-egreso" style="background:#e0e7ff; border-left:4px solid #4f46e5; padding:15px; border-radius:8px; margin-bottom:15px;">
+            <summary style="color:#4f46e5;">📎 Correo que reciben los pacientes</summary>
+            <p style="margin:8px 0;">Es importante que revisen su <strong>bandeja de entrada</strong> y <strong>correo no deseado</strong>.</p>
+        </details>
+        <details class="doc-egreso" style="background:#fee2e2; border:2px solid #dc2626; padding:15px; border-radius:8px; margin-bottom:15px;">
+            <summary style="color:#dc2626;">⚠️ Importante</summary>
+            <p style="margin:5px 0; font-weight:600;">Siempre validar si el paciente está dentro del plazo de espera y ofrecer alternativas claras si no ha recibido el documento.</p>
+        </details>
+        <script>
+            function docEgresoExpand(exp){try{document.querySelectorAll('#modalDocumentosEgreso .doc-egreso').forEach(d=>exp?d.setAttribute('open',''):d.removeAttribute('open'));}catch(e){}}
+        </script>
+    </div>
     </div>
 </div>
 
@@ -3461,51 +3477,48 @@ No, no es obligación.
 <!-- Modal Estacionamiento -->
 <div id="modalEstacionamiento" class="modal" style="display:none; justify-content:center; align-items:center;">
     <div class="modal-contenido" style="max-width:750px; max-height:90vh; overflow-y:auto; background:white; border-radius:16px; box-shadow:0 8px 32px rgba(5,150,105,0.15); padding:2rem; position:relative;">
-        <button onclick="cerrarModalEstacionamiento()" style="position:absolute; top:18px; right:18px; background:none; border:none; font-size:1.5rem; color:#059669; cursor:pointer; z-index:10;">&times;</button>
+        <button onclick="cerrarModal('modalEstacionamiento')" style="position:absolute; top:18px; right:18px; background:none; border:none; font-size:1.5rem; color:#059669; cursor:pointer; z-index:10;">&times;</button>
         <h2 style="color:#059669; margin-bottom:1.5rem; text-align:center;">🚗 Estacionamiento Hospital del Trabajador</h2>
         
         <div style="font-size:1.02em; color:#222; line-height:1.6;">
-            <!-- Información General -->
-            <div style="background:#d1fae5; border-left:4px solid #059669; padding:16px; border-radius:8px; margin-bottom:15px;">
-                <h4 style="color:#059669; margin-top:0; margin-bottom:12px;">📌 Información General</h4>
+            <style>
+                #modalEstacionamiento .estac-toolbar{display:flex; gap:.6rem; flex-wrap:wrap; justify-content:center; margin:-.3rem 0 1rem;}
+                #modalEstacionamiento .estac-toolbar button{background:#059669; color:#fff; border:none; padding:.5rem .9rem; font-size:.75rem; font-weight:600; border-radius:8px; cursor:pointer; box-shadow:0 3px 10px rgba(5,150,105,.3);}                
+                #modalEstacionamiento .estac-toolbar button:hover{filter:brightness(1.08);}
+                #modalEstacionamiento details summary{list-style:none; cursor:pointer; display:flex; align-items:center; gap:.55rem; font-weight:700;}
+                #modalEstacionamiento details summary::marker{display:none;}
+            </style>
+            <div class="estac-toolbar">
+                <button type="button" onclick="estacExpand(true)">Expandir todo</button>
+                <button type="button" onclick="estacExpand(false)">Colapsar todo</button>
+            </div>
+            <details class="estac-faq" open style="background:#d1fae5; border-left:4px solid #059669; padding:16px; border-radius:8px; margin-bottom:15px;">
+                <summary style="color:#059669; margin:0 0 4px;">📌 Información General</summary>
                 <ul style="margin:0; padding-left:20px;">
                     <li><strong>Tarifa por minuto:</strong> $28</li>
                     <li><strong>Horario:</strong> Abierto 24 horas</li>
                     <li><strong>Monto límite de pago:</strong> No hay</li>
                     <li><strong>Dirección de acceso:</strong> Ramón Carnicer 201</li>
                 </ul>
-            </div>
-
-            <!-- Pago de Ticket -->
-            <div style="background:#fef3c7; border-left:4px solid #f59e0b; padding:16px; border-radius:8px; margin-bottom:15px;">
-                <h4 style="color:#f59e0b; margin-top:0; margin-bottom:12px;">💳 Pago de Ticket</h4>
+            </details>
+            <details class="estac-faq" style="background:#fef3c7; border-left:4px solid #f59e0b; padding:16px; border-radius:8px; margin-bottom:15px;">
+                <summary style="color:#f59e0b; margin:0 0 4px;">💳 Pago de Ticket</summary>
                 <ul style="margin:0; padding-left:20px;">
                     <li><strong>Cajeros de pago ubicados en:</strong> Piso -5 y Piso -6</li>
                     <li><strong>Formas de pago:</strong> Efectivo o tarjeta de crédito (en ambos pisos)</li>
                 </ul>
-            </div>
-
-            <!-- Pérdida de Ticket -->
-            <div style="background:#fee2e2; border-left:4px solid #dc2626; padding:16px; border-radius:8px; margin-bottom:15px;">
-                <h4 style="color:#dc2626; margin-top:0; margin-bottom:12px;">🎫 En caso de Pérdida de Ticket</h4>
-                <p style="margin:0;">
-                    Dirigirse al <strong>Piso -6</strong>, Oficina de Administración EC Parking<br>
-                    (Ubicada a un costado de las máquinas de pago)
-                </p>
-            </div>
-
-            <!-- Lockers Gratuitos -->
-            <div style="background:#e0f2fe; border-left:4px solid #0284c7; padding:16px; border-radius:8px; margin-bottom:15px;">
-                <h4 style="color:#0284c7; margin-top:0; margin-bottom:12px;">� Lockers Gratuitos</h4>
-                <p style="margin:0;">
-                    Disponibles en el <strong>Piso -6</strong>, a un costado de las máquinas de pago.
-                </p>
-            </div>
-
-            <!-- Conexiones de Ascensores -->
-            <div style="background:#f3e8ff; border-left:4px solid #9333ea; padding:16px; border-radius:8px; margin-bottom:15px;">
-                <h4 style="color:#9333ea; margin-top:0; margin-bottom:12px;">🏥 Conexiones desde los Ascensores del Estacionamiento</h4>
-                <p style="margin-bottom:10px; font-weight:600; color:#9333ea;">Los ascensores del estacionamiento conectan directamente con:</p>
+            </details>
+            <details class="estac-faq" style="background:#fee2e2; border-left:4px solid #dc2626; padding:16px; border-radius:8px; margin-bottom:15px;">
+                <summary style="color:#dc2626; margin:0 0 4px;">🎫 En caso de Pérdida de Ticket</summary>
+                <p style="margin:0;">Dirigirse al <strong>Piso -6</strong>, Oficina de Administración EC Parking<br>(Ubicada a un costado de las máquinas de pago)</p>
+            </details>
+            <details class="estac-faq" style="background:#e0f2fe; border-left:4px solid #0284c7; padding:16px; border-radius:8px; margin-bottom:15px;">
+                <summary style="color:#0284c7; margin:0 0 4px;">🔒 Lockers Gratuitos</summary>
+                <p style="margin:0;">Disponibles en el <strong>Piso -6</strong>, a un costado de las máquinas de pago.</p>
+            </details>
+            <details class="estac-faq" style="background:#f3e8ff; border-left:4px solid #9333ea; padding:16px; border-radius:8px; margin-bottom:15px;">
+                <summary style="color:#9333ea; margin:0 0 4px;">🏥 Conexiones desde los Ascensores del Estacionamiento</summary>
+                <p style="margin:0 0 10px; font-weight:600; color:#9333ea;">Los ascensores del estacionamiento conectan directamente con:</p>
                 <ul style="margin:0; padding-left:20px; line-height:1.8;">
                     <li><strong>Piso -1:</strong> Urgencia (ingreso vehicular por el mismo acceso de estacionamientos públicos)</li>
                     <li><strong>Piso -2:</strong> Imagenología y Conexión a Centro Médico</li>
@@ -3514,25 +3527,20 @@ No, no es obligación.
                     <li><strong>Piso 5:</strong> UPC, Cirugía Plástica y Quemados</li>
                     <li><strong>Piso 6:</strong> Pabellón Central, Preanestesia y Recuperación</li>
                 </ul>
-            </div>
-
-            <!-- Resumen para Demás Centros -->
-            <div style="background:#fff1f2; border:2px solid #dc2626; padding:16px; border-radius:8px; margin-bottom:15px;">
-                <h4 style="color:#dc2626; margin-top:0; margin-bottom:8px;">❌ Demás centros ACHS Salud</h4>
-                <p style="margin:0; font-weight:600;">
-                    No contamos con estacionamientos habilitados.
-                </p>
-            </div>
-
-            <!-- Tip Práctico -->
-            <div style="background:#ecfdf5; border-left:4px solid #10b981; padding:16px; border-radius:8px;">
-                <h4 style="color:#10b981; margin-top:0; margin-bottom:10px;">💬 Tip para la llamada:</h4>
+            </details>
+            <details class="estac-faq" style="background:#fff1f2; border:2px solid #dc2626; padding:16px; border-radius:8px; margin-bottom:15px;">
+                <summary style="color:#dc2626; margin:0 0 4px;">❌ Demás centros ACHS Salud</summary>
+                <p style="margin:0; font-weight:600;">No contamos con estacionamientos habilitados.</p>
+            </details>
+            <details class="estac-faq" style="background:#ecfdf5; border-left:4px solid #10b981; padding:16px; border-radius:8px;">
+                <summary style="color:#10b981; margin:0 0 4px;">💬 Tip para la llamada</summary>
                 <div style="background:white; padding:12px; border-radius:6px; border:1px solid #10b981; font-style:italic;">
-                    <p style="margin:0; color:#334155;">
-                        "El <strong>Hospital del Trabajador</strong> cuenta con estacionamiento disponible 24/7. El acceso es por <strong>Ramón Carnicer 201</strong>. La tarifa es de <strong>$28 por minuto</strong> y puede pagar en efectivo o tarjeta en los pisos -5 o -6. Desde el estacionamiento hay ascensores directos a todos los servicios del hospital. Los demás centros ACHS no tienen estacionamiento habilitado."
-                    </p>
+                    <p style="margin:0; color:#334155;">"El <strong>Hospital del Trabajador</strong> cuenta con estacionamiento disponible 24/7. El acceso es por <strong>Ramón Carnicer 201</strong>. La tarifa es de <strong>$28 por minuto</strong> y puede pagar en efectivo o tarjeta en los pisos -5 o -6. Desde el estacionamiento hay ascensores directos a todos los servicios del hospital. Los demás centros ACHS no tienen estacionamiento habilitado."</p>
                 </div>
-            </div>
+            </details>
+            <script>
+                function estacExpand(exp){try{document.querySelectorAll('#modalEstacionamiento .estac-faq').forEach(d=>exp?d.setAttribute('open',''):d.removeAttribute('open'));}catch(e){}}
+            </script>
         </div>
     </div>
 </div>
@@ -3543,26 +3551,97 @@ No, no es obligación.
                 <div class="modal-contenido" style="width:90vw; max-width:1200px; max-height:480px; background:white; border-radius:10px; box-shadow:0 4px 12px rgba(0,33,71,0.10); padding:0.12rem 0.12rem; position:relative; margin:0 auto; overflow-y:auto;">
         <button onclick="cerrarModal('modalPreguntasEP')" style="position:absolute; top:18px; right:18px; background:none; border:none; font-size:1.7rem; color:#2563eb; cursor:pointer;">&times;</button>
         <h2 style="color:#2563eb; margin-bottom:1.2rem; text-align:center;">🛡️ Enfermedades Profesionales (EP) – Guía Rápida ACHS</h2>
-    <div style="font-size:1.40em; line-height:2.05;">
-            <div style="margin-bottom:0.15em;"><b>1️⃣¿Qué es una Enfermedad Profesional?</b><br>📘 Según la Ley N° 16.744, es una enfermedad causada directamente por el trabajo que realiza una persona y que puede provocar incapacidad o muerte.</div>
-            <div style="margin-bottom:1.1em;"><b>2️⃣ ¿Qué son las Mutualidades?</b><br>🏥 Son organismos que administran el seguro de la Ley 16.744. Protegen al trabajador con:<br>- Prevención de riesgos<br>- Capacitaciones<br>- Cobertura médica y compensaciones<br>🔹 Mutualidades reconocidas:<br>- ACHS – Asociación Chilena de Seguridad<br>- MUTUAL DE SEGURIDAD<br>- IST – Instituto de Seguridad del Trabajo<br>- ISL – Instituto de Seguridad Laboral</div>
-            <div style="margin-bottom:1.1em;"><b>3️⃣ ¿Cómo se inicia el proceso?</b><br>📞 Llamando al Call Center 600 600 2247<br>- Empleador: Opción 4 → Empresa → 2 EP<br>- Trabajador: Opción 3 → 3 EP</div>
-            <div style="margin-bottom:1.1em;"><b>4️⃣ ¿Qué tipos de EP se agendan?</b><br>🧠 Salud Mental (SM): estrés, acoso, burnout<br>💪 Musculoesquelético (ME): dolor corporal, dermatitis, disfonías, etc.<br>⚠️ Eventos puntuales → se ingresan como accidente</div>
-            <div style="margin-bottom:1.1em;"><b>5️⃣ Atenciones en Región Metropolitana</b><br>📍 CEEP – Vicuña Mackenna 200, 4° piso (Metro Parque Bustamante)<br>🕘 Solo con cita previa<br>- ME presencial<br>- SM telemedicina (nacional)<br>- SM presencial (excepcional)</div>
-            <div style="margin-bottom:1.1em;"><b>6️⃣ Atenciones en Regiones</b><br>📂 Consultar archivo PIZARRA 2023 para sucursales y agendamiento</div>
-            <div style="margin-bottom:1.1em;"><b>7️⃣ Tipos de citas que se agendan</b><br>📌 Ingreso EP ME<br>📌 Ingreso EP SM (telemedicina preferente)<br>📌 Notificación de resultado (solo RM en CEEP)<br>📌 Control EPMe-Otros (solo reagendamiento)</div>
-            <div style="margin-bottom:1.1em;"><b>8️⃣ ¿Cómo saber si se puede agendar?</b><br>🔍 Verificar cotizaciones en SAP → ZFI_CONSULTA con RUT del trabajador</div>
-            <div style="margin-bottom:1.1em;"><b>9️⃣ ¿Y si no aparecen cotizaciones?</b><br>🔎 Verificar RUT del empleador en Salesforce<br>📢 Si empresa no está vigente → derivar a su mutualidad correspondiente</div>
-            <div style="margin-bottom:1.1em;"><b>🔟 ¿Se agenda a trabajadores independientes?</b><br>✅ Sí, si tienen cotizaciones. Verificar en Salesforce como “independiente”</div>
-            <div style="margin-bottom:1.1em;"><b>1️⃣1️⃣ ¿Pacientes con Licencia Médica?</b><br>✅ Se agendan si tienen:<br>- Licencia tipo 6 (EP)<br>- Licencia tipo 1 rechazada por Isapre<br>- Derivación médica<br>- Licencia por otra patología</div>
-            <div style="margin-bottom:1.1em;"><b>1️⃣2️⃣ ¿Pacientes ISL?</b><br>❌ No se agendan directamente<br>📌 Deben denunciar en ISL<br>📞 Si ISL deriva a ACHS → se contacta al paciente<br>👩‍⚕️ Agendamiento autorizado: Paloma Crettón / Constanza Velásquez<br>📝 Registrar en nota externa</div>
-            <div style="margin-bottom:1.1em;"><b>1️⃣3️⃣ ¿Cómo es el proceso de evaluación?</b><br>🩺 Médico general + comité → investigación (30 días)<br>🏭 Puede incluir visita al puesto de trabajo<br>📋 Si se confirma origen laboral → derivación a especialistas<br>📌 Para SM: traer nombre y teléfono de 2 testigos<br>🎥 Video explicativo</div>
-            <div style="margin-bottom:1.1em;"><b>1️⃣4️⃣ ¿Qué es la DIEP?</b><br>📄 Formulario de Denuncia Individual de EP<br>📥 Descargar aquí</div>
-            <div style="margin-bottom:1.1em;"><b>1️⃣5️⃣ ¿La denuncia es anónima?</b><br>🚫 No. Se debe notificar a la empresa y evaluar el puesto de trabajo</div>
-            <div style="margin-bottom:1.1em;"><b>1️⃣6️⃣ ¿Se puede reagendar si se pierde la cita?</b><br>✅ Solo si es:<br>- Primera cita<br>- Control EPMe<br>- Notificación en CEEP<br>📌 Para otras especialidades → justificar presencialmente<br>📋 Para ingreso SM perdido → llenar formulario con datos del paciente</div>
-            <div style="margin-bottom:1.1em;"><b>1️⃣7️⃣ ¿Qué es el Estudio de Puesto de Trabajo?</b><br>🔍 Análisis de condiciones laborales para evaluar riesgos</div>
-            <div style="margin-bottom:1.1em;"><b>1️⃣8️⃣ a 2️⃣2️⃣ ¿Dónde se agenda cada tipo?</b><br>📌 SM Telemedicina → malla nacional<br>📌 SM Presencial → RM: Providencia / Regiones: agencia local<br>📌 ME → RM: Providencia / Regiones: agencia local<br>📌 Control EPMe-Otros → solo reagendamos en Providencia<br>📌 Notificaciones → RM: Providencia / Regiones: presencial en agencia</div>
+    <div style="font-size:1.40em; line-height:1.55;">
+        <style>
+            #modalPreguntasEP .ep-faq {border:1px solid #d0e2ff; background:#f8fbff; border-radius:10px; padding:.65rem .9rem; margin:.55rem .65rem; box-shadow:0 2px 6px rgba(37,99,235,0.08);}
+            #modalPreguntasEP .ep-faq[open]{background:#eef5ff; border-color:#2563eb; box-shadow:0 4px 14px rgba(37,99,235,0.18);}            
+            #modalPreguntasEP .ep-faq summary{cursor:pointer; font-weight:700; display:flex; align-items:center; gap:.55rem; list-style:none; font-size:.72em; color:#1e3a8a;}
+            #modalPreguntasEP .ep-faq summary::marker{display:none;}
+            #modalPreguntasEP .ep-faq p{margin:.45rem 0 0; font-size:.70em; line-height:1.35;}
+            #modalPreguntasEP .faq-toolbar{display:flex; flex-wrap:wrap; gap:.5rem; justify-content:center; margin:.4rem 0 .2rem;}
+            #modalPreguntasEP .faq-toolbar button{background:#2563eb; color:#fff; border:none; padding:.45rem .8rem; border-radius:8px; font-size:.55em; font-weight:600; cursor:pointer; box-shadow:0 2px 8px rgba(37,99,235,.35);}            
+            #modalPreguntasEP .faq-toolbar button:hover{filter:brightness(1.08);}
+        </style>
+        <div class="faq-toolbar">
+            <button type="button" onclick="epFaqExpand(true)">Expandir todo</button>
+            <button type="button" onclick="epFaqExpand(false)">Colapsar todo</button>
         </div>
+        <details class="ep-faq">
+            <summary>1️⃣ ¿Qué es una Enfermedad Profesional?</summary>
+            <p>📘 Según la Ley N° 16.744, es una enfermedad causada directamente por el trabajo que realiza una persona y que puede provocar incapacidad o muerte.</p>
+        </details>
+        <details class="ep-faq">
+            <summary>2️⃣ ¿Qué son las Mutualidades?</summary>
+            <p>🏥 Son organismos que administran el seguro de la Ley 16.744. Protegen al trabajador con:<br>• Prevención de riesgos<br>• Capacitaciones<br>• Cobertura médica y compensaciones<br>🔹 Mutualidades reconocidas:<br>• ACHS – Asociación Chilena de Seguridad<br>• MUTUAL DE SEGURIDAD<br>• IST – Instituto de Seguridad del Trabajo<br>• ISL – Instituto de Seguridad Laboral</p>
+        </details>
+        <details class="ep-faq">
+            <summary>3️⃣ ¿Cómo se inicia el proceso?</summary>
+            <p>📞 Llamando al Call Center 600 600 2247:<br>• Empleador: Opción 4 → Empresa → 2 EP<br>• Trabajador: Opción 3 → 3 EP</p>
+        </details>
+        <details class="ep-faq">
+            <summary>4️⃣ ¿Qué tipos de EP se agendan?</summary>
+            <p>🧠 Salud Mental (SM): estrés, acoso, burnout<br>💪 Musculoesquelético (ME): dolor corporal, dermatitis, disfonías, etc.<br>⚠️ Eventos puntuales → se ingresan como accidente</p>
+        </details>
+        <details class="ep-faq">
+            <summary>5️⃣ Atenciones en Región Metropolitana</summary>
+            <p>📍 CEEP – Vicuña Mackenna 200, 4° piso (Metro Parque Bustamante)<br>🕘 Solo con cita previa:<br>• ME presencial<br>• SM telemedicina (nacional)<br>• SM presencial (excepcional)</p>
+        </details>
+        <details class="ep-faq">
+            <summary>6️⃣ Atenciones en Regiones</summary>
+            <p>📂 Consultar archivo PIZARRA 2023 para sucursales y agendamiento.</p>
+        </details>
+        <details class="ep-faq">
+            <summary>7️⃣ Tipos de citas que se agendan</summary>
+            <p>📌 Ingreso EP ME<br>📌 Ingreso EP SM (telemedicina preferente)<br>📌 Notificación de resultado (solo RM en CEEP)<br>📌 Control EPMe-Otros (solo reagendamiento)</p>
+        </details>
+        <details class="ep-faq">
+            <summary>8️⃣ ¿Cómo saber si se puede agendar?</summary>
+            <p>🔍 Verificar cotizaciones en SAP → ZFI_CONSULTA con RUT del trabajador.</p>
+        </details>
+        <details class="ep-faq">
+            <summary>9️⃣ ¿Y si no aparecen cotizaciones?</summary>
+            <p>🔎 Verificar RUT del empleador en Salesforce.<br>📢 Si empresa no está vigente → derivar a su mutualidad correspondiente.</p>
+        </details>
+        <details class="ep-faq">
+            <summary>🔟 ¿Se agenda a trabajadores independientes?</summary>
+            <p>✅ Sí, si tienen cotizaciones. Verificar en Salesforce como “independiente”.</p>
+        </details>
+        <details class="ep-faq">
+            <summary>1️⃣1️⃣ ¿Pacientes con Licencia Médica?</summary>
+            <p>✅ Se agendan si tienen:<br>• Licencia tipo 6 (EP)<br>• Licencia tipo 1 rechazada por Isapre<br>• Derivación médica<br>• Licencia por otra patología</p>
+        </details>
+        <details class="ep-faq">
+            <summary>1️⃣2️⃣ ¿Pacientes ISL?</summary>
+            <p>❌ No se agendan directamente.<br>📌 Deben denunciar en ISL.<br>📞 Si ISL deriva a ACHS → se contacta al paciente.<br>👩‍⚕️ Agendamiento autorizado: Paloma Crettón / Constanza Velásquez.<br>📝 Registrar en nota externa.</p>
+        </details>
+        <details class="ep-faq">
+            <summary>1️⃣3️⃣ ¿Cómo es el proceso de evaluación?</summary>
+            <p>🩺 Médico general + comité → investigación (30 días).<br>🏭 Puede incluir visita al puesto de trabajo.<br>📋 Si se confirma origen laboral → derivación a especialistas.<br>📌 Para SM: traer nombre y teléfono de 2 testigos.<br>🎥 Video explicativo.</p>
+        </details>
+        <details class="ep-faq">
+            <summary>1️⃣4️⃣ ¿Qué es la DIEP?</summary>
+            <p>📄 Formulario de Denuncia Individual de EP.<br>📥 Descargar aquí.</p>
+        </details>
+        <details class="ep-faq">
+            <summary>1️⃣5️⃣ ¿La denuncia es anónima?</summary>
+            <p>🚫 No. Se debe notificar a la empresa y evaluar el puesto de trabajo.</p>
+        </details>
+        <details class="ep-faq">
+            <summary>1️⃣6️⃣ ¿Se puede reagendar si se pierde la cita?</summary>
+            <p>✅ Solo si es:<br>• Primera cita<br>• Control EPMe<br>• Notificación en CEEP<br>📌 Para otras especialidades → justificar presencialmente.<br>📋 Para ingreso SM perdido → llenar formulario con datos del paciente.</p>
+        </details>
+        <details class="ep-faq">
+            <summary>1️⃣7️⃣ ¿Qué es el Estudio de Puesto de Trabajo?</summary>
+            <p>🔍 Análisis de condiciones laborales para evaluar riesgos.</p>
+        </details>
+        <details class="ep-faq">
+            <summary>1️⃣8️⃣ a 2️⃣2️⃣ ¿Dónde se agenda cada tipo?</summary>
+            <p>📌 SM Telemedicina → malla nacional.<br>📌 SM Presencial → RM: Providencia / Regiones: agencia local.<br>📌 ME → RM: Providencia / Regiones: agencia local.<br>📌 Control EPMe-Otros → solo reagendamos en Providencia.<br>📌 Notificaciones → RM: Providencia / Regiones: presencial en agencia.</p>
+        </details>
+        <script>
+            function epFaqExpand(exp){try{document.querySelectorAll('#modalPreguntasEP .ep-faq').forEach(d=>exp?d.setAttribute('open',''):d.removeAttribute('open'));}catch(e){}}
+        </script>
+    </div>
     </div>
 </div>
 
@@ -3570,19 +3649,23 @@ No, no es obligación.
 
 <!-- Modal Ingreso EP-ME / EP-OP (submodal) -->
 <div id="modalIngresoEPMEOP" class="modal" style="display:none; justify-content:center; align-items:center;">
-    <div class="modal-contenido" style="max-width:600px; background:white; border-radius:14px; box-shadow:0 4px 16px rgba(76,175,80,0.13); padding:1.2rem 1rem; position:relative;">
-        <button onclick="cerrarModal('modalIngresoEPMEOP')" style="position:absolute; top:18px; right:18px; background:none; border:none; font-size:1.5rem; color:#4caf50; cursor:pointer;">&times;</button>
-        <h2 style="color:#4caf50; margin-bottom:1rem; text-align:center;">🩺 Malla de Agendamiento según Situación del Paciente</h2>
-        <div style="font-size:1em; line-height:1.5;">
-            <div style="margin-bottom:0.8em;">🔹 <b>Dolor o molestia desde la punta del dedo hasta el cuello (extremidades superiores):</b><br>➡️ Agendar en <b>Ingreso EP ME</b></div>
-            <div style="margin-bottom:0.8em;">🔹 <b>Lesiones cutáneas, alergias o problemas en la piel:</b><br>➡️ Agendar en <b>Ingreso EP OP</b></div>
-            <div style="margin-bottom:0.8em;">🔹 <b>Síntomas respiratorios (tos, dificultad para respirar, etc.):</b><br>➡️ Agendar en <b>Ingreso EP OP</b></div>
-            <div style="margin-bottom:0.8em;">🔹 <b>Síntomas auditivos (pérdida de audición, zumbidos, etc.):</b><br>➡️ Agendar en <b>Ingreso EP OP</b></div>
-            <div style="margin-bottom:0.8em;">🔹 <b>Dolor o molestia en piernas, rodillas, caderas o región inguinal (extremidades inferiores):</b><br>➡️ Agendar en <b>Ingreso EP OP</b></div>
-            <div style="margin-bottom:0.8em;">🔹 <b>Dolor en extremidades superiores + otra dolencia adicional:</b><br>➡️ Agendar <b>1 cupo en Ingreso EP ME</b> + <b>1 cupo en Ingreso EP OP</b></div>
-            <div style="margin-bottom:0.8em;">🔹 <b>¿No sabes dónde encaja la consulta del paciente?</b><br>➡️ Ante la duda, agendar en <b>Ingreso EP OP</b></div>
-            <div style="margin-bottom:1.2em;">📌 <b>Tip útil:</b> Si el paciente presenta más de una dolencia, asegúrate de agendar los cupos necesarios para una evaluación completa.</div>
-            <div style="margin-bottom:0.8em;">🔎 <b>¿Qué significa “+ 1 cupo adicional”?</b><br>📌 Se debe agendar una segunda cita en la misma malla de Ingreso EP ME para asegurar evaluación completa del caso con irradiación.</div>
+    <div class="modal-contenido" style="max-width:760px; background:white; border-radius:18px; box-shadow:0 6px 24px rgba(76,175,80,0.18); padding:1.8rem 1.6rem; position:relative;">
+        <button onclick="cerrarModal('modalIngresoEPMEOP')" style="position:absolute; top:16px; right:16px; background:none; border:none; font-size:1.9rem; color:#2e7d32; cursor:pointer; line-height:1;">&times;</button>
+        <h2 style="color:#2e7d32; margin:0 0 1.1rem; text-align:center; font-size:2.05rem; letter-spacing:.5px; font-weight:800;">🩺 Malla de Agendamiento según Situación del Paciente</h2>
+        <div style="font-size:1.15em; line-height:1.65; font-weight:500;">
+            <div style="margin-bottom:1.0em;">🔹 <b>Dolor o molestia desde la punta del dedo hasta el cuello (extremidades superiores):</b><br><span style="color:#0d47a1;">➡️ Agendar en <b>Ingreso EP ME</b></span></div>
+            <div style="margin-bottom:1.0em;">🔹 <b>Lesiones cutáneas, alergias o problemas en la piel:</b><br><span style="color:#0d47a1;">➡️ Agendar en <b>Ingreso EP OP</b></span></div>
+            <div style="margin-bottom:1.0em;">🔹 <b>Síntomas respiratorios (tos, dificultad para respirar, etc.):</b><br><span style="color:#0d47a1;">➡️ Agendar en <b>Ingreso EP OP</b></span></div>
+            <div style="margin-bottom:1.0em;">🔹 <b>Síntomas auditivos (pérdida de audición, zumbidos, etc.):</b><br><span style="color:#0d47a1;">➡️ Agendar en <b>Ingreso EP OP</b></span></div>
+            <div style="margin-bottom:1.0em;">🔹 <b>Dolor o molestia en piernas, rodillas, caderas o región inguinal (extremidades inferiores):</b><br><span style="color:#0d47a1;">➡️ Agendar en <b>Ingreso EP OP</b></span></div>
+            <div style="margin-bottom:1.0em;">🔹 <b>Dolor en extremidades superiores + otra dolencia adicional:</b><br><span style="color:#0d47a1;">➡️ Agendar <b>1 cupo en Ingreso EP ME</b> + <b>1 cupo en Ingreso EP OP</b></span></div>
+            <div style="margin-bottom:1.0em;">🔹 <b>¿No sabes dónde encaja la consulta del paciente?</b><br><span style="color:#0d47a1;">➡️ Ante la duda, agendar en <b>Ingreso EP OP</b></span></div>
+            <div style="margin:1.4em 0; background:#e8f5e9; border-left:5px solid #2e7d32; padding:1rem 1rem .9rem; border-radius:10px; font-size:.95em;">
+                📌 <b>Tip útil:</b> Si el paciente presenta más de una dolencia, asegúrate de agendar los cupos necesarios para una evaluación completa.
+            </div>
+            <div style="margin-bottom:.9em; background:#e3f2fd; border-left:5px solid #1976d2; padding:.9rem 1rem .85rem; border-radius:10px; font-size:.95em;">
+                🔎 <b>¿Qué significa “+ 1 cupo adicional”?</b><br>📌 Se debe agendar una segunda cita en la misma malla de Ingreso EP ME para asegurar evaluación completa del caso con irradiación.
+            </div>
         </div>
     </div>
 </div>
@@ -3591,14 +3674,22 @@ No, no es obligación.
 
 <!-- Modal Medios de Prueba (submodal) -->
 <div id="modalMediosPrueba" class="modal" style="display:none; justify-content:center; align-items:center;">
-    <div class="modal-contenido" style="max-width:540px; background:white; border-radius:14px; box-shadow:0 4px 16px rgba(25,118,210,0.13); padding:1.2rem 1rem; position:relative;">
-        <button onclick="cerrarModal('modalMediosPrueba')" style="position:absolute; top:18px; right:18px; background:none; border:none; font-size:1.5rem; color:#1976d2; cursor:pointer;">&times;</button>
-        <h2 style="color:#1976d2; margin-bottom:1rem; text-align:center;">📎 Medios de Prueba</h2>
-        <div style="font-size:1em; line-height:1.5;">
-            <div style="margin-bottom:1em;">📌 <b>¡Importante!</b> Si estás en proceso de estudio por Enfermedad Profesional (EP) y deseas agregar más evidencia, sigue estos pasos:</div>
-            <div style="margin-bottom:1em;">✉️ <b>¿Dónde enviar?</b><br>📧 <b>Correo:</b> <span style="color:#1976d2; font-weight:600;">mediosdeprueba@achs.cl</span><br>🕒 Envía tu información lo antes posible para que sea revisada antes de tu calificación.</div>
-            <div style="margin-bottom:1em;">📎 <b>Requisitos para los documentos:</b><br>✅ <b>Formato:</b> PDF<br>📦 <b>Peso máximo:</b> 25 MB<br>📝 <b>Asunto del correo:</b> Número de siniestro<br>🔍 (Lo encuentras en el documento de indicaciones médicas que recibiste por email)</div>
-            <div style="margin-bottom:1em;">🚫 <b>No se aceptan:</b><br>- Audios ni videos<br>- Testigos (deben entregarse en ingreso médico o psicológico)</div>
+    <div class="modal-contenido" style="max-width:760px; background:white; border-radius:18px; box-shadow:0 6px 28px rgba(25,118,210,0.18); padding:1.8rem 1.5rem; position:relative;">
+        <button onclick="cerrarModal('modalMediosPrueba')" style="position:absolute; top:16px; right:16px; background:none; border:none; font-size:1.9rem; color:#1565c0; cursor:pointer; line-height:1;">&times;</button>
+        <h2 style="color:#0d47a1; margin:0 0 1.2rem; text-align:center; font-size:2.05rem; font-weight:800; letter-spacing:.5px;">📎 Medios de Prueba</h2>
+        <div style="font-size:1.15em; line-height:1.65; font-weight:500;">
+            <div style="margin-bottom:1.05em; background:#e3f2fd; border-left:5px solid #1976d2; padding:1rem 1rem .85rem; border-radius:12px;">
+                📌 <b>¡Importante!</b> Si estás en proceso de estudio por Enfermedad Profesional (EP) y deseas agregar más evidencia, sigue estos pasos.
+            </div>
+            <div style="margin-bottom:1.05em; background:#e8f5e9; border-left:5px solid #2e7d32; padding:1rem 1rem .85rem; border-radius:12px;">
+                ✉️ <b>¿Dónde enviar?</b><br>📧 <b>Correo:</b> <span style="color:#1976d2; font-weight:700;">mediosdeprueba@achs.cl</span><br>🕒 Envía tu información lo antes posible para que sea revisada antes de tu calificación.
+            </div>
+            <div style="margin-bottom:1.05em; background:#fff8e1; border-left:5px solid #f9a825; padding:1rem 1rem .85rem; border-radius:12px;">
+                📎 <b>Requisitos para los documentos:</b><br>✅ <b>Formato:</b> PDF<br>📦 <b>Peso máximo:</b> 25 MB<br>📝 <b>Asunto del correo:</b> Número de siniestro (en documento de indicaciones médicas del correo que recibiste).
+            </div>
+            <div style="margin-bottom:1.05em; background:#ffebee; border-left:5px solid #d32f2f; padding:1rem 1rem .85rem; border-radius:12px;">
+                🚫 <b>No se aceptan:</b><br>• Audios ni videos<br>• Testigos (se entregan presencialmente en ingreso médico o psicológico)
+            </div>
         </div>
     </div>
 </div>
@@ -3607,13 +3698,22 @@ No, no es obligación.
 
 <!-- Modal Quiebre de ingreso EP-SM y cita psicológico (submodal) -->
 <div id="modalQuiebreEPSM" class="modal" style="display:none; justify-content:center; align-items:center;">
-    <div class="modal-contenido" style="max-width:540px; background:white; border-radius:14px; box-shadow:0 4px 16px rgba(245,158,66,0.13); padding:1.2rem 1rem; position:relative;">
-        <button onclick="cerrarModal('modalQuiebreEPSM')" style="position:absolute; top:18px; right:18px; background:none; border:none; font-size:1.5rem; color:#f59e42; cursor:pointer;">&times;</button>
-        <h2 style="color:#f59e42; margin-bottom:1rem; text-align:center;">🧠 Quiebre de ingreso EP-SM y cita psicológico</h2>
-        <div style="font-size:1em; line-height:1.5;">
-            <div style="margin-bottom:1em;">✅ <b>1. Paciente sin llamado administrativo y hora ya pasada más 20 minutos:</b><br>➡️ Deben gestionar directamente el reagendamiento a través de Forms.</div>
-            <div style="margin-bottom:1em;">✅ <b>2. Paciente en sala de espera:</b><br>➡️ Debe permanecer en espera.<br>➡️ Si no es atendido oportunamente, será contactado para reagendar.<br>➡️ Si es la segunda vez que ocurre, gestionar directamente el reagendamiento a través de Forms.</div>
-            <div style="margin-bottom:1em;"><b>Por qué es importante:</b><br>Evita que el paciente se retire sin atención ni seguimiento, y permite mantener trazabilidad de los casos reagendados.</div>
+    <div class="modal-contenido" style="max-width:760px; background:white; border-radius:18px; box-shadow:0 6px 28px rgba(245,158,66,0.2); padding:1.8rem 1.5rem; position:relative;">
+        <button onclick="cerrarModal('modalQuiebreEPSM')" style="position:absolute; top:16px; right:16px; background:none; border:none; font-size:1.9rem; color:#d97706; cursor:pointer; line-height:1;">&times;</button>
+        <h2 style="color:#d97706; margin:0 0 1.15rem; text-align:center; font-size:2.05rem; font-weight:800; letter-spacing:.4px;">🧠 Quiebre de ingreso EP-SM y cita psicológico</h2>
+        <div style="font-size:1.15em; line-height:1.65; font-weight:500;">
+            <div style="margin-bottom:1.05em; background:#fff7ed; border-left:5px solid #d97706; padding:1rem 1rem .85rem; border-radius:12px;">
+                ✅ <b>1. Paciente sin llamado administrativo y hora ya pasada más 20 minutos:</b><br><span style="color:#7c2d12;">➡️ Deben gestionar directamente el reagendamiento a través de Forms.</span>
+            </div>
+            <div style="margin-bottom:1.05em; background:#fef3c7; border-left:5px solid #f59e0b; padding:1rem 1rem .85rem; border-radius:12px;">
+                ✅ <b>2. Paciente en sala de espera:</b><br><span style="color:#92400e;">➡️ Debe permanecer en espera.<br>➡️ Si no es atendido oportunamente, será contactado para reagendar.<br>➡️ Si es la segunda vez que ocurre, gestionar directamente el reagendamiento a través de Forms.</span>
+            </div>
+            <div style="margin-bottom:1.05em; background:#ffe8e3; border-left:5px solid #f97316; padding:1rem 1rem .85rem; border-radius:12px;">
+                <b>Por qué es importante:</b><br>Evita que el paciente se retire sin atención ni seguimiento y permite mantener trazabilidad de los casos reagendados.
+            </div>
+            <div style="margin-bottom:1.05em; background:#ecfdf5; border-left:5px solid #10b981; padding:1rem 1rem .85rem; border-radius:12px;">
+                💡 <b>Tip operativo:</b><br>Confirma siempre hora agendada original y registro de intento de atención antes de reagendar para evitar duplicidades.
+            </div>
         </div>
     </div>
 </div>
@@ -3625,35 +3725,38 @@ No, no es obligación.
 </div>
 <!-- Modal RECETAS EP -->
 <div id="modalRecetasEP" class="modal" style="display:none; justify-content:center; align-items:center;">
-    <div class="modal-contenido" style="max-width:600px; background:white; border-radius:16px; box-shadow:0 8px 32px rgba(0,33,71,0.15); padding:2rem; position:relative;">
-        <button onclick="cerrarModal('modalRecetasEP')" style="position:absolute; top:18px; right:18px; background:none; border:none; font-size:1.5rem; color:#009688; cursor:pointer;">&times;</button>
-        <h2 style="color:#009688; margin-bottom:1rem; text-align:center;">🩺💊 Retiro de Medicamentos Indicados por tu Médico</h2>
-        <div style="margin-bottom:1.2rem;">
-            <b>📍 ¿Dónde y cuándo retirar?</b>
-            <ul style="margin-top:0.7rem; margin-bottom:0.7rem;">
-                <li>🧠 <b>Atención de Salud Mental:</b><br>Retiro en agencia ACHS más cercana, 24 horas hábiles después de tu atención, entre 09:00 y 16:00 hrs.</li>
-                <li>🧑‍⚕️ <b>Atención Psiquiátrica:</b><br>Retiro en agencia ACHS más cercana, 48 a 72 horas hábiles después de tu atención, entre 09:00 y 16:00 hrs.</li>
+    <div class="modal-contenido" style="max-width:760px; background:#ffffff; border-radius:18px; box-shadow:0 8px 36px rgba(0,33,71,0.18); padding:2.2rem 2.4rem; position:relative; line-height:1.5;">
+        <button onclick="cerrarModal('modalRecetasEP')" style="position:absolute; top:18px; right:18px; background:none; border:none; font-size:1.75rem; color:#00796b; cursor:pointer; line-height:1;">&times;</button>
+        <h2 style="color:#00695c; margin:0 0 1.4rem; text-align:center; font-size:2.05rem; letter-spacing:.5px;">🩺💊 Retiro de Medicamentos Indicados por tu Médico</h2>
+
+        <div style="background:#e8f5e9; border-left:6px solid #2e7d32; padding:1rem 1.25rem 1rem 1.25rem; border-radius:12px; margin-bottom:1.25rem;">
+            <div style="font-weight:600; color:#1b5e20; font-size:1.05rem; margin-bottom:.4rem;">📍 ¿Dónde y cuándo retirar?</div>
+            <ul style="margin:.4rem 0 .8rem 1.1rem; padding:0; list-style:disc;">
+                <li style="margin-bottom:.55rem;">🧠 <b>Atención de Salud Mental:</b> Retiro en agencia ACHS más cercana, <b>24 horas hábiles</b> después de tu atención (09:00 a 16:00).</li>
+                <li style="margin-bottom:.55rem;">🧑‍⚕️ <b>Atención Psiquiátrica:</b> Retiro en agencia ACHS más cercana, <b>48 a 72 horas hábiles</b> después de tu atención (09:00 a 16:00).</li>
             </ul>
-            <b>🏥 Si retiras en el Hospital del Trabajador:</b>
-            <ul>
-                <li><b>Receta retenida:</b><br>Ingresa por Vicuña Mackenna 200, sube al 4° piso (CEEP) para regularizar tu receta, luego baja al piso -1 (farmacia).</li>
+            <div style="font-weight:600; color:#1b5e20; margin-top:.25rem;">🏥 Si retiras en el Hospital del Trabajador</div>
+            <ul style="margin:.35rem 0 .8rem 1.1rem; padding:0; list-style:disc;">
+                <li><b>Receta retenida:</b> Ingresa por Vicuña Mackenna 200, sube al 4° piso (CEEP) para regularizar tu receta y luego baja al piso -1 (farmacia).</li>
             </ul>
-            <b>🏢 Si retiras en Agencia con receta retenida:</b>
-            <ul>
-                <li>⏳ Tu receta debe ser regularizada por el médico antes del retiro.<br>Esto puede tomar algunos minutos. ¡Organiza tus tiempos!</li>
-            </ul>
-        </div>
-        <div style="margin-bottom:1.2rem;">
-            <b>✅ Requisitos para el retiro:</b>
-            <ul>
-                <li>🎟️ Sacar ticket de farmacia o botiquín para ser atendido.</li>
-                <li>🪪 Llevar tu documento de identidad.</li>
-                <li>👥 Puede retirar un tercero con poder simple y mayor de 18 años.</li>
+            <div style="font-weight:600; color:#1b5e20; margin-top:.25rem;">🏢 Si retiras en Agencia con receta retenida</div>
+            <ul style="margin:.35rem 0 0 1.1rem; padding:0; list-style:disc;">
+                <li>⏳ La receta debe ser regularizada por el médico antes del retiro. Esto puede tomar algunos minutos: organiza tus tiempos.</li>
             </ul>
         </div>
-        <div>
-            <b>📌 Recuerda:</b><br>
-            Sigue siempre las indicaciones de tu médico para el uso correcto de tus medicamentos. ¡Tu salud es lo primero!
+
+        <div style="background:#e3f2fd; border-left:6px solid #1565c0; padding:1rem 1.25rem; border-radius:12px; margin-bottom:1.25rem;">
+            <div style="font-weight:600; color:#0d47a1; font-size:1.05rem; margin-bottom:.4rem;">✅ Requisitos para el retiro</div>
+            <ul style="margin:.35rem 0 0 1.1rem; padding:0; list-style:disc;">
+                <li style="margin-bottom:.5rem;">🎟️ Sacar ticket de farmacia o botiquín para ser atendido.</li>
+                <li style="margin-bottom:.5rem;">🪪 Llevar tu documento de identidad.</li>
+                <li>👥 Puede retirar un tercero mayor de 18 años con poder simple.</li>
+            </ul>
+        </div>
+
+        <div style="background:#fff8e1; border-left:6px solid #ffb300; padding:1rem 1.25rem; border-radius:12px;">
+            <div style="font-weight:600; color:#b37400; font-size:1.05rem; margin-bottom:.4rem;">📌 Recuerda</div>
+            <p style="margin:.35rem 0 0;">Sigue siempre las indicaciones de tu médico para el uso correcto de tus medicamentos. ¡Tu salud es lo primero! 💚</p>
         </div>
     </div>
 </div>
@@ -3834,24 +3937,28 @@ No, no es obligación.
                     <button id="btnDuracionTF" class="btn-herramienta" onclick="abrirModalDuracionTF()">⏱️ Duración de la atención en Terapia Física</button>
                                 <!-- Modal Duración Terapia Física -->
                                 <div id="modalDuracionTF" class="modal" style="display:none; justify-content:center; align-items:center;">
-                                    <div class="modal-contenido" style="max-width:500px; background:white; border-radius:16px; box-shadow:0 8px 32px rgba(30,58,138,0.15); padding:2rem; position:relative;">
-                                        <button onclick="cerrarModalDuracionTF()" style="position:absolute; top:18px; right:18px; background:none; border:none; font-size:1.5rem; color:#1e3a8a; cursor:pointer;">&times;</button>
-                                        <h2 style="color:#348fff; margin-bottom:1rem; text-align:center;">⏱️ Duración de la atención en Terapia Física</h2>
-                                        <div style="margin-bottom:1.2rem;">
-                                            <span style="font-size:1.1rem; color:#059669; font-weight:bold;">🕒 La atención en Terapia Física (TF) tiene una duración de 45 a 60 minutos.</span>
-                                            <ul style="margin-top:0.7rem; margin-bottom:0.7rem;">
-                                                <li>👥 Modalidad simultánea, hasta 4 pacientes por sesión.</li>
-                                                <li>📝 Evaluación inicial: 30 minutos.</li>
+                                    <div class="modal-contenido" style="max-width:760px; background:#ffffff; border-radius:18px; box-shadow:0 8px 36px rgba(30,58,138,0.18); padding:2.2rem 2.4rem; position:relative; line-height:1.5;">
+                                        <button onclick="cerrarModalDuracionTF()" style="position:absolute; top:18px; right:18px; background:none; border:none; font-size:1.75rem; color:#1e3a8a; cursor:pointer; line-height:1;">&times;</button>
+                                        <h2 style="color:#1e3a8a; margin:0 0 1.4rem; text-align:center; font-size:2.05rem; letter-spacing:.5px;">⏱️ Duración de la atención en Terapia Física</h2>
+
+                                        <div style="background:#e8f5e9; border-left:6px solid #2e7d32; padding:1rem 1.25rem; border-radius:12px; margin-bottom:1.25rem;">
+                                            <div style="font-weight:600; color:#1b5e20; font-size:1.05rem; margin-bottom:.45rem;">🕒 Duración estándar</div>
+                                            <p style="margin:.35rem 0 .55rem; font-weight:600; color:#0d5d33;">La sesión de Terapia Física dura entre <span style="color:#056a35;">45 y 60 minutos</span> en modalidad simultánea.</p>
+                                            <ul style="margin:.2rem 0 0 1.1rem; padding:0; list-style:disc;">
+                                                <li style="margin-bottom:.45rem;">👥 Modalidad simultánea: hasta 4 pacientes por sesión.</li>
+                                                <li>📝 Evaluación inicial: 30 minutos.</li>
                                             </ul>
                                         </div>
-                                        <div style="background:#e8eef3; border-radius:8px; padding:1rem; margin-bottom:1rem; color:#1e3a8a;">
-                                            <b>¿Por qué es importante?</b><br>
-                                            <span>Permite entregar información clara al paciente sobre tiempos y modalidad de atención, evitando confusiones o expectativas erróneas.</span>
+
+                                        <div style="background:#e3f2fd; border-left:6px solid #1565c0; padding:1rem 1.25rem; border-radius:12px; margin-bottom:1.25rem;">
+                                            <div style="font-weight:600; color:#0d47a1; font-size:1.05rem; margin-bottom:.4rem;">¿Por qué es importante informarlo?</div>
+                                            <p style="margin:.35rem 0 0;">Evita confusiones o expectativas erróneas respecto al tiempo efectivo, modalidad de acompañamiento y duración total del proceso terapéutico.</p>
                                         </div>
-                                        <div style="background:#dbeafe; border-radius:8px; padding:1rem; color:#3b82f6;">
-                                            <b>Tip práctico para la llamada:</b><br>
-                                            <span>“La evaluación dura 30 minutos. Luego, las sesiones de terapia física duran entre 45 y 60 minutos, en atención simultánea con otros tres pacientes.”</span>
-                                            <span> 👥 Se realiza en modalidad de atención simultánea, con hasta 4 pacientes por sesión.</span>
+
+                                        <div style="background:#fff8e1; border-left:6px solid #ffb300; padding:1rem 1.25rem; border-radius:12px;">
+                                            <div style="font-weight:600; color:#b37400; font-size:1.05rem; margin-bottom:.4rem;">Tip práctico para comunicar en llamada</div>
+                                            <p style="margin:.35rem 0 .55rem; font-style:italic;">“La evaluación dura 30 minutos. Luego, cada sesión de terapia física dura entre 45 y 60 minutos y se realiza junto a otros tres pacientes en modalidad simultánea.”</p>
+                                            <p style="margin:0;">👥 Modalidad simultánea = atención compartida con hasta 4 pacientes (optimiza tiempos y continuidad).</p>
                                         </div>
                                     </div>
                                 </div>
@@ -4591,6 +4698,7 @@ BANDA LIDIOTIDAL DISCAL DE RODILLA
 LUMBAGO TENDINITIS
 BERTOLOTTI
 RADICULOPATÍA LUMBAR
+ESCOLIOSIS LUMBAR
 `.split('\n')
  .map(s => s.trim())
  .filter(Boolean)
@@ -4701,28 +4809,33 @@ RADICULOPATÍA LUMBAR
                     <button id="btnCitaGratis" class="btn-herramienta" onclick="window.open('https://achs.sharepoint.com/:x:/s/SaludIntegral/Edm5ZMDTNj5Et-T1CQFCF_sB1NTPBvBoSbWsiLQkgR4vWA?wdOrigin=TEAMS-MAGLEV.p2p_ns.rwc&wdExp=TEAMS-TREATMENT&wdhostclicktime=1758921351341&web=1', '_blank')">🎁 Beneficio de Cita Gratis</button>
                                 <!-- Modal Horario Imagología -->
                                 <div id="modalHorarioImagen" class="modal" style="display:none; justify-content:center; align-items:center;">
-                                    <div class="modal-contenido" style="max-width:500px; background:white; border-radius:16px; box-shadow:0 8px 32px rgba(30,58,138,0.15); padding:2rem; position:relative;">
-                                        <button onclick="cerrarModalHorarioImagen()" style="position:absolute; top:18px; right:18px; background:none; border:none; font-size:1.5rem; color:#1e3a8a; cursor:pointer;">&times;</button>
-                                        <h2 style="color:#1e3a8a; margin-bottom:1rem; text-align:center;">🩻 Horario de Imagología SNL</h2>
-                                        <div style="margin-bottom:1.2rem;">
-                                            <span style="font-size:1.1rem; color:#059669; font-weight:bold;">🕘 Radiografías (RX) de 9:00 a 18:00 hrs</span>
-                                            <ul style="margin-top:0.7rem; margin-bottom:0.7rem;">
-                                                <li>👥 Atención por orden de llegada, <b>sin agendar</b>.</li>
-                                                <li>⚠️ Solo RX de <b>extremidades superiores e inferiores</b>.</li>
-                                                <li>🚫 No se realizan imágenes de columna, tronco, TAC ni resonancia.</li>
-                                                <li>🔎 Valida si el centro ofrece RX en “Centros Abiertos RX” (SharePoint SNL) o web oficial.</li>
+                                    <div class="modal-contenido" style="max-width:760px; background:#ffffff; border-radius:18px; box-shadow:0 8px 36px rgba(30,58,138,0.18); padding:2.2rem 2.4rem; position:relative; line-height:1.5;">
+                                        <button onclick="cerrarModalHorarioImagen()" style="position:absolute; top:18px; right:18px; background:none; border:none; font-size:1.75rem; color:#1e3a8a; cursor:pointer; line-height:1;">&times;</button>
+                                        <h2 style="color:#1e3a8a; margin:0 0 1.4rem; text-align:center; font-size:2.05rem; letter-spacing:.5px;">🩻 Horario de Imagología SNL</h2>
+
+                                        <div style="background:#e8f5e9; border-left:6px solid #2e7d32; padding:1rem 1.25rem; border-radius:12px; margin-bottom:1.25rem;">
+                                            <div style="font-weight:600; color:#1b5e20; font-size:1.05rem; margin-bottom:.45rem;">🕘 Radiografías (RX)</div>
+                                            <p style="margin:.35rem 0 .55rem; font-weight:600; color:#0d5d33;">Disponibles de <span style="color:#056a35;">09:00 a 18:00 hrs</span> (orden de llegada, sin agendamiento).</p>
+                                            <ul style="margin:.2rem 0 0 1.1rem; padding:0; list-style:disc;">
+                                                <li style="margin-bottom:.45rem;">👥 Atención por orden de llegada (sin reserva previa).</li>
+                                                <li style="margin-bottom:.45rem;">⚠️ Solo radiografías de extremidades superiores e inferiores.</li>
+                                                <li style="margin-bottom:.45rem;">🚫 No se realizan columna, tronco, TAC ni resonancia.</li>
+                                                <li>🔎 Validar disponibilidad en “Centros Abiertos RX” (SharePoint SNL) o web oficial.</li>
                                             </ul>
                                         </div>
-                                        <div style="background:#e8eef3; border-radius:8px; padding:1rem; margin-bottom:1rem; color:#1e3a8a;">
-                                            <b>¿Por qué es importante?</b><br>
-                                            <span>Permite entregar información clara y completa desde el primer contacto, evitando confusiones sobre horarios, modalidad y tipo de atención.</span>
+
+                                        <div style="background:#e3f2fd; border-left:6px solid #1565c0; padding:1rem 1.25rem; border-radius:12px; margin-bottom:1.25rem;">
+                                            <div style="font-weight:600; color:#0d47a1; font-size:1.05rem; margin-bottom:.4rem;">¿Por qué informar estos límites?</div>
+                                            <p style="margin:.35rem 0 0;">Evita que el paciente llegue esperando otros tipos de estudios (TAC, resonancia) o horarios fuera de rango. Alinea expectativas desde el primer contacto.</p>
                                         </div>
-                                        <div style="background:#dbeafe; border-radius:8px; padding:1rem; color:#3b82f6;">
-                                            <b>Tip práctico para la llamada:</b><br>
-                                            <span>“Puede acudir entre las 9 y las 18 horas, por orden de llegada. Solo se realizan radiografías de extremidades, y no todos los centros ofrecen el servicio, por lo que es importante validar antes.”</span>
+
+                                        <div style="background:#fff8e1; border-left:6px solid #ffb300; padding:1rem 1.25rem; border-radius:12px; margin-bottom:1.25rem;">
+                                            <div style="font-weight:600; color:#b37400; font-size:1.05rem; margin-bottom:.4rem;">Tip para comunicar en la llamada</div>
+                                            <p style="margin:.35rem 0 .55rem; font-style:italic;">“Puede acudir entre las 9 y las 18 horas, por orden de llegada. Solo hacemos radiografías de extremidades y algunos centros no tienen el servicio, por eso validaremos primero.”</p>
                                         </div>
+
                                         <!-- Botón para abrir segunda ventana (modal) de sedes RX -->
-                                        <div style="margin-top:1.2rem; display:flex; justify-content:center;">
+                                        <div style="margin-top:.6rem; display:flex; justify-content:center;">
                                             <button onclick="abrirModalSedesRayosX()" style="background:linear-gradient(135deg,#1e3a8a,#3b82f6); color:#fff; border:none; padding:1rem 1.4rem; border-radius:14px; cursor:pointer; font-size:1.05rem; font-weight:600; letter-spacing:.5px; display:flex; align-items:center; gap:10px; box-shadow:0 6px 18px rgba(30,58,138,0.35); position:relative; overflow:hidden; animation:pulseRX 2s ease-in-out infinite;">
                                                 <span style="font-size:1.3rem;">📡</span>
                                                 <span>Ver Sedes Abiertas RX</span>
@@ -4731,7 +4844,6 @@ RADICULOPATÍA LUMBAR
                                             <style>
                                                 @keyframes pulseRX {0%{transform:scale(1);}50%{transform:scale(1.035);}100%{transform:scale(1);} }
                                                 @keyframes glowRX {0%{transform:translate(0,0);}50%{transform:translate(8px,6px);}100%{transform:translate(0,0);} }
-                                                /* Soporte preferencia reduce motion */
                                                 @media (prefers-reduced-motion: reduce){
                                                     button[onclick="abrirModalSedesRayosX()"]{animation:none;}
                                                     button[onclick="abrirModalSedesRayosX()"] span[style*='radial-gradient']{animation:none;}
