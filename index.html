@@ -744,6 +744,8 @@ function cargarEmailsGuardados() {
             box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
             overflow: hidden;
             min-width: 120px;
+            width: 100%;
+            min-height: 42px; /* igual altura que .btn-primario */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -2568,10 +2570,19 @@ const feriadosCL = new Map([
                         <button id="btnSalesforce" class="btn-primario hover-lift escalar-suave zoom-hover" data-tooltip="Ir a Salesforce" onclick="window.open('https://achs.lightning.force.com/lightning/o/Account/list?filterName=__Recent', '_blank')">🔗 SALESFORCE</button>
                         <button id="btnNovedades" class="btn-primario hover-lift escalar-suave zoom-hover" data-tooltip="Ver novedades" onclick="abrirModalNovedades()">🆕 NOVEDADES</button>
                         <button id="exportar" class="btn-primario hover-lift escalar-suave" data-tooltip="Exportar datos a Excel">📥 EXPORTAR EXCEL</button>
-                        <button id="btnAnexo" class="btn-anexo-entretenido" data-tooltip="📊 Anexo interactivo de contactos y transferencias - ¡Haz clic para explorar!">
-                            <span class="btn-anexo-icono">📊</span>
-                            <span class="btn-anexo-texto">ANEXO</span>
+                        <div class="anexo-wrapper" style="position:relative; display:block; width:100%;">
+                            <button id="btnAnexo" class="btn-anexo-entretenido" data-tooltip="📊 Anexo interactivo de contactos y transferencias - Haz clic para ver menú" aria-haspopup="true" aria-expanded="false" onclick="toggleSubmenuAnexo(event)">
+                                <span class="btn-anexo-icono">📊</span>
+                                <span class="btn-anexo-texto">ANEXO</span>
+                                <span style="margin-left:6px; font-size:0.9em;">▾</span>
                             </button>
+                            <div id="submenuAnexo" class="submenu-anexo" style="display:none; position:absolute; top:100%; left:0; background:#ffffff; border:2px solid #002147; border-radius:10px; padding:10px 12px; box-shadow:0 6px 20px rgba(0,33,71,0.25); min-width:240px; z-index:300;">
+                                <div style="font-weight:700; color:#002147; font-size:0.85rem; letter-spacing:.5px; margin-bottom:6px; display:flex; align-items:center; gap:6px;">📂 Menú Anexo</div>
+                                <button type="button" class="submenu-item-anexo" onclick="abrirModalAnexo()" style="display:block; width:100%; text-align:left; background:#f1f5f9; color:#002147; border:1px solid #cbd5e1; border-radius:8px; padding:8px 10px; font-size:0.85rem; font-weight:600; cursor:pointer; margin-bottom:6px;">📊 Ver Anexo Completo</button>
+                                <button type="button" class="submenu-item-anexo" onclick="abrirModalIVR()" style="display:block; width:100%; text-align:left; background:#e0f2fe; color:#1e3a8a; border:1px solid #93c5fd; border-radius:8px; padding:8px 10px; font-size:0.85rem; font-weight:600; cursor:pointer;">📞 Diagrama IVR</button>
+                                <div style="margin-top:10px; font-size:0.65rem; color:#64748b; font-weight:500;">Actualizado 02-06-2025</div>
+                            </div>
+                        </div>
                         <button id="btnReclamo" class="btn-primario hover-lift escalar-suave zoom-hover" data-tooltip="Formulario de reclamos y quejas" onclick="abrirModalReclamo()">📢 RECLAMO</button>
                     </div>
                 </div>
@@ -2584,38 +2595,49 @@ const feriadosCL = new Map([
                         <button id="btnMedicosBonos" class="btn-secundario hover-scale" data-tooltip="Ver profesionales para compra de bonos" onclick="abrirModalMedicosBonos()">🩺 Nombres de médicos para compra de bonos</button>
 <!-- Modal Nombres de Médico para Bonos -->
 <div id="modalMedicosBonos" class="modal" style="display:none; justify-content:center; align-items:center;">
-    <div class="modal-contenido" style="max-width:540px; background:white; border-radius:16px; box-shadow:0 8px 32px rgba(0,33,71,0.15); padding:2rem; position:relative;">
-        <button onclick="cerrarModalMedicosBonos()" style="position:absolute; top:18px; right:18px; background:none; border:none; font-size:1.5rem; color:#009688; cursor:pointer;">&times;</button>
-        <h2 style="color:#009688; margin-bottom:1rem; text-align:center;">🩺 Profesionales por Zona – Compra de Bonos ACHS</h2>
-        <div style="margin-bottom:1.2rem;">
-            <b>👨‍⚕️ Médico General-Traumatología-Dermatología</b><br>
-            <span>🔢 <b>Código:</b> 0101001</span>
-            <ul style="margin-top:0.7rem; margin-bottom:0.7rem;">
-                <li>🧭 Norte: <b>María José Seguí Arcos</b> (Antofagasta)</li>
-                <li>🏙️ Centro: <b>Miguel José Ayala Angarita</b> (Maipú)</li>
-                <li>🌧️ Sur: <b>Luis Diego Bermúdez Jiménez</b> (Valdivia)</li>
-            </ul>
-            <span style="color:#dc3545; font-size:0.98em;">📝 Importante: Al comprar el bono, debes elegir al profesional correspondiente según la zona de la sede donde se atenderá el paciente.</span>
+    <div class="modal-contenido" style="max-width:600px; background:white; border-radius:16px; box-shadow:0 8px 32px rgba(0,150,136,0.15); padding:2rem 2rem 1.4rem; position:relative;">
+        <button onclick="cerrarModalMedicosBonos()" style="position:absolute; top:18px; right:18px; background:none; border:none; font-size:1.6rem; color:#009688; cursor:pointer;">&times;</button>
+        <h2 style="color:#009688; margin-bottom:.9rem; text-align:center; font-size:1.55rem;">🩺 Profesionales por Zona – Compra de Bonos ACHS</h2>
+        <style>
+            #modalMedicosBonos .mb-toolbar{display:flex; gap:.5rem; flex-wrap:wrap; justify-content:center; margin:.1rem 0 .8rem;}
+            #modalMedicosBonos .mb-toolbar button{background:#009688; color:#fff; border:none; padding:.45rem .85rem; font-size:.7rem; font-weight:700; border-radius:7px; cursor:pointer; box-shadow:0 3px 10px rgba(0,150,136,.28);}            
+            #modalMedicosBonos .mb-toolbar button:hover{filter:brightness(1.08);}            
+            #modalMedicosBonos .accordion-medicos details{border:1px solid #b2dfdb; border-radius:10px; padding:.55rem .9rem .7rem; background:#f1fafa; margin-bottom:.55rem; box-shadow:0 2px 6px rgba(0,150,136,0.09);}            
+            #modalMedicosBonos .accordion-medicos details[open]{background:#e0f2f1; border-color:#009688; box-shadow:0 4px 14px rgba(0,150,136,0.18);}            
+            #modalMedicosBonos .accordion-medicos summary{list-style:none; cursor:pointer; display:flex; align-items:center; gap:.55rem; font-weight:700; color:#00695c; font-size:1.01em;}
+            #modalMedicosBonos .accordion-medicos summary::marker{display:none;}
+            #modalMedicosBonos .accordion-medicos ul{margin:.55rem 0 .4rem .9rem; padding:0;}
+            #modalMedicosBonos .nota{color:#c0392b; font-size:.75rem; font-weight:600; background:#fdecea; padding:.4rem .6rem; border-radius:6px; border:1px solid #f5c6cb;}
+        </style>
+        <div class="mb-toolbar">
+            <button onclick="(function(){document.querySelectorAll('#modalMedicosBonos .accordion-medicos details').forEach(d=>d.open=true);})()">Expandir todo</button>
+            <button onclick="(function(){document.querySelectorAll('#modalMedicosBonos .accordion-medicos details').forEach(d=>d.open=false);})()">Contraer todo</button>
         </div>
-        <div style="margin-bottom:1.2rem;">
-            <b>🧘‍♂️ Kinesiología</b><br>
-            <ul style="margin-top:0.7rem; margin-bottom:0.7rem;">
-                <li>🧭 Norte: <b>Nelson Ignacio Arancibia Figueroa</b> (Antofagasta)</li>
-                <li>🏙️ Centro: <b>Krish Rayen García González</b> (Maipú)</li>
-                <li>🌧️ Sur: <b>Claudia Andrea Daetz Medina</b> (Osorno)</li>
-            </ul>
-        </div>
-        <div>
-            <b>🧠 Psicología</b><br>
-            <span>📍 Profesionales asignados por sede:</span>
-            <ul style="margin-top:0.7rem; margin-bottom:0.7rem;">
-                <li><b>Francisca Peñafiel</b><br>
-                    <span style="font-size:0.97em; color:#007bff;">🔹 La Serena<br>🔹 Valparaíso<br>🔹 San Antonio</span>
-                </li>
-                <li><b>Eileen Yamile Green Jara</b><br>
-                    <span style="font-size:0.97em; color:#007bff;">🔹 San Felipe<br>🔹 San Miguel</span>
-                </li>
-            </ul>
+        <div class="accordion-medicos">
+            <details>
+                <summary>👨‍⚕️ Médico General – Traumatología – Dermatología <span style="font-weight:400; font-size:.85em; color:#004d40;">(Código 0101001)</span></summary>
+                <ul>
+                    <li>🧭 Norte: <b>María José Seguí Arcos</b> (Antofagasta)</li>
+                    <li>🏙️ Centro: <b>Miguel José Ayala Angarita</b> (Maipú)</li>
+                    <li>🌧️ Sur: <b>Luis Diego Bermúdez Jiménez</b> (Valdivia)</li>
+                </ul>
+                <div class="nota">📝 Importante: Elegir al profesional según la zona de la sede donde se atenderá el paciente.</div>
+            </details>
+            <details>
+                <summary>🧘‍♂️ Kinesiología</summary>
+                <ul>
+                    <li>🧭 Norte: <b>Nelson Ignacio Arancibia Figueroa</b> (Antofagasta)</li>
+                    <li>🏙️ Centro: <b>Krish Rayen García González</b> (Maipú)</li>
+                    <li>🌧️ Sur: <b>Claudia Andrea Daetz Medina</b> (Osorno)</li>
+                </ul>
+            </details>
+            <details>
+                <summary>🧠 Psicología – Asignación por sedes</summary>
+                <ul>
+                    <li><b>Francisca Peñafiel</b><br><span style="font-size:.78em; color:#007bff;">🔹 La Serena · Valparaíso · San Antonio</span></li>
+                    <li><b>Eileen Yamile Green Jara</b><br><span style="font-size:.78em; color:#007bff;">🔹 San Felipe · San Miguel</span></li>
+                </ul>
+            </details>
         </div>
     </div>
 </div>
@@ -3222,92 +3244,140 @@ const feriadosCL = new Map([
                         <button id="btnLeyKarin" class="btn-secundario hover-scale" onclick="abrirModal('modalLeyKarin')" data-tooltip="Preguntas Frecuentes Ley Karin">⚖️ LEY KARIN</button>
 <!-- Modal LEY KARIN -->
 <div id="modalLeyKarin" class="modal" style="display:none; justify-content:center; align-items:center;">
-    <div class="modal-contenido" style="max-width:700px; background:white; border-radius:16px; box-shadow:0 8px 32px rgba(0,33,71,0.15); padding:2rem; position:relative; overflow-y:auto; max-height:90vh;">
+    <div class="modal-contenido" style="max-width:760px; background:white; border-radius:16px; box-shadow:0 8px 32px rgba(0,33,71,0.15); padding:2rem; position:relative; overflow-y:auto; max-height:90vh;">
         <button onclick="cerrarModal('modalLeyKarin')" style="position:absolute; top:18px; right:18px; background:none; border:none; font-size:1.5rem; color:#1e3a8a; cursor:pointer;">&times;</button>
-        <h2 style="color:#1e3a8a; margin-bottom:1rem; text-align:center;">⚖️ Ley Karin – Preguntas Frecuentes ACHS Seguro Laboral</h2>
+        <h2 style="color:#1e3a8a; margin-bottom:.9rem; text-align:center;">⚖️ Ley Karin – Preguntas Frecuentes ACHS Seguro Laboral</h2>
+        <style>
+            #modalLeyKarin .lk-toolbar{display:flex; gap:.6rem; flex-wrap:wrap; justify-content:center; margin:.2rem 0 .9rem;}
+            #modalLeyKarin .lk-toolbar button{background:#1e3a8a; color:#fff; border:none; padding:.5rem .9rem; font-size:.75rem; font-weight:700; border-radius:8px; cursor:pointer; box-shadow:0 3px 10px rgba(30,58,138,.25);}            
+            #modalLeyKarin .lk-toolbar button:hover{filter:brightness(1.08);}            
+            #modalLeyKarin .accordion-leykarin details{border:1px solid #c7d2fe; border-radius:10px; padding:.45rem .9rem .75rem; background:#f8fafc; margin-bottom:.6rem; box-shadow:0 2px 6px rgba(30,58,138,0.08);}            
+            #modalLeyKarin .accordion-leykarin details[open]{background:#eef2ff; border-color:#1e3a8a; box-shadow:0 4px 14px rgba(30,58,138,0.18);}            
+            #modalLeyKarin .accordion-leykarin summary{list-style:none; cursor:pointer; display:flex; align-items:center; gap:.55rem; font-weight:700; color:#1e3a8a; font-size:1.02em;}
+            #modalLeyKarin .accordion-leykarin summary::marker{display:none;}
+            #modalLeyKarin .accordion-leykarin p{margin:.55rem 0 .4rem;}
+            #modalLeyKarin .callout{background:#e0e7ff; border-left:5px solid #1e3a8a; padding:.75rem .9rem; border-radius:8px; font-weight:600; font-size:.95em; color:#0f172a; margin-bottom:.75rem;}
+            #modalLeyKarin .subnote{font-size:.88em; color:#334155; margin:.2rem 0 .7rem;}
+            #modalLeyKarin .icon{font-size:1.1em;}
+        </style>
+        <div class="lk-toolbar">
+            <button onclick="(function(){document.querySelectorAll('#modalLeyKarin .accordion-leykarin details').forEach(function(d){d.open=true;});})()">Expandir todo</button>
+            <button onclick="(function(){document.querySelectorAll('#modalLeyKarin .accordion-leykarin details').forEach(function(d){d.open=false;});})()">Contraer todo</button>
+        </div>
         <div style="font-size:1em; color:#222; line-height:1.6; max-height:70vh; overflow-y:auto; padding-right:8px;">
-            <ol style="padding-left:1.2em;">
-                <li><b>🟦 Nueva información – Activación de Ley Karin </b><br>
-📞 Si llama el trabajador o afectado:</b><br>
-➡️ El agendamiento se realiza de forma espontánea en la Agencia.</b><br>
-🚫 No se solicita por formulario.</b><br>
-🏢 Si llama la empresa:</b><br>
-➡️ Debe realizar la gestión por el 1404 opción 3 o por ACHS Virtual.</b><br>
-📝 Esto permite que se realice la APT correspondiente.</b><br>
-🟢 Recordar: Esta actualización aplica de inmediato para todas las atenciones relacionadas con Ley Karin.</b><br>
+            <div class="accordion-leykarin">
+                <details open>
+                    <summary><span class="icon">🟦</span>Nueva información – Activación de Ley Karin</summary>
+                    <p>📞 Si llama el trabajador o afectado: el agendamiento se realiza de forma espontánea en la Agencia. No se solicita por formulario.</p>
+                    <p>🏢 Si llama la empresa: debe realizar la gestión por el <strong>1404 opción 3</strong> o por <strong>ACHS Virtual</strong>. Esto permite que se realice la APT correspondiente.</p>
+                    <p>🟢 Recordar: aplica de inmediato para todas las atenciones relacionadas con Ley Karin.</p>
+                    <div class="subnote">Admisión y Agenda APT.</div>
+                </details>
 
-Admisión y Agenda APT.
-<li><b>PREGUNTAS FRECUENTES LEY KARIN – GESTIÓN CCENTER.</b><br>
-<li><b>Cómo solicitar APT por Ley Karin?</b><br>
-Puedes hacerlo ingresando en achsvirtual.achs.cl o llamando al 1404 opción 3
-<li><b>Quién debe solicitar la APT?</b><br>
-El empleador.
-<li><b>Qué necesito para solicitar la APT?</b><br>
-Debes contar con los siguientes datos: Rut empresa, mail empresa + nombre, RUT, teléfono y mail del trabajador afectado
-<li><b>La empresa recibe con algún comprobante de la solicitud? </b><br>
-Si, recibirá un mail confirmando el éxito de la solicitud, el motivo y los datos del trabajador/a 
-<li><b>Cómo se entera el trabajador de su ingreso en la achs? </b><br>
-Una vez recibida la solicitud del empleador, en un plazo máximo de 24 horas hábiles un ejecutivo tomará contacto con el trabajador para realizar la admisión, y agendar la APT. 
-<li><b>Qué ocurre si no se logra contacto con el trabajador? </b><br>
-El empleador recibirá una notificación en caso de no poder contactar al trabajador luego de 3 intentos dentro de 24 horas hábiles. 
-<li><b>Qué ocurre si el trabajador no desea recibir la APT? </b><br>
-En caso de rechazar la APT, el empleador recibirá una notificación al respecto. 
-<li><b>Si el trabajador desiste del rechazo y desea ser atendido? </b><br>
-El empleador deberá realizar nuevamente la solicitud vía achs virtual o llamando al 1404 opción 3 
-<li><b>Cuál es el flujo una vez contactado el trabajador? </b><br>
-Se realizará la admisión, y se agendará la APT (la cuál ocurrirá en un plazo máximo de 72 horas). 
-<li><b>¿Qué ocurre si la empresa llama para activar APT, y el trabajador ya se presentó en un centro achs?? </b><br>
-Si ya cuenta con un siniestro por el mismo motivo, no se debe Admisionar de forma remota por CCENTER. 
-<li><b>La empresa debe subir una denuncia DIAT/DIEP?</b><br> 
-Si, la empresa debe cargar en Achs Virtual la DIAT hasta 24 horas desde la notificación del hecho. 
-<li><b>Si el trabajador afectado por Ley Karin recibió agresión física o física y verbal, puedo activar ley Karin por ccenter?.</b><br>
-No, todo caso donde exista agresión física debe ser derivado presencial a su centro de salud achs más cercano para que puedan evaluar su estado, independiente a que el trabajador 
-indique no presentar molestias, dolor, etc...
-<li><b>Es obligación del trabajador asistir a la APT de achs?</b><br>
-No, no es obligación.
-                <li><b>¿Si los trabajadores presenciaron un turbazo en su lugar de trabajo en el que no hubo amenaza directa a ninguno, deben ser admisionados?</b><br>
-                En este caso no existe un evento que haya expuesto la vida o integridad de los trabajadores, por lo que pueden recibir una prestación preventiva UIC.<br>
-                Por otro lado, si alguno de ellos fue agredido, amenazado con arma de fuego, arma blanca u otro objeto contundente, debe ser admisionado, agendado y atendido de manera individual. Esto asegurará que las prestaciones de salud que requiera, dado el evento de alto impacto que atravesó, estén garantizadas y sujetas al siniestro que se generará para su atención.
-                </li>
-                <li><b>Si existen trabajadores que han sido expuestos a eventos de alto impacto emocional, ¿puede solicitar únicamente la intervención preventiva?</b><br>
-                No puede solicitarse la intervención preventiva para trabajadores que, según la circular 3869, debe respaldar su APT con una DIAT/DIEP dada la gravedad del evento del que fue víctima.<br>
-                La intervención preventiva es únicamente para los casos de bajo impacto y no reemplaza en ningún caso la APT individual que el trabajador puede recibir por derecho.
-                </li>
-                <li><b>¿La atención individual de los trabajadores que han sido admisionados genera informe para la empresa?</b><br>
-                La atención por violencia y alta complejidad, al igual que las atenciones Ley Karin, no generará un informe posterior a la atención. La notificación empresa así como el eventual avance y agendamientos posteriores del trabajador en el área de salud ACHS, será notificado por los medios regulares para estos fines.<br>
-                La intervención preventiva sí genera informe de cierre.
-                </li>
-                <li><b>El trabajador que recibirá su APT individual, ¿podría participar de la intervención preventiva?</b><br>
-                El trabajador que ya recibió su APT individual y desea participar en la instancia presencial y grupal, puede hacerlo sin inconvenientes. Esta instancia le permitirá no solo validar su propia experiencia, sino también enriquecerla al compartir y contrastar vivencias con sus colegas, fortaleciendo así la mirada de equipo frente al evento.
-                </li>
-                <li><b>¿La empresa puede activar a través del 1404 sin DIAT/DIEP y regularizarla posteriormente?</b><br>
-                La empresa podrá activar sin presentar la DIAT/DIEP. Cabe mencionar, sin embargo, que la normativa indica que la empresa tiene 24 horas para generarla una vez recibida la denuncia.<br>
-                ACHS procederá a ingresar a su trabajador, agendar la APT y atención médica en agencia del trabajador afectado, independiente que la DIAT/DIEP haya sido cargada en ACHS virtual al momento de la activación.
-                </li>
-                <li><b>Si la denuncia no se realiza, ¿el trabajador puede recibir la atención psicológica temprana?</b><br>
-                El trabajador que no ha denunciado puede presentarse directamente en un centro de salud ACHS, donde recibirá la APT en caso que corresponda, sin necesidad de presentar la DIAT/DIEP, donde será el OAL quien genere el documento, según lo instruido por la autoridad en esta materia.<br>
-                Si el empleador solicita la activación de la APT a través del canal empresa (1404 opción 3), en este caso el empleador deberá cargar la DIAT/DIEP en los plazos normativos exigidos.
-                </li>
-                <li><b>¿La atención por Ley Karin generará un informe posterior a la atención?</b><br>
-                La atención por Ley Karin no generará un informe posterior a la atención. La notificación empresa así como el eventual avance y agendamientos posteriores del trabajador en el área de salud ACHS, será notificado por los medios regulares para estos fines.
-                </li>
-                <li><b>Si el trabajador no asiste a su cita para atención psicológica temprana, ¿se reagenda?</b><br>
-                El trabajador podrá tener hasta 1 reagendamiento si es que no rechaza la APT. Si en esta nueva instancia tampoco se puede realizar la atención debido a inasistencia o incidencias relacionadas al trabajador, se cerrará el caso y avanzará en su calificación.
-                </li>
-                <li><b>¿Qué información se necesita para activar el servicio de la UIC?</b><br>
-                Al solicitante del servicio se le consultará el nombre y RUT de la empresa, datos de contacto para la posterior coordinación del servicio, número de personas afectadas y un resumen del evento por el que se activa. Es relevante poder diferenciar las personas de primera y segunda línea para organizar eficazmente las atenciones.<br>
-                Para los casos asociados a acoso laboral, sexual o violencia en el trabajo (Ley Karin), el empleador podrá activar a través del 1404 para solicitar la APT para los trabajadores que han denunciado ser víctimas de un evento declarado en la ley 21.643. Para esto, se solicitarán los datos básicos de la empresa y del trabajador.
-                </li>
-                <li><b>¿Cuándo aplica la activación de la UIC?</b><br>
-                La UIC puede recibir y atender casos Ley que no han sufrido violencia física. Estos podrán incorporar tanto a las personas directamente afectadas por el evento, como a los trabajadores que participaron en la contención o coordinaciones realizadas a raíz del mismo (primera y segunda línea de exposición).
-                </li>
-                <li><b>¿Cuándo no aplica la activación de la UIC?</b><br>
-                Los casos que no aplican para la contención por parte de la UIC corresponden a los eventos no relacionados al contexto laboral o prestación de servicios y los casos que han presentado violencia física. Estos últimos tienen que hacer ingreso directo a centro de salud ACHS para evaluar el estado físico del trabajador afectado. En caso que corresponda, las prestaciones psicológicas serán entregadas en centro de salud ACHS.
-                </li>
-                <li><b>¿Todo proceso de atención por Ley Karin implicará la atención por la dupla de especialistas en centro de salud ACHS?</b><br>
-                El colaborador que se ha visto afectado por algún evento asociado a Ley Karin y que presente sintomatología psíquica específica, será evaluado en agencia de salud ACHS, donde se pesquisará la existencia del alto impacto emocional. Si este último está presente, será agendado con la dupla de especialistas.
-                </li>
-            </ol>
+                <div class="callout">PREGUNTAS FRECUENTES LEY KARIN – GESTIÓN CCENTER</div>
+
+                <details>
+                    <summary>¿Cómo solicitar APT por Ley Karin?</summary>
+                    <p>Ingresando en <strong>achsvirtual.achs.cl</strong> o llamando al <strong>1404 opción 3</strong>.</p>
+                </details>
+                <details>
+                    <summary>¿Quién debe solicitar la APT?</summary>
+                    <p>El empleador.</p>
+                </details>
+                <details>
+                    <summary>¿Qué necesito para solicitar la APT?</summary>
+                    <p>Rut empresa, correo de la empresa y nombre, RUT del trabajador, teléfono y correo del trabajador afectado.</p>
+                </details>
+                <details>
+                    <summary>¿La empresa recibe algún comprobante de la solicitud?</summary>
+                    <p>Sí. Recibirá un correo confirmando la solicitud, el motivo y los datos del/la trabajador(a).</p>
+                </details>
+                <details>
+                    <summary>¿Cómo se entera el trabajador de su ingreso en la ACHS?</summary>
+                    <p>En un máximo de <strong>24 horas hábiles</strong> un ejecutivo contactará al trabajador para realizar la admisión y agendar la APT.</p>
+                </details>
+                <details>
+                    <summary>¿Qué ocurre si no se logra contacto con el trabajador?</summary>
+                    <p>El empleador recibirá una notificación tras <strong>3 intentos</strong> dentro de 24 horas hábiles.</p>
+                </details>
+                <details>
+                    <summary>¿Qué ocurre si el trabajador no desea recibir la APT?</summary>
+                    <p>En caso de rechazo, el empleador recibirá una notificación.</p>
+                </details>
+                <details>
+                    <summary>Si el trabajador desiste del rechazo y desea ser atendido, ¿qué hacer?</summary>
+                    <p>El empleador debe realizar nuevamente la solicitud vía ACHS Virtual o llamando al <strong>1404 opción 3</strong>.</p>
+                </details>
+                <details>
+                    <summary>¿Cuál es el flujo una vez contactado el trabajador?</summary>
+                    <p>Se realiza la admisión y se agenda la APT (en un plazo máximo de <strong>72 horas</strong>).</p>
+                </details>
+                <details>
+                    <summary>La empresa llama para activar APT, y el trabajador ya se presentó en un centro ACHS, ¿qué procede?</summary>
+                    <p>Si ya existe un siniestro por el mismo motivo, <strong>no</strong> se debe admisionar de forma remota por Call Center.</p>
+                </details>
+                <details>
+                    <summary>¿La empresa debe subir una denuncia DIAT/DIEP?</summary>
+                    <p>Sí. Debe cargar en ACHS Virtual la <strong>DIAT/DIEP</strong> dentro de <strong>24 horas</strong> desde la notificación del hecho.</p>
+                </details>
+                <details>
+                    <summary>Si hubo agresión física o física y verbal, ¿puedo activar Ley Karin por Call Center?</summary>
+                    <p>No. En casos con agresión física, derivar presencialmente al centro de salud ACHS más cercano para evaluar su estado, independiente de que el trabajador indique no presentar molestias.</p>
+                </details>
+                <details>
+                    <summary>¿Es obligación del trabajador asistir a la APT de ACHS?</summary>
+                    <p>No es obligación.</p>
+                </details>
+                <details>
+                    <summary>Presenciaron un "turbazo" sin amenazas directas, ¿deben ser admisionados?</summary>
+                    <p>No existe un evento que exponga la vida o integridad; corresponde <strong>prestación preventiva UIC</strong>. Si alguno fue agredido o amenazado, debe ser admisionado, agendado y atendido individualmente.</p>
+                </details>
+                <details>
+                    <summary>Expuestos a alto impacto emocional, ¿puede solicitarse solo intervención preventiva?</summary>
+                    <p>No. Según circular 3869, debe respaldarse la APT con DIAT/DIEP por la gravedad. La intervención preventiva es para casos de bajo impacto y no reemplaza la APT individual.</p>
+                </details>
+                <details>
+                    <summary>¿La atención individual por violencia/alta complejidad genera informe para la empresa?</summary>
+                    <p>No se genera informe posterior. La notificación y avance se informan por los canales regulares. <strong>La intervención preventiva sí</strong> genera informe de cierre.</p>
+                </details>
+                <details>
+                    <summary>Quien recibió APT individual, ¿puede participar de la intervención preventiva?</summary>
+                    <p>Sí, puede participar. Es una instancia grupal que complementa su experiencia y fortalece al equipo.</p>
+                </details>
+                <details>
+                    <summary>¿La empresa puede activar por 1404 sin DIAT/DIEP y regularizar luego?</summary>
+                    <p>Sí. La normativa exige generarla en <strong>24 horas</strong> desde la denuncia. ACHS ingresará al trabajador, agendará la APT y atención médica en la agencia correspondiente, independiente de si la DIAT/DIEP ya fue cargada.</p>
+                </details>
+                <details>
+                    <summary>Sin denuncia, ¿el trabajador puede recibir atención psicológica temprana?</summary>
+                    <p>Puede presentarse directamente en un centro de salud ACHS donde recibirá la APT si corresponde; el <strong>OAL</strong> generará el documento según instrucción de la autoridad. Si la activación es por canal empresa (1404 opción 3), el empleador debe cargar la DIAT/DIEP en los plazos normativos.</p>
+                </details>
+                <details>
+                    <summary>¿La atención por Ley Karin genera informe posterior?</summary>
+                    <p>No. La notificación y eventuales agendamientos se comunican por los medios regulares.</p>
+                </details>
+                <details>
+                    <summary>Si el trabajador no asiste a su cita de APT, ¿se reagenda?</summary>
+                    <p>Tiene hasta <strong>1 reagendamiento</strong> si no rechaza la APT. Si nuevamente no se realiza por inasistencia u otra incidencia del trabajador, se cierra el caso y avanza a calificación.</p>
+                </details>
+                <details>
+                    <summary>¿Qué información se necesita para activar servicio UIC?</summary>
+                    <p>Nombre y RUT de la empresa, datos de contacto, número de personas afectadas y resumen del evento, diferenciando personas de primera y segunda línea.</p>
+                    <p>Para casos de Ley Karin, el empleador puede activar vía <strong>1404</strong> para solicitar la APT; se pedirán datos básicos de empresa y trabajador.</p>
+                </details>
+                <details>
+                    <summary>¿Cuándo aplica la activación de la UIC?</summary>
+                    <p>Para casos Ley <strong>sin violencia física</strong>, incorporando personas afectadas y quienes participaron en la contención o coordinaciones (primera y segunda línea).</p>
+                </details>
+                <details>
+                    <summary>¿Cuándo no aplica la activación de la UIC?</summary>
+                    <p>Eventos no relacionados al contexto laboral o con <strong>violencia física</strong>. Estos deben ingresar directo a centro de salud ACHS para evaluar estado físico; si corresponde, las prestaciones psicológicas serán en centro ACHS.</p>
+                </details>
+                <details>
+                    <summary>¿Toda atención por Ley Karin implica dupla de especialistas en centro ACHS?</summary>
+                    <p>Se evalúa en agencia de salud ACHS la presencia de <strong>alto impacto emocional</strong>. De existir, se agenda con la dupla de especialistas.</p>
+                </details>
+            </div>
         </div>
     </div>
 </div>
@@ -6359,6 +6429,121 @@ ESCOLIOSIS LUMBAR
         </div>
     </div>
 
+    <!-- Modal IVR (Submenú del botón ANEXO) -->
+    <div id="modalIVR" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.55); z-index:2100; justify-content:center; align-items:center;">
+        <div style="background:#ffffff; border-radius:18px; padding:1.4rem 1.6rem 2.4rem; max-width:1180px; width:96%; max-height:92vh; overflow:auto; box-shadow:0 14px 42px rgba(0,33,71,0.38); position:relative; line-height:1.4;">
+            <button onclick="cerrarModalIVR()" style="position:absolute; top:14px; right:14px; background:#dc2626; color:#fff; border:none; width:40px; height:40px; border-radius:50%; font-size:1.2rem; cursor:pointer;">&times;</button>
+            <div style="position:absolute; top:14px; left:14px; display:flex; gap:8px;">
+                <button onclick="imprimirIVR()" title="Imprimir diagrama" style="background:#f1f5f9; color:#003366; border:1px solid #cbd5e1; padding:6px 12px; border-radius:8px; font-size:.75rem; font-weight:600; cursor:pointer;">🖨️ Imprimir</button>
+                <button onclick="copiarIVR()" title="Copiar diagrama" style="background:#eef2ff; color:#1e3a8a; border:1px solid #cbd5e1; padding:6px 12px; border-radius:8px; font-size:.75rem; font-weight:600; cursor:pointer;">📋 Copiar</button>
+            </div>
+            <div style="background:#5d87c9; color:#fff; font-weight:700; letter-spacing:.8px; text-align:center; padding:10px 16px; border-radius:10px; font-size:1.15rem;">DIAGRAMA DE IVR ACTUALIZADO 02-06-2025</div>
+            <div style="display:grid; grid-template-columns:310px 330px 1fr; gap:18px; margin-top:18px; align-items:start;">
+                <!-- Columna izquierda (Menú principal numerado) -->
+                <div style="display:flex; flex-direction:column; gap:12px;">
+                    <details style="border:1px solid #ffd874; border-left:6px solid #f59e0b; border-radius:10px; overflow:hidden;">
+                        <summary style="list-style:none; cursor:pointer; padding:8px 10px; background:#ffe8a6; color:#7a5200; font-weight:700; display:flex; align-items:center; gap:8px;">
+                            <span style="min-width:26px; color:#7a7a7a;">1</span>
+                            <span>OPCIÓN 1: INCORPORACIÓN ACHS</span>
+                        </summary>
+                        <div style="padding:8px 10px; background:#fff8dc;">
+                            <div style="display:grid; gap:4px;">
+                                <span style="background:#ffefc2; padding:4px 6px; border-radius:4px; display:inline-block;">1 INDEPENDIENTE</span>
+                                <span style="background:#ffefc2; padding:4px 6px; border-radius:4px; display:inline-block;">2 PYME</span>
+                                <span style="background:#ffefc2; padding:4px 6px; border-radius:4px; display:inline-block;">3 CASA PARTICULAR</span>
+                                <span style="background:#fff3d9; padding:4px 6px; border-radius:4px; display:inline-block; font-weight:600;">9 VOLVER AL MENÚ PRINCIPAL</span>
+                            </div>
+                        </div>
+                    </details>
+                    <details style="border:1px solid #c2e5c2; border-left:6px solid #2e7d32; border-radius:10px; overflow:hidden;">
+                        <summary style="list-style:none; cursor:pointer; padding:8px 10px; background:#d9eed9; color:#0f4d17; font-weight:700; display:flex; align-items:center; gap:8px;">
+                            <span style="min-width:26px; color:#7a7a7a;">2</span>
+                            <span>OPCIÓN 2: SEL</span>
+                        </summary>
+                        <div style="padding:8px 10px; background:#eff7ef;">
+                            <div style="display:grid; gap:4px;">
+                                <span style="background:#eaf7ea; padding:4px 6px; border-radius:4px; display:inline-block;">1 EMPRESAS</span>
+                                <span style="background:#eaf7ea; padding:4px 6px; border-radius:4px; display:inline-block;">2 TRABAJADORES</span>
+                                <span style="background:#f2faf2; padding:4px 6px; border-radius:4px; display:inline-block; font-weight:600;">9 VOLVER AL MENÚ PRINCIPAL</span>
+                                <span style="background:#eaf4ff; padding:4px 6px; border-radius:4px; display:inline-block;">SERVICIO DE EVALUACIONES LABORALES <b style="color:#0d47a1;">sel@achs.cl</b></span>
+                            </div>
+                        </div>
+                    </details>
+                    <details style="border:1px solid #c4dbf5; border-left:6px solid #1e3a8a; border-radius:10px; overflow:hidden;">
+                        <summary style="list-style:none; cursor:pointer; padding:8px 10px; background:#dce9f9; color:#122c63; font-weight:700; display:flex; align-items:center; gap:8px;">
+                            <span style="min-width:26px; color:#7a7a7a;">3</span>
+                            <span>OPCIÓN 3: TRABAJADORES</span>
+                        </summary>
+                        <div style="padding:8px 10px; background:#edf4fe;">
+                            <div style="display:grid; gap:4px;">
+                                <span style="background:#eef5fc; padding:4px 6px; border-radius:4px; display:inline-block;">1 LICENCIAS MÉDICAS</span>
+                                <span style="background:#eef5fc; padding:4px 6px; border-radius:4px; display:inline-block;">2 TRANSPORTE</span>
+                                <span style="background:#eef5fc; padding:4px 6px; border-radius:4px; display:inline-block;">3 ENFERMEDAD PROFESIONAL</span>
+                                <span style="background:#eef5fc; padding:4px 6px; border-radius:4px; display:inline-block;">4 SOPORTE PÁGINA WEB</span>
+                                <span style="background:#eef5fc; padding:4px 6px; border-radius:4px; display:inline-block;">5 INFORMACIONES</span>
+                            </div>
+                        </div>
+                    </details>
+                    <details style="border:1px solid #f5d1b7; border-left:6px solid #d97706; border-radius:10px; overflow:hidden;">
+                        <summary style="list-style:none; cursor:pointer; padding:8px 10px; background:#fbe4d1; color:#7a3e04; font-weight:700; display:flex; align-items:center; gap:8px;">
+                            <span style="min-width:26px; color:#7a7a7a;">4</span>
+                            <span>OPCIÓN 4: EMPRESAS</span>
+                        </summary>
+                        <div style="padding:8px 10px; background:#fff1e6;">
+                            <div style="display:grid; gap:4px;">
+                                <span style="background:#fdf0e3; padding:4px 6px; border-radius:4px; display:inline-block;">0 JUNTA DE ASOCIADOS / DIRECTORIO</span>
+                                <span style="background:#fdf0e3; padding:4px 6px; border-radius:4px; display:inline-block;">1 SOPORTE PÁGINA WEB</span>
+                                <span style="background:#fdf0e3; padding:4px 6px; border-radius:4px; display:inline-block;">2 ASESORÍA EN PREVENCIÓN</span>
+                                <span style="background:#fdf0e3; padding:4px 6px; border-radius:4px; display:inline-block;">3 ASESORÍA COMERCIAL</span>
+                                <span style="background:#fdf0e3; padding:4px 6px; border-radius:4px; display:inline-block;">4 ENFERMEDAD PROFESIONAL</span>
+                            </div>
+                        </div>
+                    </details>
+                    <details style="border:1px solid #d5d5d5; border-left:6px solid #6b7280; border-radius:10px; overflow:hidden;">
+                        <summary style="list-style:none; cursor:pointer; padding:8px 10px; background:#e2e2e2; color:#333; font-weight:700; display:flex; align-items:center; gap:8px;">
+                            <span style="min-width:26px; color:#7a7a7a;">5</span>
+                            <span>OPCIÓN 5: SALUD NO LABORAL (SNL)</span>
+                        </summary>
+                        <div style="padding:8px 10px; background:#ededed;">
+                            <div style="display:grid; gap:4px;">
+                                <span style="background:#ebebeb; padding:4px 6px; border-radius:4px; display:inline-block;">1 NOSOTROS</span>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+                <!-- Columna central (ramificaciones destacadas) -->
+                <div style="display:flex; flex-direction:column; gap:12px;">
+                    <div style="background:#dce9f9; border:1px solid #c4dbf5; border-left:6px solid #1e3a8a; border-radius:8px; padding:10px 12px; font-size:.8rem; font-weight:600; color:#1e3a8a;">PACIENTES LEY / SUBSIDIOS<br><span style="font-weight:400; color:#334e7d;">Certificados • Consulta de pago • Documentos licencia • Subsidios</span><span style="margin-top:4px; display:block; font-weight:400; color:#122c63;">Empresa y trabajador: consultar pago / doc. licencia / certificado licencia</span></div>
+                    <div style="background:#dce9f9; border:1px solid #c4dbf5; border-left:6px solid #1e3a8a; border-radius:8px; padding:10px 12px; font-size:.8rem; font-weight:600; color:#1e3a8a;">INFORMACIONES<br><span style="font-weight:400; color:#334e7d;">Accidentes · Informaciones · Apelaciones · Otras consultas · Reclamos</span></div>
+                </div>
+                <!-- Columna derecha (Notas de derivación y criterios) -->
+                <div style="display:flex; flex-direction:column; gap:12px; font-size:.72rem; color:#1f2937;">
+                    <div style="background:#f1f5f9; border:1px solid #e2e8f0; border-left:5px solid #003366; border-radius:8px; padding:10px 12px; font-weight:600; color:#003366;">CUÁNDO DERIVAR
+                        <ul style="margin:6px 0 0 14px; padding:0; list-style:disc; font-weight:400;">
+                            <li>Solicitud formal evaluaciones laborales</li>
+                            <li>Falta de confirmación retiro transporte</li>
+                            <li>Reclamo por retraso o no pasó móvil</li>
+                        </ul>
+                    </div>
+                    <div style="background:#fff8e1; border:1px solid #ffecb3; border-left:5px solid #f59e0b; border-radius:8px; padding:10px 12px; font-weight:600; color:#7a5200;">TEMAS DE TRANSPORTE PACIENTES LEY
+                        <ul style="margin:6px 0 0 14px; padding:0; list-style:disc; font-weight:400;">
+                            <li>Retraso</li>
+                            <li>No lo pasaron a buscar</li>
+                            <li>Reclamo puntual</li>
+                        </ul>
+                    </div>
+                    <div style="background:#e9f7ef; border:1px solid #cde9db; border-left:5px solid #2e7d32; border-radius:8px; padding:10px 12px; font-weight:600; color:#0f4d17;">AFILIACIÓN / INCORPORACIÓN
+                        <span style="display:block; margin-top:4px; font-weight:400;">Personas naturales y/o empresas que requieren afiliarse a ACHS.</span>
+                    </div>
+                </div>
+            </div>
+            <div style="margin-top:16px; display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap; font-size:.68rem; color:#475569; background:#f8fafc; padding:10px 14px; border-radius:10px;">
+                <span>Diagrama simplificado para orientación rápida en llamadas.</span>
+                <span><b>Revisión:</b> 02-06-2025 • <span style="color:#1e3a8a; font-weight:600;">Lista para impresión / copia</span></span>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal de Correos -->
     <div id="modalCorreos" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:2000; justify-content:center; align-items:center;">
         <div style="background:white; border-radius:12px; padding:25px; max-width:800px; width:95%; max-height:90vh; overflow-y:auto; box-shadow:0 8px 32px rgba(0,33,71,0.2); position:relative;">
@@ -9303,14 +9488,103 @@ ESCOLIOSIS LUMBAR
     function configurarBotonAnexo() {
         const btnAnexo = document.getElementById('btnAnexo');
         if (btnAnexo) {
-            btnAnexo.onclick = function() {
-                console.log('🔄 Botón ANEXO presionado');
-                abrirModalAnexo();
-            };
-            console.log('✅ Evento del botón ANEXO configurado');
+            console.log('✅ Botón ANEXO listo para desplegar submenú');
         } else {
             console.error('❌ Botón ANEXO no encontrado');
         }
+    }
+
+    // Submenú ANEXO: toggle mostrar/ocultar
+    function toggleSubmenuAnexo(e) {
+        e.stopPropagation();
+        const submenu = document.getElementById('submenuAnexo');
+        const btn = document.getElementById('btnAnexo');
+        if (!submenu) return;
+        const visible = submenu.style.display === 'block';
+        submenu.style.display = visible ? 'none' : 'block';
+        if (btn) btn.setAttribute('aria-expanded', visible ? 'false' : 'true');
+    }
+
+    // Cerrar submenú anexo al hacer clic fuera
+    document.addEventListener('click', function(ev){
+        const submenu = document.getElementById('submenuAnexo');
+        const btn = document.getElementById('btnAnexo');
+        if (submenu && btn && submenu.style.display === 'block') {
+            if (!submenu.contains(ev.target) && !btn.contains(ev.target)) {
+                submenu.style.display = 'none';
+                btn.setAttribute('aria-expanded','false');
+            }
+        }
+    });
+
+    // ===== Modal IVR =====
+    function abrirModalIVR() {
+        const m = document.getElementById('modalIVR');
+        if (m) {
+            m.style.display = 'flex';
+            // Oculta submenú al abrir
+            const submenu = document.getElementById('submenuAnexo');
+            if (submenu) submenu.style.display = 'none';
+        } else {
+            console.error('❌ Modal IVR no encontrado');
+        }
+    }
+    function cerrarModalIVR() {
+        const m = document.getElementById('modalIVR');
+        if (m) m.style.display = 'none';
+    }
+    // Copiar contenido textual del diagrama IVR
+    function copiarIVR(){
+        const modal = document.getElementById('modalIVR');
+        if(!modal) return;
+        const texto = Array.from(modal.querySelectorAll('div, span'))
+            .map(n=>n.innerText.trim())
+            .filter(t=>t.length>0)
+            .join('\n');
+        if(navigator.clipboard){
+            navigator.clipboard.writeText(texto).then(()=>{
+                mostrarToastIVR('✅ Diagrama IVR copiado');
+            }).catch(()=>{alert('Error al copiar');});
+        } else {
+            const ta=document.createElement('textarea');
+            ta.value=texto;document.body.appendChild(ta);ta.select();
+            try{document.execCommand('copy');mostrarToastIVR('✅ Diagrama IVR copiado');}catch(e){alert('Error al copiar');}
+            document.body.removeChild(ta);
+        }
+    }
+    // Imprimir sólo contenido diagrama
+    function imprimirIVR(){
+        const modal = document.getElementById('modalIVR');
+        if(!modal) return;
+        const contenido = modal.querySelector('div[style*="DIAGRAMA DE IVR"]').parentElement.innerHTML;
+        const w = window.open('', '_blank');
+        w.document.write('<html><head><title>Diagrama IVR</title><style>body{font-family:Arial, sans-serif; margin:20px;} .col-print div{page-break-inside:avoid;} </style></head><body>'+contenido+'</body></html>');
+        w.document.close();
+        w.focus();
+        w.print();
+    }
+    // Toast temporal
+    function mostrarToastIVR(msg){
+        let t = document.getElementById('toastIVR');
+        if(!t){
+            t=document.createElement('div');
+            t.id='toastIVR';
+            t.style.position='fixed';
+            t.style.bottom='20px';
+            t.style.left='50%';
+            t.style.transform='translateX(-50%)';
+            t.style.background='rgba(30,58,138,0.95)';
+            t.style.color='#fff';
+            t.style.padding='10px 18px';
+            t.style.borderRadius='10px';
+            t.style.fontSize='.8rem';
+            t.style.fontWeight='600';
+            t.style.boxShadow='0 6px 18px rgba(30,58,138,0.35)';
+            document.body.appendChild(t);
+        }
+        t.textContent=msg;
+        t.style.opacity='1';
+        setTimeout(()=>{t.style.transition='opacity .6s'; t.style.opacity='0';},1800);
     }
 
     // ============ FUNCIONES DEL MODAL DE PRECIOS ============
@@ -11589,14 +11863,14 @@ Total de alertas: ${alertasProgramadas.length}
             filtroCategoria.addEventListener('change', filtrarRespuestas);
         }
         
-        // Expandir todas las categorías por defecto
-        const categorias = ['acuso-recibo', 'bloqueos', 'cambios-cita', 'opciones-completas', 'finalizacion', 'contacto-paciente'];
+        // Cerrar todas las categorías por defecto (requerimiento: iniciar sub-menús cerrados)
+        const categorias = ['acuso-recibo', 'bloqueos', 'cambios-cita', 'opciones-completas', 'finalizacion', 'contacto-paciente', 'agenda-ingreso-ep'];
         categorias.forEach(categoria => {
             const content = document.getElementById(`content-${categoria}`);
             const toggle = document.getElementById(`toggle-${categoria}`);
             if (content && toggle) {
-                content.style.display = 'block';
-                toggle.textContent = '▼';
+                content.style.display = 'none';
+                toggle.textContent = '▶';
             }
         });
     }
