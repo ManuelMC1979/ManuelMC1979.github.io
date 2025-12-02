@@ -3241,6 +3241,7 @@ const feriadosCL = new Map([
 
                         <button id="btnPlanillaRespuestas" class="btn-secundario hover-scale" data-tooltip="Respuestas predefinidas">📋 PLANILLA RESPUESTAS</button>
                         <button id="btnInformacionEP" class="btn-secundario hover-scale" onclick="abrirModal('modalInformacionEP')" data-tooltip="Información sobre Enfermedades Profesionales">📚 INFORMACION EP</button>
+                        <button id="btnSigla" class="btn-secundario hover-scale" data-tooltip="Siglas de Agencias" onclick="window.open('https://docs.google.com/spreadsheets/d/1cPleoLqCLlxCJAsJHKnX3lwBllb2HJf4/edit?usp=sharing&ouid=109971191188208299343&rtpof=true&sd=true', '_blank')">SIGLAS AGENCIAS</button>
                         <button id="btnLeyKarin" class="btn-secundario hover-scale" onclick="abrirModal('modalLeyKarin')" data-tooltip="Preguntas Frecuentes Ley Karin">⚖️ LEY KARIN</button>
 <!-- Modal LEY KARIN -->
 <div id="modalLeyKarin" class="modal" style="display:none; justify-content:center; align-items:center;">
@@ -4074,6 +4075,8 @@ OPERACION DE PROTESIS DE RODILLA
 CONTUSION DE DEDO DE LA MANO, SIN DAÑO DE LA(S) U
 ABOMBAMIENTO DISCAL
 DISCOPATIA LUMBAR
+DORSO CURVO
+OSTEOPOROSIS VG FRACTURA VERTEBRAL
 ABSCESO FALANGE DISTAL DEDO IZQUIERDO
 ACORTAMIENTO DEL TENDON DE AQUILES (ADQUIRIDO) 
 AFLOJAMIENTO DE PROTESIS TOTAL DE CADERA
@@ -4782,7 +4785,12 @@ ESTENOSIS CERVICAL
  .map(s => s.trim())
  .filter(Boolean)
  .map(s => s.toUpperCase())
- .sort((a,b) => new Intl.Collator('es', { sensitivity: 'base' }).compare(a,b));
+ .sort((a,b) => {
+     const coll = new Intl.Collator('es', { sensitivity: 'base' });
+     const an = a.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+     const bn = b.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+     return coll.compare(an, bn);
+ });
 
                                                                 const normalizarTF = (s) => s
                                                                     .toLowerCase()
