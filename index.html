@@ -3242,6 +3242,7 @@ const feriadosCL = new Map([
                         <button id="btnPlanillaRespuestas" class="btn-secundario hover-scale" data-tooltip="Respuestas predefinidas">📋 PLANILLA RESPUESTAS</button>
                         <button id="btnInformacionEP" class="btn-secundario hover-scale" onclick="abrirModal('modalInformacionEP')" data-tooltip="Información sobre Enfermedades Profesionales">📚 INFORMACION EP</button>
                         <button id="btnSigla" class="btn-secundario hover-scale" data-tooltip="Siglas de Agencias" onclick="window.open('https://docs.google.com/spreadsheets/d/1cPleoLqCLlxCJAsJHKnX3lwBllb2HJf4/edit?usp=sharing&ouid=109971191188208299343&rtpof=true&sd=true', '_blank')">SIGLAS AGENCIAS</button>
+                        <button id="btnGlosarioHeader" class="btn-secundario hover-scale" onclick="abrirModalGlosario()" data-tooltip="Glosario ACHS">📘 GLOSARIO</button>
                         <button id="btnLeyKarin" class="btn-secundario hover-scale" onclick="abrirModal('modalLeyKarin')" data-tooltip="Preguntas Frecuentes Ley Karin">⚖️ LEY KARIN</button>
 <!-- Modal LEY KARIN -->
 <div id="modalLeyKarin" class="modal" style="display:none; justify-content:center; align-items:center;">
@@ -4898,6 +4899,221 @@ ESTENOSIS CERVICAL
                     <button id="btnRutificador2025" class="btn-herramienta" onclick="window.open('https://rutificador.net/rut/', '_blank')">🆔 Rutificador 2025</button>
                     <button id="btnBuscadorMutualidades" class="btn-herramienta" onclick="window.open('https://www.asociaciondemutuales.cl/buscador-mutualidades/', '_blank')">🔎 Buscador Mutualidades</button>
                     <button id="btnCitaGratis" class="btn-herramienta" onclick="window.open('https://achs.sharepoint.com/:x:/s/SaludIntegral/Edm5ZMDTNj5Et-T1CQFCF_sB1NTPBvBoSbWsiLQkgR4vWA?wdOrigin=TEAMS-MAGLEV.p2p_ns.rwc&wdExp=TEAMS-TREATMENT&wdhostclicktime=1758921351341&web=1', '_blank')">🎁 Beneficio de Cita Gratis</button>
+                    <button id="btnGlosario" class="btn-herramienta" onclick="abrirModalGlosario()">📘 Glosario</button>
+                    
+                    <!-- Modal Glosario -->
+                    <div id="modalGlosario" class="modal" style="display:none; justify-content:center; align-items:center;">
+                        <div class="modal-contenido" style="max-width:780px; background:#ffffff; border-radius:18px; box-shadow:0 8px 36px rgba(30,58,138,0.18); padding:2rem 2.4rem; position:relative; line-height:1.5;">
+                            <button onclick="cerrarModalGlosario()" style="position:absolute; top:18px; right:18px; background:none; border:none; font-size:1.75rem; color:#1e3a8a; cursor:pointer; line-height:1;">&times;</button>
+                            <h2 style="color:#1e3a8a; margin:0 0 1.2rem; text-align:center; font-size:2rem;">📘 Glosario ACHS</h2>
+                            <div style="display:flex; gap:12px; align-items:center; margin-bottom:12px;">
+                                <input id="inputBuscarGlosario" type="text" placeholder="Escribe para buscar…" oninput="filtrarGlosario()" style="flex:1; min-width:240px; padding:10px 12px; border:2px solid #dbeafe; border-radius:10px; font-size:0.98rem; outline:none;">
+                                <button onclick="limpiarBusquedaGlosario()" style="padding:10px 14px; border-radius:10px; border:none; background:#e5e7eb; cursor:pointer;">Limpiar</button>
+                            </div>
+                            <div id="listaGlosario" style="border:1px solid #e5e7eb; border-radius:12px; padding:10px; max-height:58vh; overflow:auto;"></div>
+                        </div>
+                    </div>
+                    <script>
+                        // Dataset del glosario completo
+                        const GLOSARIO_ITEMS = `
+- ACV/AVE :: Accidente cerebro vascular encefálico
+- AEA :: Ambulancia de Equipamiento Avanzado
+- AEB :: Ambulancia de Equipamiento Básico
+- AES :: Atención Espontánea
+- ALME :: Alta Médica
+- AM :: Antecedentes mórbidos
+- ANES :: Anestesiología
+- AP :: Acoge Parcial
+- APS :: Atención Primaria de Salud (Sistema Público)
+- APT :: Atención Psicológica Temprana
+- AS :: Asistente Social
+- ATB :: Antibióticos
+- BIOME :: Biomédica
+- CAA :: Centro de Atención Ambulatoria
+- CAV :: Clínica Alemana de Valdivia
+- CC :: Contraloría de Cuentas
+- CCEI :: Comisión Central Evaluadora de Incapacidad
+- CCO :: Centro de Control Operacional
+- CEM :: Centro de Especialidades Médicas
+- CEEP :: Centro de Especialidades de Enfermedades Profesionales
+- CESFAM :: Centro de Salud Familiar
+- CETEP :: Centro Médico de Salud Mental
+- CIEL :: Centro Integral de Evaluación Laboral
+- CMF :: Cirugía Maxilo Facial
+- CMN :: Contraloría Médica Nacional
+- COMPIN :: Comisión de Medicina Preventiva e Invalidez
+- COMERE :: Comisión Médica de Reclamos
+- CPHS :: Comité Paritario de Higiene y Seguridad
+- CX :: Cirugía
+- CX P-Q :: Cirujano Plástico-Quemados
+- DERMA :: Dermatología
+- DG :: Diagnóstico
+- DIAT :: Denuncia Individual de Accidente del Trabajo
+- DIEP :: Denuncia Individual de Enfermedad Profesional
+- DLP :: Dislipidemia
+- DM :: Diabetes Mellitus
+- DT :: Dirección del Trabajo
+- Eco Cardio :: Ecocardiograma
+- Eco Doppler :: Ultrasonido para flujos sanguíneos
+- ECG :: Electrocardiograma
+- EEG :: Electroencefalograma
+- EMG :: Electromiografía
+- ENF :: Enfermería
+- EP :: Enfermedad Profesional
+- EP-OP :: Enfermedad Profesional - Otras Patologías
+- EPP :: Elementos de Protección Personal
+- ESACHS :: Empresa de Servicios Externos Achs
+- EVA :: Escala Valoración Análoga del dolor
+- FO :: Fonoaudiología
+- FONASA :: Fondo Nacional de Salud
+- FUNDEPI :: Fundamentos de calificación EP
+- FX :: Fractura
+- GAF :: Escala de funcionamiento global del paciente psiquiátrico
+- HCS :: Hospital Clínico del Sur
+- HMD :: Hemodinamia
+- HNP :: Hernia Núcleo Pulposo
+- HTA :: Hipertensión Arterial
+- HTS :: Hospital del Trabajador de Santiago
+- IA :: Investigación de Accidente
+- IAM :: Infarto Agudo al Miocardio
+- IC :: Interconsulta
+- ICC :: Insuficiencia Cardiaca Congestiva
+- IMA :: Informe Médico de Atención
+- IMC :: Informe Médico Centralizado
+- INFEC :: Infectología
+- IRC :: Insuficiencia Renal Crónica
+- ISAPRE :: Instituciones de Salud Previsional
+- ISL :: Instituto de Seguridad Laboral
+- IZQ :: Izquierdo
+- JOÁ :: Jefe de Operaciones y Administración
+- KNT :: Kinesioterapia
+- MDJ :: Médico Jefe
+- MDT :: Medicina del Trabajo
+- ME :: Músculo Esquelético
+- MFE :: Maxilo Facial Dental
+- MI :: Medicina Interna
+- MINSAL :: Ministerio de Salud
+- MJ :: Médico Jefe
+- M-QX :: Médico Quirúrgico
+- N :: Normal
+- NEU :: Neurología
+- OAL :: Oficina de Atención Laboral
+- OB :: Obesidad
+- OBS :: Observación
+- OFT :: Oftalmología
+- OH :: Alcohol
+- OTEC :: Organismo Técnico de Capacitación
+- OTR :: Otorrinolaringología
+- OT :: Orden de Transporte
+- OTS :: Osteosíntesis
+- PAB :: Pabellón
+- PAV :: Página Achs Virtual
+- PL :: Punción Lumbar
+- PROTEX :: Empresa en Rehabilitación médica (prótesis y órtesis)
+- PPI :: Paciente Postrado Institucionalizado
+- PS :: Psicología
+- PSQ/PSQT :: Psiquiatría
+- QUEM :: Quemados
+- QX :: Quirúrgico
+- RAM :: Reacción Adversa a Medicamento
+- RCR :: Red Clínicas Regionales
+- RD :: Reducción
+- RECA :: Resolución Calificación
+- RED :: Agencias y sucursales Achs
+- REIP :: Resolución de Incapacidad Permanente
+- RH :: Rehabilitación
+- RIHS :: Reglamento Interno de Higiene y Seguridad
+- RIEP :: Resolución Incapacidad Permanente
+- RNM :: Resonancia Nuclear Magnética
+- RND :: Registro Nacional de Discapacidad
+- RX :: Radiografía
+- SAR :: Servicio de Alta Resolución
+- SEL :: Servicio de Evaluaciones Laborales
+- SENADIS :: Servicio Nacional de Discapacidad
+- SEP :: Servicio Evaluaciones Preventivas
+- SIS :: Superintendencia de Salud
+- SNL :: Salud No Laboral
+- SM :: Salud Mental
+- SGP :: Sistema de Gestión de Pacientes
+- SOS :: En caso de urgencia
+- STP :: Sin Tiempo Perdido
+- SU :: Servicio de Urgencia
+- SUSESO :: Superintendencia de Seguridad Social
+- SVE :: Servicio Virtual Especializado
+- TAC :: Tomografía Axial Computarizada
+- TDP :: Trastorno de Depresión Persistente
+- TF :: Terapia Física
+- THC :: Cannabis sativa
+- TLP :: Trastorno Límite de Personalidad
+- TME :: Trastorno Músculo Esquelético
+- TMT :: Traumatología
+- TMT ESS :: Traumatología de Extremidad Superior
+- TMT EII :: Traumatología de Extremidad Inferior
+- TCOL :: Traumatología de Columna
+- TCYP :: Traumatólogo de Columna y Pelvis
+- THOM :: Traumatología de Hombro
+- TO :: Terapia Ocupacional
+- TROD :: Traumatología de Rodilla
+- TTYP :: Traumatología de Tobillo y Pie
+- TTO :: Tratamiento
+- UAT :: Unidad Atención Temprana
+- UCI :: Unidad de Cuidados Intensivos
+- UIC :: Unidad de Intervención de Crisis
+- UPC :: Unidad Paciente Crítico
+- UPP :: Úlcera por Presión
+- UTI :: Unidad de Tratamiento Intermedio
+- VSC :: Venta de Servicios Complementarios
+`
+                            .split('\n')
+                            .map(s => s.trim())
+                            .filter(Boolean)
+                            .sort((a, b) => a.localeCompare(b, 'es', { sensitivity: 'base' }));
+
+                        function abrirModalGlosario(){ document.getElementById('modalGlosario').style.display='flex'; renderGlosario(GLOSARIO_ITEMS); }
+                        function cerrarModalGlosario(){ document.getElementById('modalGlosario').style.display='none'; }
+                        function limpiarBusquedaGlosario(){ const i=document.getElementById('inputBuscarGlosario'); i.value=''; filtrarGlosario(); }
+                        function normalizarEs(s){ return s.normalize('NFD').replace(/[\u0300-\u036f]/g,''); }
+                        // Mapas de categorías para colorear badges
+                        const CAT_INSTITUCIONES = new Set(['APS','CAV','CESFAM','CETEP','COMERE','COMPIN','CCO','ESACHS','FONASA','HCS','ISAPRE','ISL','MINSAL','PROTEX','RCR','SAR','SENADIS','SIS','SUSESO']);
+                        const CAT_ESPECIALIDADES = new Set(['ANES','AS','BIOME','CMF','DERMA','MFE','CX','CX P-Q','ENF','FO','INFEC','MI','MDT','M-QX','NEU','OFT','OTR','PSQ','PS','QUEM','RH','SM','TF','TMT','-TMT ESS','-TMT EII','-TCOL','-TCYP','-THOM','-TROD','-TTYP','TO']);
+                        const CAT_EXAMENES = new Set(['Eco Cardio','Eco Doppler','ECG','EEG','EMG','PL','RX','-Rx s/LOA','-Rx Tx','RNM','TAC']);
+                        const CAT_DEPTO = new Set(['CAA','CC','CCEI','CEM','CEEP','CIEL','CMN','CPHS','HTS','MDT','OTEC','PAB','RED','REIP','SU','SEL','SEP','SVE','UCI','UPC','UTI']);
+                        const CAT_SIGLAS = new Set(['ACV/AVE','AEA','AEB','AES','ALME','AM','ATB','AP','D°','D/E','DG','DIAT','DIEP','DLP','DM','EESS','EEII','EJ','EP','EPP','EPT','EVA','FUNDEPI','FX','GAF','HMD','HNP','HTA','IA','IAM','IC','ICC','IMA','IMC','IRC','IZQ','JOA','KNT','MJ','N','OB','OBS','OH','OT','OTS','PAV','PPI','QX','RAM','RD','RECA','RIHS','RIEP','RND','SGP','STP','SOS','TDP','THC','TLP','TME','TTO','UPP','VSC','OAL','APT','UIC','UAT','EP-OP','DT','SNL','ME']);
+
+                        function estiloBadgePorClave(clave){
+                            let bg = '#eef2ff', bd = '#c7d2fe', fg = '#1e3a8a';
+                            if (CAT_INSTITUCIONES.has(clave)) { bg = '#e8f5e9'; bd = '#a5d6a7'; fg = '#1b5e20'; }
+                            else if (CAT_ESPECIALIDADES.has(clave)) { bg = '#f3e8ff'; bd = '#d8b4fe'; fg = '#6b21a8'; }
+                            else if (CAT_EXAMENES.has(clave)) { bg = '#e3f2fd'; bd = '#90caf9'; fg = '#0d47a1'; }
+                            else if (CAT_DEPTO.has(clave)) { bg = '#fff8e1'; bd = '#ffe082'; fg = '#b37400'; }
+                            else if (CAT_SIGLAS.has(clave)) { bg = '#fde7e9'; bd = '#f8b4bd'; fg = '#9b1c1f'; }
+                            return { bg, bd, fg };
+                        }
+                        function renderGlosario(items){
+                            const cont = document.getElementById('listaGlosario');
+                            if(!cont) return;
+                            const html = items.map(it => {
+                                const idx = it.indexOf(':');
+                                if (idx > 0) {
+                                    const clave = it.slice(0, idx).trim();
+                                    const valor = it.slice(idx + 1).trim();
+                                    const est = estiloBadgePorClave(clave);
+                                    return `<div style="padding:10px 12px; border-bottom:1px solid #f1f5f9; display:flex; gap:10px; align-items:flex-start;">
+                                                <span style="display:inline-block; background:${est.bg}; color:${est.fg}; border:1px solid ${est.bd}; font-weight:700; font-size:.85rem; padding:4px 8px; border-radius:999px; min-width:80px; text-align:center;">${clave}</span>
+                                                <span style="color:#374151;">${valor}</span>
+                                            </div>`;
+                                }
+                                return `<div style="padding:8px 10px; border-bottom:1px solid #f1f5f9; color:#374151;">${it}</div>`;
+                            }).join('');
+                            cont.innerHTML = html || '<div style="padding:10px; color:#6b7280;">Sin resultados</div>';
+                        }
+                        function filtrarGlosario(){
+                            const t = normalizarEs(document.getElementById('inputBuscarGlosario').value || '').toLowerCase();
+                            if(!t){ renderGlosario(GLOSARIO_ITEMS); return; }
+                            const filtrados = GLOSARIO_ITEMS.filter(it => normalizarEs(it).toLowerCase().includes(t));
+                            renderGlosario(filtrados);
+                        }
+                    </script>
                                 <!-- Modal Horario Imagología -->
                                 <div id="modalHorarioImagen" class="modal" style="display:none; justify-content:center; align-items:center;">
                                     <div class="modal-contenido" style="max-width:760px; background:#ffffff; border-radius:18px; box-shadow:0 8px 36px rgba(30,58,138,0.18); padding:2.2rem 2.4rem; position:relative; line-height:1.5;">
@@ -4911,7 +5127,7 @@ ESTENOSIS CERVICAL
                                                 <li style="margin-bottom:.45rem;">👥 Atención por orden de llegada (sin reserva previa).</li>
                                                 <li style="margin-bottom:.45rem;">⚠️ Solo radiografías de extremidades superiores e inferiores.</li>
                                                 <li style="margin-bottom:.45rem;">🚫 No se realizan columna, tronco, TAC ni resonancia.</li>
-                                                <li>🔎 Validar disponibilidad en “Centros Abiertos RX” (SharePoint SNL) o web oficial.</li>
+                                                
                                             </ul>
                                         </div>
 
@@ -4930,6 +5146,8 @@ ESTENOSIS CERVICAL
                                             <button onclick="abrirModalSedesRayosX()" style="background:linear-gradient(135deg,#1e3a8a,#3b82f6); color:#fff; border:none; padding:1rem 1.4rem; border-radius:14px; cursor:pointer; font-size:1.05rem; font-weight:600; letter-spacing:.5px; display:flex; align-items:center; gap:10px; box-shadow:0 6px 18px rgba(30,58,138,0.35); position:relative; overflow:hidden; animation:pulseRX 2s ease-in-out infinite;">
                                                 <span style="font-size:1.3rem;">📡</span>
                                                 <span>Ver Sedes Abiertas RX</span>
+                                                <br>
+                                                <span style="font-size:.9rem; opacity:.9;">Pinchar acá</span>
                                                 <span style="position:absolute; inset:0; background:radial-gradient(circle at 30% 30%, rgba(255,255,255,0.25), transparent 60%); opacity:.4; animation:glowRX 4s linear infinite; pointer-events:none;"></span>
                                             </button>
                                             <style>
