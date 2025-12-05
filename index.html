@@ -3142,6 +3142,7 @@ const feriadosCL = new Map([
                 <tbody>
                     <tr><td>Puerto Montt</td><td>Andrés Céspedes Jara</td></tr>
                     <tr><td>Telemedicina</td><td>Valentina Andrea González Cid</td></tr>
+                    <tr><td>Telemedicina-Buin</td><td>Alejandra Hoffmann Campos</td></tr>
                     <tr><td>Temuco</td><td>Sebastián Caniumil Candia</td></tr>
                     <tr><td>Copiapo</td><td>Macarena Cáceres Morales</td></tr>
                     <tr><td>Talcahuano</td><td>Camila Soto Melín</td></tr>
@@ -4962,6 +4963,7 @@ ESTENOSIS CERVICAL
 - EP :: Enfermedad Profesional
 - EP-OP :: Enfermedad Profesional - Otras Patologías
 - EPP :: Elementos de Protección Personal
+- EPT :: Evaluación Puesto de Trabajo
 - ESACHS :: Empresa de Servicios Externos Achs
 - EVA :: Escala Valoración Análoga del dolor
 - FO :: Fonoaudiología
@@ -5069,10 +5071,39 @@ ESTENOSIS CERVICAL
                             .filter(Boolean)
                             .sort((a, b) => a.localeCompare(b, 'es', { sensitivity: 'base' }));
 
-                        function abrirModalGlosario(){ document.getElementById('modalGlosario').style.display='flex'; renderGlosario(GLOSARIO_ITEMS); }
+                        function abrirModalGlosario(){
+                            document.getElementById('modalGlosario').style.display='flex';
+                            filtrarGlosario();
+                        }
                         function cerrarModalGlosario(){ document.getElementById('modalGlosario').style.display='none'; }
                         function limpiarBusquedaGlosario(){ const i=document.getElementById('inputBuscarGlosario'); i.value=''; filtrarGlosario(); }
-                        function normalizarEs(s){ return s.normalize('NFD').replace(/[\u0300-\u036f]/g,''); }
+                        function normalizarEs(s){ return (s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,''); }
+                        function escapeRegExp(s){ return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }
+                        function dividirItem(it){
+                            const idx = it.indexOf(':');
+                            if (idx > 0) {
+                                return { clave: it.slice(0, idx).trim(), valor: it.slice(idx+1).replace(/^\s*[:\-]*\s*/, '').trim() };
+                            }
+                            return { clave: it.trim(), valor: '' };
+                        }
+                        function categoriaDeClave(clave){
+                            if (CAT_INSTITUCIONES.has(clave)) return 'instituciones';
+                            if (CAT_ESPECIALIDADES.has(clave)) return 'especialidades';
+                            if (CAT_EXAMENES.has(clave)) return 'examenes';
+                            if (CAT_DEPTO.has(clave)) return 'departamentos';
+                            if (CAT_SIGLAS.has(clave)) return 'siglas';
+                            return 'otras';
+                        }
+                        function resaltarTexto(texto, tokens){
+                            if (!tokens || tokens.length===0) return texto;
+                            let result = texto;
+                            tokens.forEach(t => {
+                                if (!t) return;
+                                const pattern = new RegExp(escapeRegExp(t), 'gi');
+                                result = result.replace(pattern, m => `<mark style="background:#fff3bf;">${m}</mark>`);
+                            });
+                            return result;
+                        }
                         // Mapas de categorías para colorear badges
                         const CAT_INSTITUCIONES = new Set(['APS','CAV','CESFAM','CETEP','COMERE','COMPIN','CCO','ESACHS','FONASA','HCS','ISAPRE','ISL','MINSAL','PROTEX','RCR','SAR','SENADIS','SIS','SUSESO']);
                         const CAT_ESPECIALIDADES = new Set(['ANES','AS','BIOME','CMF','DERMA','MFE','CX','CX P-Q','ENF','FO','INFEC','MI','MDT','M-QX','NEU','OFT','OTR','PSQ','PS','QUEM','RH','SM','TF','TMT','-TMT ESS','-TMT EII','-TCOL','-TCYP','-THOM','-TROD','-TTYP','TO']);
@@ -5089,29 +5120,77 @@ ESTENOSIS CERVICAL
                             else if (CAT_SIGLAS.has(clave)) { bg = '#fde7e9'; bd = '#f8b4bd'; fg = '#9b1c1f'; }
                             return { bg, bd, fg };
                         }
-                        function renderGlosario(items){
+                        function renderGlosario(items, tokens){
                             const cont = document.getElementById('listaGlosario');
                             if(!cont) return;
+                            const terms = tokens || [];
                             const html = items.map(it => {
-                                const idx = it.indexOf(':');
-                                if (idx > 0) {
-                                    const clave = it.slice(0, idx).trim();
-                                    const valor = it.slice(idx + 1).trim();
-                                    const est = estiloBadgePorClave(clave);
+                                const { clave, valor } = dividirItem(it);
+                                const est = estiloBadgePorClave(clave);
+                                const claveH = resaltarTexto(clave, terms);
+                                const valorH = resaltarTexto(valor, terms);
+                                if (valor) {
                                     return `<div style="padding:10px 12px; border-bottom:1px solid #f1f5f9; display:flex; gap:10px; align-items:flex-start;">
-                                                <span style="display:inline-block; background:${est.bg}; color:${est.fg}; border:1px solid ${est.bd}; font-weight:700; font-size:.85rem; padding:4px 8px; border-radius:999px; min-width:80px; text-align:center;">${clave}</span>
-                                                <span style="color:#374151;">${valor}</span>
+                                                <span style="display:inline-block; background:${est.bg}; color:${est.fg}; border:1px solid ${est.bd}; font-weight:700; font-size:.85rem; padding:4px 8px; border-radius:999px; min-width:80px; text-align:center;">${claveH}</span>
+                                                <span style="color:#374151;">${valorH}</span>
                                             </div>`;
                                 }
-                                return `<div style="padding:8px 10px; border-bottom:1px solid #f1f5f9; color:#374151;">${it}</div>`;
+                                return `<div style="padding:8px 10px; border-bottom:1px solid #f1f5f9; color:#374151;">${claveH}</div>`;
                             }).join('');
                             cont.innerHTML = html || '<div style="padding:10px; color:#6b7280;">Sin resultados</div>';
                         }
                         function filtrarGlosario(){
-                            const t = normalizarEs(document.getElementById('inputBuscarGlosario').value || '').toLowerCase();
-                            if(!t){ renderGlosario(GLOSARIO_ITEMS); return; }
-                            const filtrados = GLOSARIO_ITEMS.filter(it => normalizarEs(it).toLowerCase().includes(t));
-                            renderGlosario(filtrados);
+                            const raw = (document.getElementById('inputBuscarGlosario').value || '').trim();
+                            const norm = normalizarEs(raw).toLowerCase();
+                            if (!norm){ renderGlosario(GLOSARIO_ITEMS, []); return; }
+
+                            const parts = norm.match(/"[^"]+"|\S+/g) || [];
+                            const termsKey = []; const termsDesc = []; const termsAny = []; const phrases = []; const cats = new Set();
+                            parts.forEach(p => {
+                                let token = p.replace(/^"|"$/g,'');
+                                if (!token) return;
+                                if (token.startsWith('key:')) { termsKey.push(token.slice(4)); return; }
+                                if (token.startsWith('desc:')) { termsDesc.push(token.slice(5)); return; }
+                                if (token.startsWith('cat:')) {
+                                    const c = token.slice(4);
+                                    if (['instituciones','especialidades','examenes','departamentos','siglas','otras'].includes(c)) cats.add(c);
+                                    return;
+                                }
+                                if (p.startsWith('"') && p.endsWith('"')) { phrases.push(token); return; }
+                                termsAny.push(token);
+                            });
+
+                            const scored = GLOSARIO_ITEMS.map(it => {
+                                const { clave, valor } = dividirItem(it);
+                                const keyN = normalizarEs(clave).toLowerCase();
+                                const valN = normalizarEs(valor).toLowerCase();
+                                const cat = categoriaDeClave(clave);
+                                // Category filter
+                                if (cats.size && !cats.has(cat)) return null;
+
+                                // Must-match checks (AND semantics)
+                                const allKey = termsKey.every(t => keyN.includes(t));
+                                if (!allKey) return null;
+                                const allDesc = termsDesc.every(t => valN.includes(t));
+                                if (!allDesc) return null;
+                                const allAny = termsAny.every(t => keyN.includes(t) || valN.includes(t));
+                                if (!allAny) return null;
+                                const allPhrases = phrases.every(t => keyN.includes(t) || valN.includes(t));
+                                if (!allPhrases) return null;
+
+                                // Scoring
+                                let score = 0;
+                                if (raw && clave.toLowerCase() === raw.toLowerCase()) score += 50; // exact key typed
+                                termsKey.forEach(t => { if (keyN.startsWith(t)) score += 15; else if (keyN.includes(t)) score += 8; });
+                                termsDesc.forEach(t => { if (valN.includes(t)) score += 5; });
+                                termsAny.forEach(t => { if (keyN.startsWith(t)) score += 6; else if (keyN.includes(t)) score += 4; else if (valN.includes(t)) score += 2; });
+                                phrases.forEach(t => { if (valN.includes(t) || keyN.includes(t)) score += 7; });
+                                return { it, clave, score };
+                            }).filter(Boolean);
+
+                            scored.sort((a,b) => b.score - a.score || a.clave.localeCompare(b.clave, 'es', { sensitivity:'base' }));
+                            const tokensToHighlight = [...termsKey, ...termsDesc, ...termsAny, ...phrases].filter(Boolean);
+                            renderGlosario(scored.map(s => s.it), tokensToHighlight);
                         }
                     </script>
                                 <!-- Modal Horario Imagología -->
