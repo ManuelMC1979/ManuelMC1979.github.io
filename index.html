@@ -5065,6 +5065,10 @@ ESTENOSIS CERVICAL
 - UPP :: Úlcera por Presión
 - UTI :: Unidad de Tratamiento Intermedio
 - VSC :: Venta de Servicios Complementarios
+ - VSC :: Venta de Servicios Complementarios
+ - Telemapr :: Telemedicina con Médico
+ - Telesiap :: Telemedicina con Psicología
+ - Teleceap :: Telemedicina con Psiquiatría
 `
                             .split('\n')
                             .map(s => s.trim())
@@ -5109,7 +5113,7 @@ ESTENOSIS CERVICAL
                         const CAT_ESPECIALIDADES = new Set(['ANES','AS','BIOME','CMF','DERMA','MFE','CX','CX P-Q','ENF','FO','INFEC','MI','MDT','M-QX','NEU','OFT','OTR','PSQ','PS','QUEM','RH','SM','TF','TMT','-TMT ESS','-TMT EII','-TCOL','-TCYP','-THOM','-TROD','-TTYP','TO']);
                         const CAT_EXAMENES = new Set(['Eco Cardio','Eco Doppler','ECG','EEG','EMG','PL','RX','-Rx s/LOA','-Rx Tx','RNM','TAC']);
                         const CAT_DEPTO = new Set(['CAA','CC','CCEI','CEM','CEEP','CIEL','CMN','CPHS','HTS','MDT','OTEC','PAB','RED','REIP','SU','SEL','SEP','SVE','UCI','UPC','UTI']);
-                        const CAT_SIGLAS = new Set(['ACV/AVE','AEA','AEB','AES','ALME','AM','ATB','AP','D°','D/E','DG','DIAT','DIEP','DLP','DM','EESS','EEII','EJ','EP','EPP','EPT','EVA','FUNDEPI','FX','GAF','HMD','HNP','HTA','IA','IAM','IC','ICC','IMA','IMC','IRC','IZQ','JOA','KNT','MJ','N','OB','OBS','OH','OT','OTS','PAV','PPI','QX','RAM','RD','RECA','RIHS','RIEP','RND','SGP','STP','SOS','TDP','THC','TLP','TME','TTO','UPP','VSC','OAL','APT','UIC','UAT','EP-OP','DT','SNL','ME']);
+                        const CAT_SIGLAS = new Set(['ACV/AVE','AEA','AEB','AES','ALME','AM','ATB','AP','D°','D/E','DG','DIAT','DIEP','DLP','DM','EESS','EEII','EJ','EP','EPP','EPT','EVA','FUNDEPI','FX','GAF','HMD','HNP','HTA','IA','IAM','IC','ICC','IMA','IMC','IRC','IZQ','JOA','KNT','MJ','N','OB','OBS','OH','OT','OTS','PAV','PPI','QX','RAM','RD','RECA','RIHS','RIEP','RND','SGP','STP','SOS','TDP','THC','TLP','TME','TTO','UPP','VSC','OAL','APT','UIC','UAT','EP-OP','DT','SNL','ME','Telemapr','Telesiap','Teleceap']);
 
                         function estiloBadgePorClave(clave){
                             let bg = '#eef2ff', bd = '#c7d2fe', fg = '#1e3a8a';
