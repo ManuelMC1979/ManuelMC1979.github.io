@@ -3414,6 +3414,147 @@
 </head>
 
 <body>
+    <!-- FORMULARIO DE INGRESO DE USUARIO (RUT y Nombre) -->
+    <div id="loginOverlay" style="position:fixed;z-index:200000;top:0;left:0;width:100vw;height:100vh;background:#002d5c;">
+        <form id="loginForm" style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;padding:32px 28px 24px 28px;border-radius:18px;box-shadow:0 8px 32px rgba(0,33,71,0.18);min-width:320px;display:flex;flex-direction:column;gap:18px;align-items:center;max-width:94vw;">
+            <h2 style="margin-bottom:10px;color:#002d5c;font-size:1.35em;font-weight:700;text-align:center;">Bienvenido a ACHS Ejecutivo Centralizado</h2>
+            <label style="width:100%;font-weight:500;">RUT
+                <input id="inputRut" name="rut" type="text" maxlength="12" autocomplete="off" placeholder="Ej: 12345678-9" style="width:100%;margin-top:4px;padding:8px 10px;border-radius:7px;border:1px solid #cbd5e1;font-size:1.1em;" required pattern="^[0-9]{7,8}-[0-9kK]{1}$">
+            </label>
+            <label style="width:100%;font-weight:500;">Nombre y Apellido
+                <input id="inputNombre" name="nombre" type="text" maxlength="60" autocomplete="off" placeholder="Ej: Juan Pérez" style="width:100%;margin-top:4px;padding:8px 10px;border-radius:7px;border:1px solid #cbd5e1;font-size:1.1em;" required>
+            </label>
+            <button type="submit" style="margin-top:10px;background:#2563eb;color:#fff;padding:10px 0;border:none;border-radius:8px;font-size:1.1em;font-weight:600;width:100%;cursor:pointer;">Ingresar</button>
+            <div id="loginError" style="color:#dc2626;font-size:.98em;display:none;margin-top:2px;"></div>
+        </form>
+    </div>
+    <script>
+    // Valida RUT chileno simple
+    function validarRut(rut) {
+        rut = rut.replace(/\./g, '').replace(/-/g, '');
+        if (rut.length < 8) return false;
+        var cuerpo = rut.slice(0, -1);
+        var dv = rut.slice(-1).toUpperCase();
+        var suma = 0, multiplo = 2;
+        for (var i = cuerpo.length - 1; i >= 0; i--) {
+            suma += parseInt(cuerpo[i]) * multiplo;
+            multiplo = multiplo < 7 ? multiplo + 1 : 2;
+        }
+        var dvEsperado = 11 - (suma % 11);
+        dvEsperado = dvEsperado === 11 ? '0' : dvEsperado === 10 ? 'K' : dvEsperado.toString();
+        return dv === dvEsperado;
+    }
+
+    // Guarda un registro de acceso en localStorage
+    function guardarRegistroAcceso(rut, nombre) {
+        try {
+            var lista = JSON.parse(localStorage.getItem('accesosAchs') || '[]');
+            var ahora = new Date();
+            lista.push({ rut: rut, nombre: nombre, timestamp: ahora.toISOString() });
+            localStorage.setItem('accesosAchs', JSON.stringify(lista));
+        } catch (e) { console.error('Error guardando registro', e); }
+    }
+
+    // Renderiza registros en el modal administrador (con contador y acciones de borrar)
+    function renderizarRegistrosAdmin() {
+        var cont = document.getElementById('adminRecords');
+        var countEl = document.getElementById('adminCount');
+        var lista = JSON.parse(localStorage.getItem('accesosAchs') || '[]');
+        if (!cont) return;
+        countEl.textContent = lista.length ? ('Total: ' + lista.length) : '(0 registros)';
+        if (!lista.length) {
+            cont.innerHTML = '<div style="color:#64748b;padding:12px;text-align:center;">No hay registros aún.</div>';
+            return;
+        }
+        var html = '<div style="overflow:auto; max-height:56vh;"><table style="width:100%;border-collapse:collapse;font-size:0.95rem;">';
+        html += '<thead><tr style="text-align:left;border-bottom:2px solid #e5e7eb;"><th style="padding:8px">RUT</th><th style="padding:8px">Nombre</th><th style="padding:8px">Fecha / Hora</th><th style="padding:8px">Acción</th></tr></thead>';
+        html += '<tbody>';
+        for (var i = lista.length - 1; i >= 0; i--) {
+            var r = lista[i];
+            var d = new Date(r.timestamp);
+            html += '<tr>' +
+                '<td style="padding:8px;border-bottom:1px solid #f1f5f9">' + (r.rut || '') + '</td>' +
+                '<td style="padding:8px;border-bottom:1px solid #f1f5f9">' + (r.nombre || '') + '</td>' +
+                '<td style="padding:8px;border-bottom:1px solid #f1f5f9">' + d.toLocaleString() + '</td>' +
+                '<td style="padding:8px;border-bottom:1px solid #f1f5f9"><button onclick="borrarRegistro(' + i + ')" style="background:#ef4444;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;">Borrar</button></td>' +
+                '</tr>';
+        }
+        html += '</tbody></table></div>';
+        cont.innerHTML = html;
+    }
+
+    // Borra un registro por índice (índice corresponde al array original en localStorage)
+    function borrarRegistro(idx) {
+        try {
+            var lista = JSON.parse(localStorage.getItem('accesosAchs') || '[]');
+            if (!lista || !lista.length) return;
+            if (idx < 0 || idx >= lista.length) return;
+            if (!confirm('¿Borrar este registro?')) return;
+            lista.splice(idx, 1);
+            localStorage.setItem('accesosAchs', JSON.stringify(lista));
+            renderizarRegistrosAdmin();
+        } catch (e) { console.error(e); alert('Error borrando registro'); }
+    }
+
+    function borrarTodosConfirm() {
+        if (!confirm('¿Borrar todos los registros? Esta acción no se puede deshacer.')) return;
+        localStorage.removeItem('accesosAchs');
+        renderizarRegistrosAdmin();
+    }
+
+    function exportarRegistrosCSV() {
+        var lista = JSON.parse(localStorage.getItem('accesosAchs') || '[]');
+        if (!lista.length) { alert('No hay registros para exportar.'); return; }
+        var csv = 'RUT,Nombre,Timestamp\n';
+        lista.forEach(function(r){ csv += '"' + (r.rut||'') + '","' + (r.nombre||'') + '","' + (r.timestamp||'') + '"\n'; });
+        var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a'); a.href = url; a.download = 'accesos_achs.csv'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    }
+
+    function abrirAdmin() {
+        var pwd = prompt('Clave de administrador:');
+        if (pwd === null) return; // cancel
+        if (pwd === 'ADMIN2026') {
+            var modal = document.getElementById('adminModal');
+            if (modal) { modal.style.display = 'flex'; renderizarRegistrosAdmin(); }
+        } else {
+            alert('Clave incorrecta.');
+        }
+    }
+
+    function cerrarAdmin() { var m = document.getElementById('adminModal'); if (m) m.style.display = 'none'; }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var overlay = document.getElementById('loginOverlay');
+        var form = document.getElementById('loginForm');
+        var inputRut = document.getElementById('inputRut');
+        var inputNombre = document.getElementById('inputNombre');
+        var error = document.getElementById('loginError');
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            var rut = inputRut.value.trim();
+            var nombre = inputNombre.value.trim();
+            if (!rut.match(/^[0-9]{7,8}-[0-9kK]{1}$/) || !validarRut(rut)) {
+                error.textContent = 'Ingrese un RUT válido (Ej: 12345678-9)';
+                error.style.display = 'block';
+                inputRut.focus();
+                return;
+            }
+            if (nombre.length < 3) {
+                error.textContent = 'Ingrese su nombre y apellido.';
+                error.style.display = 'block';
+                inputNombre.focus();
+                return;
+            }
+            error.style.display = 'none';
+            // Guardar registro
+            guardarRegistroAcceso(rut, nombre);
+            overlay.style.display = 'none';
+        });
+        setTimeout(() => inputRut.focus(), 200);
+    });
+    </script>
     <!-- Franja superior azul con texto desplazándose (ticker informativo) -->
     <div class="banner-ticker" role="status" aria-live="polite" id="bannerTicker">
         <div class="banner-inner" id="bannerInner">
@@ -3442,6 +3583,23 @@
         </div>
     </div>
     <!-- Banner superior de ayuda eliminado a solicitud del usuario -->
+    <!-- Modal Administrador (protegido por contraseña) -->
+    <div id="adminModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.6); z-index:3500; justify-content:center; align-items:center;">
+        <div style="background:#fff; border-radius:12px; padding:18px; width:92%; max-width:900px; max-height:86vh; overflow:auto; box-shadow:0 20px 40px rgba(2,6,23,0.4);">
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:12px;">
+                <h3 style="margin:0; color:#002147;">🔒 Registros de acceso - Administrador
+                    <small id="adminCount" style="display:inline-block;margin-left:12px;color:#6b7280;font-weight:600;font-size:0.9rem;"></small>
+                </h3>
+                <div style="display:flex; gap:8px; align-items:center;">
+                    <button onclick="exportarRegistrosCSV()" style="background:#2563eb;color:#fff;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:600;">Exportar CSV</button>
+                    <button onclick="borrarTodosConfirm()" style="background:#ef4444;color:#fff;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:600;">Borrar todos</button>
+                    <button onclick="cerrarAdmin()" style="background:#f3f4f6;border:1px solid #e5e7eb;padding:8px 12px;border-radius:8px;cursor:pointer;">Cerrar</button>
+                </div>
+            </div>
+            <div id="adminRecords" style="background:#ffffff;border-radius:8px;padding:6px;min-height:120px;color:#0f172a;"></div>
+        </div>
+    </div>
+
     <!-- Botón flotante Ayuda Global (ubicado en primer body para que siempre cargue) -->
     <button type="button" class="help-fab" onclick="abrirModalAyuda()" aria-label="Ayuda general del sistema">ℹ
         <small>Ayuda</small></button>
@@ -3551,6 +3709,7 @@ const feriadosCL = new Map([
                         <button id="btnReclamo" class="btn-primario hover-lift escalar-suave zoom-hover"
                             data-tooltip="Formulario de reclamos y quejas" onclick="abrirModalReclamo()">📢
                             RECLAMO</button>
+                        <button id="btnAdministrador" class="btn-secundario hover-lift escalar-suave" style="margin-left:10px; background:#0f172a; color:#fff; border:1px solid rgba(255,255,255,0.06); padding:8px 12px; border-radius:8px; font-weight:700;" onclick="abrirAdmin()">🔐 Administrador</button>
                     </div>
                 </div>
 
