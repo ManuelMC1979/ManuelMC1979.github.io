@@ -1,0 +1,250 @@
+/* ACHS Theme: variables y utilidades
+   Archivo generado automáticamente — paleta corporativa ACHS / ACHS Salud
+*/
+:root {
+  /* ACHS Identidad (unificado) */
+  --achs-blue: #002D5C; /* Azul principal ACHS */
+  --achs-blue-hover: #004C8C; /* Hover / headers */
+  --achs-blue-soft: #E6F0FA;
+
+  /* ACHS Salud (acento) */
+  --achs-green: #00A859; /* Verde salud */
+  --achs-green-hover: #2DBE72; /* Hover / estados positivos */
+  --achs-green-soft: #E8F7EF;
+
+  /* Fondos */
+  --bg-body: #F4F6F9;
+  --bg-card: #FFFFFF;
+
+  /* Texto */
+  --text-main: #1F2937;
+  --text-muted: #6B7280;
+
+  /* Estados */
+  --success: #00A859;
+  --warning: #F59E0B;
+  --error: #DC2626;
+
+  /* Bordes y sombras */
+  --border-soft: #E5E7EB;
+  --shadow-soft: 0 6px 18px rgba(0,0,0,0.06);
+
+  /* Legacy aliases para compatibilidad */
+  --achs-azul: var(--achs-blue);
+  --achs-azul-claro: var(--achs-blue-hover);
+  --achs-verde: var(--achs-green);
+  --green: var(--success);
+  /* Tipografía y espaciados */
+  --font-sans: 'Helvetica Rounded', 'Arial Rounded MT Bold', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, 'Segoe UI Mono', 'Roboto Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.85rem;
+  --font-size-base: 0.95rem;
+  --font-size-md: 1.05rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.6rem;
+  --line-height-tight: 1.2;
+  --line-height-base: 1.5;
+  --line-height-relaxed: 1.65;
+  --letter-spacing-tight: -0.015em;
+  --letter-spacing-normal: 0;
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 0.75rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+}
+
+/* Colores y sombras adicionales reutilizables */
+:root {
+  --white: #FFFFFF;
+  --header-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  --white-12: rgba(255,255,255,0.12);
+  --white-06: rgba(255,255,255,0.06);
+  --white-08: rgba(255,255,255,0.08);
+  --white-15: rgba(255,255,255,0.15);
+  --white-25: rgba(255,255,255,0.25);
+  --white-40: rgba(255,255,255,0.4);
+  --header-subtext: #D1E4F8;
+}
+
+/* Layout base */
+body {
+  background: var(--bg-body);
+  color: var(--text-main);
+  font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+  padding-top: 50px;
+}
+
+/* Cards / paneles */
+.card,
+.panel,
+.modal-content {
+  background: var(--bg-card);
+  color: var(--text-main);
+  border-radius: 14px;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid var(--border-soft);
+  padding: 20px;
+}
+
+/* Títulos */
+h1, h2, h3 {
+  color: var(--achs-blue);
+  font-weight: 700;
+}
+
+small { color: var(--text-muted); }
+
+/* Botones */
+.btn-primary {
+  background: var(--achs-blue);
+  color: var(--white);
+  border-radius: 10px;
+  padding: 10px 18px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-primary:hover {
+  background: var(--achs-blue-hover);
+  transform: translateY(-1px);
+}
+
+/* Botón Salud / Confirmación */
+.btn-success {
+  background: var(--achs-green);
+  color: var(--white);
+  border: none;
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.btn-success:hover {
+  background: var(--achs-green-hover);
+  transform: translateY(-1px);
+}
+
+/* Estados Salud */
+.estado-ok,
+.success {
+  background: var(--achs-green-soft);
+  color: var(--achs-green);
+  border-left: 4px solid var(--achs-green);
+  padding: 10px 12px;
+  border-radius: 8px;
+}
+
+/* Banner superior (ticker) */
+.banner-ticker {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 44px;
+  background: linear-gradient(135deg, var(--achs-blue) 0%, var(--achs-blue-hover) 50%, var(--achs-blue) 100%);
+  color: #fff;
+  font-family: 'Helvetica Rounded', 'Arial Rounded MT Bold', 'Helvetica Neue', 'Helvetica', sans-serif;
+  overflow: hidden;
+  z-index: 950;
+  box-shadow: 0 3px 12px rgba(0, 45, 92, 0.15);
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  padding: 0 44px 0 12px;
+}
+
+.banner-ticker .banner-inner { white-space: nowrap; display: inline-block; animation: tickerScroll 20s linear infinite; padding-left: 100%; }
+.banner-ticker .banner-text { font-size: 1.15rem; letter-spacing: .5px; font-weight: 600; }
+.banner-ticker:hover .banner-inner, .banner-ticker.is-paused .banner-inner { animation-play-state: paused; }
+
+.banner-ticker .banner-toggle {
+  position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+  background: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.25);
+  padding: 5px 10px; border-radius: 20px; font-size: 11px; cursor: pointer; line-height: 1; backdrop-filter: blur(8px);
+  font-weight: 500; transition: all 0.3s ease;
+}
+
+@keyframes tickerScroll { 0%{ transform: translateX(0); } 100%{ transform: translateX(-100%); } }
+
+/* Header / Top Bar ACHS */
+.achs-header,
+header.achs-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--achs-blue);
+  padding: 14px 24px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.logo-achs {
+  height: 42px;
+  width: auto;
+  display: block;
+}
+
+.header-titles h1 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.header-titles span {
+  font-size: 12px;
+  color: var(--header-subtext);
+}
+
+.header-actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* Botones del header */
+.btn-header {
+  background: var(--white-15);
+  color: var(--white);
+  border: 1px solid var(--white-25);
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-header:hover {
+  background: var(--white-25);
+}
+
+/* Botón Salud dentro del header */
+.btn-header.btn-success {
+  background: var(--achs-green);
+  border-color: var(--achs-green);
+}
+
+.btn-header.btn-success:hover {
+  background: var(--achs-green-hover);
+}
+
+/* Botón outline (modo oscuro) */
+.btn-header.btn-outline {
+  background: transparent;
+  border: 1px solid var(--white-40);
+}
