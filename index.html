@@ -49,11 +49,71 @@
 <head>
     <meta charset="UTF-8">
     <title>ACHS Ejecutivo Centralizado</title>
+    <link rel="stylesheet" href="achs-theme.css">
     <!-- ✅ CSS Y JS INTEGRADOS EN EL HTML - 2025-11-11 -->
     <style>
         /* ========================================
            ESTILOS MIGRADOS DESDE assets/css/styles.css
+           (variables y utilidades movidas a achs-theme.css)
            ======================================== */
+
+        :root {
+            /* Paleta oficial ACHS Salud (proporcionada)
+               Azul Profundo: #001E61
+               Azul Clínico: #0057B8
+               Verde ACHS: #13C045
+               Azul Claro: #E0F2FE
+               Gris Clínico (fondo): #F5F7FA
+               Texto Principal: #0F172A
+               Texto Secundario: #475569
+            */
+            --color-salud-primary: #0057B8;
+            --color-salud-dark: #001E61;
+            --color-achs-accent: #13C045;
+
+            --bg-page: #F5F7FA;
+            --text-main: #0F172A;
+            --text-muted: #475569;
+
+            /* Legacy mappings used across this file -> map to new tokens */
+            --achs-primary: var(--color-salud-primary);
+            --achs-primary-dark: var(--color-salud-dark);
+            --achs-accent: var(--color-achs-accent);
+            --achs-blue: var(--color-salud-primary);
+            --achs-blue-hover: var(--color-salud-dark);
+            --achs-azul: var(--color-salud-primary);
+            --achs-azul-claro: var(--color-achs-accent);
+            --primary-blue: var(--color-salud-primary);
+            --secondary-blue: var(--color-salud-dark);
+            --accent-blue: var(--color-achs-accent);
+            --light-blue: #E0F2FE;
+            --primary-color: var(--color-salud-primary);
+            --text-color: var(--text-main);
+            --bg-body: var(--bg-page);
+            --bg-card: var(--bg-page);
+            --structure-color: var(--color-salud-dark);
+            --action-color: var(--color-salud-primary);
+            --structure-border: rgba(0,30,97,0.08);
+            --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            /* Label y input helpers */
+            --label-standard: #334155; /* etiquetas estándar */
+            --label-highlight: #0057B8; /* etiquetas destacadas (RUT, Nombre) */
+            --label-disabled: #64748B; /* etiquetas deshabilitadas (Fecha) */
+            --input-border: #CBD5E1;
+            --input-focus: var(--color-salud-primary);
+            --input-disabled-bg: #F8FAFC;
+        }
+
+                                body.dark-mode {
+                                    --bg-body: #0f172a;
+                                    --bg-card: #111827;
+
+                                    --text-main: #f9fafb;
+                                    --text-muted: #9ca3af;
+
+                                    --border-soft: #1f2937;
+                                    --shadow-soft: 0 4px 14px rgba(0,0,0,0.5);
+                                }
 
         /* Búsqueda rápida (Ctrl+K) */
         /* ===== Banner Ticker Superior ===== */
@@ -63,9 +123,9 @@
             left: 0;
             width: 100%;
             height: 44px;
-            background: linear-gradient(135deg, #002d5c 0%, #004c8c 50%, #002d5c 100%);
+            background: linear-gradient(135deg, var(--achs-blue) 0%, var(--achs-blue-hover) 50%, var(--achs-blue) 100%);
             color: #fff;
-            font-family: 'Helvetica Rounded', 'Arial Rounded MT Bold', 'Helvetica Neue', 'Helvetica', sans-serif;
+            font-family: var(--font-sans);
             overflow: hidden;
             z-index: 950;
             box-shadow: 0 3px 12px rgba(0, 45, 92, 0.15);
@@ -133,8 +193,63 @@
 
         /* Ajustar desplazamiento del resto del contenido para no quedar bajo el banner */
         body {
+            background: var(--bg-body);
+            color: var(--text-main);
+            font-family: 'Inter', system-ui, sans-serif;
             padding-top: 50px;
         }
+
+        /* ACHS Salud palette overrides (official tokens) */
+        .btn-primario { background: linear-gradient(135deg, var(--color-salud-primary) 0%, var(--color-salud-dark) 100%) !important; color: #fff !important; box-shadow: 0 6px 14px rgba(0, 30, 97, 0.12) !important; }
+        .btn-primario:hover { background: var(--color-achs-accent) !important; }
+        /* Botón GRABAR - fondo sólido Azul Clínico según solicitud */
+        #grabar.btn-primario { background: var(--color-salud-primary) !important; background-image: none !important; color: #fff !important; }
+        #grabar.btn-primario:hover { filter: brightness(0.95) !important; }
+        .btn-secundario { background: #ffffff !important; color: var(--color-salud-primary) !important; border: 2px solid var(--color-salud-dark) !important; }
+        .btn-herramienta { background: var(--color-salud-primary) !important; color: #fff !important; border: 2px solid var(--color-salud-dark) !important; }
+        .help-fab { background: var(--color-salud-dark) !important; color: #fff !important; box-shadow: 0 4px 6px rgba(0,0,0,0.12) !important; }
+        .btn-flotante-ep, .btn-flotante-snl, .btn-flotante-snl2, .btn-flotante-le { background: linear-gradient(135deg, var(--color-salud-primary) 0%, var(--color-salud-dark) 100%) !important; color: #fff !important; }
+        .cal-header { background: var(--structure-color) !important; color: #fff !important; }
+        .dia-actual, .cal-hoy { outline-color: var(--color-salud-dark) !important; background: var(--light-blue) !important; color: var(--text-main) !important; }
+        .banner-ticker { background: var(--structure-color) !important; }
+
+                /* 2️⃣ Tarjetas / paneles */
+                .card,
+                .panel,
+                .modal-content {
+                    background: var(--bg-card);
+                    color: var(--text-main);
+                    border-radius: 12px;
+                    box-shadow: var(--shadow-soft);
+                    border: 1px solid var(--border-soft);
+                }
+
+                /* 3️⃣ Títulos y textos */
+                h1, h2, h3 {
+                    color: var(--structure-color);
+                }
+
+                p, span, li {
+                    color: var(--text-main);
+                }
+
+                small {
+                    color: var(--text-muted);
+                }
+
+                /* 4️⃣ Botones (MISMO LOOK QUE DASH) */
+                .btn-primary {
+                    background: var(--action-color);
+                    color: #fff;
+                    border-radius: 8px;
+                    padding: 8px 14px;
+                    border: none;
+                    cursor: pointer;
+                }
+
+                .btn-primary:hover {
+                    background: var(--color-salud-dark);
+                }
 
         #busquedaRapidaOverlay {
             display: none;
@@ -151,7 +266,7 @@
 
         #busquedaRapidaBox {
             margin-top: 10vh;
-            background: #fff;
+            background: var(--bg-card);
             border-radius: 14px;
             box-shadow: 0 8px 32px rgba(0, 33, 71, 0.18);
             padding: 1.2rem 1.5rem 1.1rem 1.5rem;
@@ -281,13 +396,13 @@
             top: 90px;
             right: 20px;
             left: auto;
-            background: #fff;
+            background: var(--bg-card);
             border-radius: 16px;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
             padding: 0;
             width: 300px;
             z-index: 1200;
-            font-family: 'Helvetica Rounded', 'Arial Rounded MT Bold', 'Helvetica Neue', 'Helvetica', sans-serif;
+            font-family: var(--font-sans);
         }
 
         .cal-header {
@@ -360,7 +475,7 @@
             right: 20px !important;
             bottom: 20px !important;
             z-index: 99999 !important;
-            background: #2563eb;
+            background: var(--action-color);
             color: white;
             border: none;
             border-radius: 999px;
@@ -377,7 +492,7 @@
         .help-fab:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
-            background: #1e40af;
+            background: var(--structure-color);
         }
 
         .help-fab small {
@@ -446,7 +561,7 @@
         /* Estilo del modal de ayuda */
         .modal-ayuda-contenido {
             max-width: 760px;
-            background: #fff;
+            background: var(--bg-card);
             border-radius: 16px;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
             padding: 1.5rem;
@@ -579,7 +694,7 @@
 
         /* Estilos para impresión Script SNL */
         .print-snl-body {
-            font-family: 'Helvetica Rounded', 'Arial Rounded MT Bold', 'Helvetica Neue', 'Helvetica', Arial, sans-serif;
+            font-family: var(--font-sans);
             line-height: 1.6;
             margin: 40px;
             color: #2c3e50;
@@ -651,7 +766,7 @@
 
         /* Estilos para impresión Script LE */
         .print-le-body {
-            font-family: 'Helvetica Rounded', 'Arial Rounded MT Bold', 'Helvetica Neue', 'Helvetica', Arial, sans-serif;
+            font-family: var(--font-sans);
             line-height: 1.6;
             margin: 40px;
             color: #2c3e50;
@@ -763,52 +878,7 @@
             border: 1px solid #cbd5e1;
         }
 
-        /* ========================================
-           FIN ESTILOS MIGRADOS - Inicio estilos legados
-           ======================================== */
-        /* INICIO BLOQUE LEGADO: Será migrado a assets/css/styles.css en pasos.
-                   Fecha inicio migración: 2025-11-10 */
-        :root {
-            --primary-blue: #080606;
-            --secondary-blue: #0c0101;
-            --accent-blue: #040c72;
-            --light-blue: #00A1E0;
-            --dark-navy: #0f172a;
-            --success-green: #c50e1e;
-            --warning-amber: #d97706;
-            --error-red: #dc2626;
-            --neutral-gray: #3076e3;
-            --soft-white: #e8eef3;
-            --pure-white: #f2f6f9;
-            /* Gradientes */
-            --gradient-primary: linear-gradient(135deg, #00A1E0 100%);
-            --gradient-secondary: linear-gradient(135deg, #00A1E0 100%);
-            --gradient-accent: linear-gradient(135deg, #00A1E0 100%);
-            --gradient-background: linear-gradient(135deg, #00A1E0 100%);
-            /* Sombras */
-            --shadow-sm: 0 1px 3px rgb(238, 231, 231), 0 1px 2px rgba(0, 0, 0, 0.06);
-            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
-            --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.1);
-            /* Espaciado consistente */
-            --spacing-xs: 0.5rem;
-            /* 8px - espaciado mínimo entre elementos */
-            --spacing-sm: 0.75rem;
-            /* 12px - espaciado pequeño */
-            --spacing-md: 1rem;
-            /* 16px - espaciado medio */
-            --spacing-lg: 1.5rem;
-            /* 24px - espaciado grande */
-            --spacing-xl: 2rem;
-            /* 32px - espaciado extra grande */
-            --spacing-2xl: 3rem;
-            /* 48px - espaciado entre secciones */
-            /* Border radius */
-            --radius-sm: 6px;
-            --radius-md: 10px;
-            --radius-lg: 16px;
-            --radius-xl: 20px;
-        }
+        /* Variables y bloques legados movidos a achs-theme.css; eliminar :root redundantes */
 
         /* 
 <!-- Botón LEY KARIN al lado de INFORMACION EP y Modal (ubica esto en el body donde corresponda) -->
@@ -817,24 +887,7 @@
 <!-- ✅ Script migrado a assets/js/app.js - Sistema de Modales (10/11/2025) -->
 */
 
-        /* Tipografía modernizada: pila de fuentes del sistema para rendimiento y legibilidad.
-           Incluye variables para escalas y line-height consistentes.
-           Se evita carga externa (Google Fonts) para mantener velocidad. */
-        :root {
-            --font-sans: 'Helvetica Rounded', 'Arial Rounded MT Bold', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
-            --font-mono: ui-monospace, SFMono-Regular, 'Segoe UI Mono', 'Roboto Mono', Menlo, Consolas, 'Liberation Mono', monospace;
-            --font-size-xs: 0.75rem;
-            --font-size-sm: 0.85rem;
-            --font-size-base: 0.95rem;
-            --font-size-md: 1.05rem;
-            --font-size-lg: 1.25rem;
-            --font-size-xl: 1.6rem;
-            --line-height-tight: 1.2;
-            --line-height-base: 1.5;
-            --line-height-relaxed: 1.65;
-            --letter-spacing-tight: -0.015em;
-            --letter-spacing-normal: 0;
-        }
+        /* Tipografía movida a achs-theme.css. Evitar :root adicionales. */
 
         body {
             font-family: var(--font-sans);
@@ -852,12 +905,12 @@
         .container-principal {
             max-width: 1600px;
             margin: 0 auto;
-            background: rgba(200, 215, 225, 0.98);
+            background: var(--bg-page);
             border-radius: var(--radius-xl);
             padding: var(--spacing-2xl);
             box-shadow: var(--shadow-xl);
             backdrop-filter: blur(20px);
-            border: 1px solid rgb(224, 229, 231);
+            border: 1px solid var(--structure-border);
 
 
         }
@@ -897,7 +950,7 @@
         }
 
         .formulario-principal {
-            background: rgba(210, 220, 230, 0.98);
+            background: var(--bg-card);
             border-radius: var(--radius-lg);
             padding: var(--spacing-lg);
             /* 24px de padding interno */
@@ -917,7 +970,7 @@
         }
 
         .form-label {
-            color: var(--primary-blue);
+            color: var(--label-standard);
             font-weight: 600;
             font-size: 0.9rem;
             margin-bottom: var(--spacing-xs);
@@ -927,28 +980,46 @@
             letter-spacing: 0.5px;
         }
 
+        .form-label.destacado {
+            color: var(--label-highlight);
+        }
+
+        .form-label.deshabilitada {
+            color: var(--label-disabled);
+        }
+
         .form-input,
         .form-select,
         .form-textarea {
             width: 100%;
             padding: var(--spacing-sm);
             /* 12px de padding interno */
-            border: 3px solid var(--secondary-blue);
+            border: 2px solid var(--input-border);
             border-radius: var(--radius-sm);
-            font-size: 0.95rem;
-            transition: all 0.2s ease;
-            background: rgba(238, 244, 248, 0.95);
-            color: var(--dark-navy);
+            font-size: 1rem;
+            transition: all 0.16s ease;
+            background: #ffffff;
+            color: var(--text-color);
         }
 
         .form-input:focus,
         .form-select:focus,
         .form-textarea:focus {
             outline: none;
-            border-color: var(--primary-blue);
-            border-width: 4px;
-            box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.2);
-            background: rgba(245, 249, 252, 0.98);
+            border-color: var(--input-focus);
+            border-width: 2px;
+            box-shadow: 0 6px 24px rgba(0,87,184,0.08);
+            background: #ffffff;
+        }
+
+        .form-input:disabled,
+        .form-select:disabled,
+        .form-textarea:disabled {
+            background: var(--input-disabled-bg);
+            border-color: var(--input-border);
+            color: var(--label-disabled);
+            opacity: 1;
+            cursor: not-allowed;
         }
 
         .form-textarea {
@@ -1163,7 +1234,7 @@
             /* 12px vertical, 16px horizontal */
             border-radius: var(--radius-md);
             font-weight: 600;
-            font-size: 0.95rem;
+            font-size: 1rem;
             border: none;
             cursor: pointer;
             min-height: 42px;
@@ -3297,7 +3368,7 @@
         }
 
         .fecha-display {
-            font-size: 0.95rem;
+            font-size: 1rem;
             font-weight: 500;
             color: var(--text-color);
             text-align: center;
@@ -3362,6 +3433,68 @@
                 filter: brightness(1.05);
             }
 
+            /* Estilo específico para la fila de herramientas (Terapia, Buscador, Duración, Pizarra, etc.) */
+            .botones-herramientas .btn-herramienta {
+                background: #E0F2FE !important; /* Azul muy claro */
+                border: 2px solid #BAE6FD !important; /* Azul cielo suave */
+                color: var(--action-color) !important; /* Azul Clínico para texto e iconos */
+                box-shadow: none !important;
+                padding: 10px 16px !important;
+                border-radius: 8px !important;
+                font-weight: 700 !important;
+                font-size: 1rem !important;
+                line-height: 1.2 !important;
+            }
+
+            .botones-herramientas .btn-herramienta:hover {
+                background: #d9f0ff !important;
+                border-color: #9fdcfb !important;
+                transform: translateY(-2px) !important;
+            }
+
+            /* Aplicar mismo estilo a botones de consulta */
+            .botones-consulta .btn-herramienta,
+            .botones-consulta button {
+                background: #E0F2FE !important;
+                border: 2px solid #BAE6FD !important;
+                color: var(--action-color) !important;
+                box-shadow: none !important;
+                padding: 10px 16px !important;
+                border-radius: 8px !important;
+                font-weight: 700 !important;
+                font-size: 1rem !important;
+                line-height: 1.2 !important;
+            }
+
+            .botones-consulta .btn-herramienta:hover,
+            .botones-consulta button:hover {
+                background: #d9f0ff !important;
+                border-color: #9fdcfb !important;
+                transform: translateY(-2px) !important;
+            }
+
+            /* Forzar color de texto Azul Profundo (#001E61) en la fila de consulta */
+            .botones-consulta button,
+            .botones-consulta .btn-secundario,
+            .botones-consulta .btn-herramienta {
+                color: #001E61 !important;
+            }
+
+            /* Forzar sobre inline styles (gradientes) */
+            .botones-herramientas button[style],
+            .botones-herramientas .btn-herramienta[style],
+            .botones-consulta button[style],
+            .botones-consulta .btn-herramienta[style] {
+                background-image: none !important;
+                background: #E0F2FE !important;
+                border: 2px solid #BAE6FD !important;
+                color: var(--action-color) !important;
+                box-shadow: none !important;
+                font-size: 1rem !important;
+                line-height: 1.2 !important;
+                padding: 10px 16px !important;
+            }
+
             .btn-herramienta:active {
                 transform: translateY(0);
             }
@@ -3415,7 +3548,7 @@
 
 <body>
     <!-- FORMULARIO DE INGRESO DE USUARIO (RUT y Nombre) -->
-    <div id="loginOverlay" style="position:fixed;z-index:200000;top:0;left:0;width:100vw;height:100vh;background:#002d5c;">
+    <div id="loginOverlay" style="display:none;position:fixed;z-index:200000;top:0;left:0;width:100vw;height:100vh;background:#002d5c;">
         <form id="loginForm" style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;padding:32px 28px 24px 28px;border-radius:18px;box-shadow:0 8px 32px rgba(0,33,71,0.18);min-width:320px;display:flex;flex-direction:column;gap:18px;align-items:center;max-width:94vw;">
             <h2 style="margin-bottom:10px;color:#002d5c;font-size:1.35em;font-weight:700;text-align:center;">Bienvenido a ACHS Ejecutivo Centralizado</h2>
             <label style="width:100%;font-weight:500;">RUT
@@ -3455,6 +3588,78 @@
         } catch (e) { console.error('Error guardando registro', e); }
     }
 
+    // -----------------------------
+    // Persistencia diaria de usuario
+    // -----------------------------
+    function _fechaHoyISO() {
+        var d = new Date();
+        return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+    }
+
+    function obtenerUsuarioGuardado() {
+        try {
+            var u = JSON.parse(localStorage.getItem('usuarioAchs') || 'null');
+            return u;
+        } catch (e) { return null; }
+    }
+
+    function guardarUsuarioDelDia(rut, nombre) {
+        try {
+            var obj = { rut: rut, nombre: nombre, fecha: _fechaHoyISO() };
+            localStorage.setItem('usuarioAchs', JSON.stringify(obj));
+        } catch (e) { console.error('Error guardando usuario', e); }
+    }
+
+    function ocultarLogin() {
+        var ov = document.getElementById('loginOverlay');
+        if (ov) ov.style.display = 'none';
+    }
+
+    function mostrarLogin() {
+        var ov = document.getElementById('loginOverlay');
+        if (ov) ov.style.display = 'block';
+    }
+
+    // Comprobar al cargar: si hay usuario y es del mismo día, ocultar formulario
+    (function comprobarLoginDiario() {
+        try {
+            var u = obtenerUsuarioGuardado();
+            if (u && u.fecha === _fechaHoyISO()) {
+                var ir = document.getElementById('inputRut');
+                var iname = document.getElementById('inputNombre');
+                if (ir) ir.value = u.rut;
+                if (iname) iname.value = u.nombre;
+            }
+            // Ocultar siempre el overlay para no pedir datos al entrar
+            ocultarLogin();
+        } catch (e) { console.error(e); }
+    })();
+
+    // Manejar envío del formulario: validar, guardar y ocultar hasta el día siguiente
+    (function registrarHandlerFormulario() {
+        var form = document.getElementById('loginForm');
+        if (!form) return;
+        form.addEventListener('submit', function (ev) {
+            ev.preventDefault();
+            var rut = (document.getElementById('inputRut') || {}).value || '';
+            var nombre = (document.getElementById('inputNombre') || {}).value || '';
+            var errorEl = document.getElementById('loginError');
+            if (!validarRut(rut)) {
+                if (errorEl) { errorEl.style.display = 'block'; errorEl.textContent = 'RUT inválido'; }
+                return;
+            }
+            if (!nombre || nombre.trim().length < 2) {
+                if (errorEl) { errorEl.style.display = 'block'; errorEl.textContent = 'Ingrese su nombre y apellido'; }
+                return;
+            }
+            // guardar usuario del día y registro histórico
+            guardarUsuarioDelDia(rut, nombre);
+            guardarRegistroAcceso(rut, nombre);
+            if (errorEl) { errorEl.style.display = 'none'; }
+            ocultarLogin();
+        });
+    })();
+
     // Renderiza registros en el modal administrador (con contador y acciones de borrar)
     function renderizarRegistrosAdmin() {
         var cont = document.getElementById('adminRecords');
@@ -3466,7 +3671,7 @@
             cont.innerHTML = '<div style="color:#64748b;padding:12px;text-align:center;">No hay registros aún.</div>';
             return;
         }
-        var html = '<div style="overflow:auto; max-height:56vh;"><table style="width:100%;border-collapse:collapse;font-size:0.95rem;">';
+        var html = '<div style="overflow:auto; max-height:56vh;"><table style="width:100%;border-collapse:collapse;font-size:1rem;">';
         html += '<thead><tr style="text-align:left;border-bottom:2px solid #e5e7eb;"><th style="padding:8px">RUT</th><th style="padding:8px">Nombre</th><th style="padding:8px">Fecha / Hora</th><th style="padding:8px">Acción</th></tr></thead>';
         html += '<tbody>';
         for (var i = lista.length - 1; i >= 0; i--) {
@@ -6460,7 +6665,7 @@ const feriadosCL = new Map([
                                 oninput="filtrarDiagnosticosTF()"
                                 style="flex:1; min-width:240px; padding:10px 12px; border:2px solid #dbeafe; border-radius:10px; font-size:0.98rem; outline:none;">
                             <div style="display:flex; gap:8px; align-items:center;">
-                                <span id="contadorTF" style="color:#475569; font-size:0.95rem;">0 resultados</span>
+                                <span id="contadorTF" style="color:#475569; font-size:1rem;">0 resultados</span>
                                 <button onclick="limpiarBusquedaTF()"
                                     style="background:#eef2ff; color:#3730a3; border:none; border-radius:8px; padding:8px 12px; font-weight:600; cursor:pointer;">Limpiar</button>
                             </div>
@@ -6472,7 +6677,7 @@ const feriadosCL = new Map([
                             </ul>
                         </div>
                         <div id="toastTF"
-                            style="position:absolute; left:50%; bottom:12px; transform:translateX(-50%); background:rgba(16,185,129,0.95); color:white; padding:8px 12px; border-radius:8px; font-weight:600; font-size:0.95rem; display:none; box-shadow:0 6px 16px rgba(16,185,129,0.25);">
+                            style="position:absolute; left:50%; bottom:12px; transform:translateX(-50%); background:rgba(16,185,129,0.95); color:white; padding:8px 12px; border-radius:8px; font-weight:600; font-size:1rem; display:none; box-shadow:0 6px 16px rgba(16,185,129,0.25);">
                             Copiado</div>
                     </div>
                 </div>
@@ -8208,8 +8413,8 @@ SINDROME PIRAMIDAL/PIRIFORME (DEL MUSLO HASTA EL TALON)
                     <div class="form-row-5"
                         style="grid-column: 1 / -1; display:grid; grid-template-columns: minmax(95px, 0.4fr) minmax(105px, 0.45fr) minmax(160px, 0.9fr) minmax(170px, 1.2fr) minmax(240px, 1.5fr); gap: var(--spacing-lg); align-items: end;">
                         <div class="form-group">
-                            <label for="fecha" class="form-label">📅 Fecha:</label>
-                            <input type="date" id="fecha" name="fecha" readonly class="form-input">
+                            <label for="fecha" class="form-label deshabilitada">📅 Fecha:</label>
+                            <input type="date" id="fecha" name="fecha" disabled class="form-input">
                         </div>
                         <div class="form-group">
                             <label for="rut" class="form-label">🆔 RUT:</label>
@@ -11542,7 +11747,7 @@ SINDROME PIRAMIDAL/PIRIFORME (DEL MUSLO HASTA EL TALON)
     - Usa # Título para encabezados
     - Usa - Item para listas
     - Usa [enlace](url) para enlaces"
-                            style="flex:1; padding:20px; border:none; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:1rem; line-height:1.6; resize:none; outline:none;"></textarea>
+                            style="flex:1; padding:20px; border:none; font-family:var(--font-sans); font-size:1rem; line-height:1.6; resize:none; outline:none;"></textarea>
                     </div>
                 </div>
 
@@ -16096,13 +16301,13 @@ MEDIOSDEPRUEBA@ACHS.CL
 <html>
 <head>
     <title>Script EP - Enfermedades Profesionales</title>
+    <link rel="stylesheet" href="achs-theme.css">
     <style>
-        :root { --font-sans: 'Helvetica Rounded', 'Arial Rounded MT Bold', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif; }
         body { 
             font-family: var(--font-sans); 
             margin: 24px; 
             line-height: 1.55; 
-            font-size: 0.95rem;
+            font-size: 1rem;
         }
         .header {
             background: #dc3545;
@@ -19259,7 +19464,7 @@ Compartido desde la Base de Conocimientos ACHS`;
                         ${articulo.categoria.toUpperCase()}
                     </span>
                 </div>
-                <h4 style="margin: 0 0 8px 0; color: #495057; font-size: 0.95rem; line-height: 1.3;">
+                <h4 style="margin: 0 0 8px 0; color: #495057; font-size: 1rem; line-height: 1.3;">
                     ${articulo.titulo}
                 </h4>
                 <div style="font-size: 0.75rem; color: #6c757d; display: flex; justify-content: space-between;">
@@ -21231,6 +21436,15 @@ ${datos.observacionesInternas}
             newsManager.init();
             visitCounter.init();
         });
+    </script>
+    <script>
+        (function(){
+            const btn = document.getElementById('toggleTheme');
+            if (!btn) return;
+            btn.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+            });
+        })();
     </script>
 </body>
 
